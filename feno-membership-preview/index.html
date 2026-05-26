@@ -784,12 +784,36 @@
     padding: 14px;
     font-size: 13px;
     color: #4A4A4A;
-    line-height: 1.6;
+    line-height: 1.5;
     margin-bottom: 18px;
     text-align: left;
+    width: 100%;
   }
 
   .confirm-summary strong { color: #1A1A1A; }
+
+  .confirm-summary__row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+
+  .confirm-summary__row--discount { color: #1D9E75; font-weight: 600; }
+
+  .confirm-summary__total {
+    border-top: 1px solid #E1E1E1;
+    padding-top: 10px;
+    margin-top: 8px;
+    font-size: 15px;
+  }
+
+  .confirm-summary__note {
+    font-size: 11px;
+    color: #888888;
+    margin-top: 8px;
+    line-height: 1.5;
+    font-style: italic;
+  }
 
   .confirm-done {
     background: #1A1A1A;
@@ -954,7 +978,7 @@
       <span class="incentive" id="incentive"></span>
 
       <div class="price-row">
-        <p class="price-main"><span id="price-amount">$35</span><span class="price-unit" id="price-unit">/mo</span></p>
+        <p class="price-main"><span id="price-amount">$40</span><span class="price-unit" id="price-unit">/mo</span></p>
         <p class="price-sub" id="price-sub"></p>
       </div>
 
@@ -1110,17 +1134,20 @@
     render();
   }
 
-  function openCart() {
-    subInCart = addonCheckbox.checked;
-    view = 'cart';
-    renderCart();
+  function openDrawer(initialView) {
+    view = initialView;
+    if (view === 'cart') renderCart();
+    else if (view === 'upsell') showView();
+    else if (view === 'confirm') renderConfirm(subInCart);
     lastFocused = document.activeElement;
     drawer.classList.add('open');
     backdrop.classList.add('open');
     drawer.setAttribute('aria-hidden', 'false');
     document.body.classList.add('cart-open');
     window.requestAnimationFrame(() => {
-      document.getElementById('cart-close').focus();
+      const activeView = document.getElementById('view-' + view);
+      const firstFocus = activeView && activeView.querySelector('.scp-close, button:not([disabled])');
+      if (firstFocus) firstFocus.focus();
     });
   }
 
@@ -1141,7 +1168,9 @@
   }
 
   function handleCtaClick() {
-    if (primary === 'onetime') openCart();
+    if (primary !== 'onetime') return;
+    subInCart = addonCheckbox.checked;
+    openDrawer(subInCart ? 'confirm' : 'cart');
   }
 
   function handleCheckout() {
@@ -1154,6 +1183,9 @@
       window.requestAnimationFrame(() => document.getElementById('upsell-accept').focus());
     }
   }
+
+  // Update CTA copy + price when the addon checkbox flips.
+  addonCheckbox.addEventListener('change', render);
 
   function acceptUpsell() {
     subInCart = true;
@@ -1191,11 +1223,18 @@
 
   function renderConfirm(withSub) {
     if (withSub) {
-      confirmSub.textContent = 'Your SmartBrush ships in 2 business days. First refill ships in 90 days.';
-      confirmSummary.innerHTML = '<strong>SmartBrush Bundle</strong> · $299<br><strong>Quarterly Refills</strong> · $65 every 90 days, starting in 90 days';
+      confirmSub.textContent = 'SmartBrush ships in 2 business days. First refill ships in 90 days.';
+      confirmSummary.innerHTML =
+        '<div class="confirm-summary__row"><span>SmartBrush Bundle</span><span>$299</span></div>' +
+        '<div class="confirm-summary__row confirm-summary__row--discount"><span>First-order bonus</span><span>−$30</span></div>' +
+        '<div class="confirm-summary__row confirm-summary__total"><strong>Charged today</strong><strong>$269</strong></div>' +
+        '<div class="confirm-summary__note">Quarterly Refills: $65 every 90 days, starting in 90 days. Cancel anytime.</div>';
     } else {
-      confirmSub.textContent = 'Your SmartBrush ships in 2 business days. We\'ll email tracking shortly.';
-      confirmSummary.innerHTML = '<strong>SmartBrush Bundle</strong> · $299<br>You can add refills anytime from your account.';
+      confirmSub.textContent = 'SmartBrush ships in 2 business days. We\'ll email tracking shortly.';
+      confirmSummary.innerHTML =
+        '<div class="confirm-summary__row"><span>SmartBrush Bundle</span><span>$299</span></div>' +
+        '<div class="confirm-summary__row confirm-summary__total"><strong>Charged today</strong><strong>$299</strong></div>' +
+        '<div class="confirm-summary__note">Add refills anytime from your Feno account.</div>';
     }
     showView();
   }
@@ -1248,14 +1287,14 @@
       billingEl.classList.remove('hidden');
       addonToggle.classList.add('hidden');
       if (billing === 'monthly') {
-        amount.textContent = '$35';
+        amount.textContent = '$40';
         unit.textContent = '/mo';
-        sub.textContent = 'Lowest monthly cost. Cancel anytime after SmartBrush is paid off.';
+        sub.textContent = 'Everything included. Cancel anytime after SmartBrush is paid off.';
         incentive.textContent = 'Lowest cost to start';
       } else {
         amount.textContent = '$360';
         unit.textContent = '/yr';
-        sub.textContent = 'Save ~25% vs monthly. Renews annually at the same rate.';
+        sub.textContent = 'Save $120 vs monthly ($30/mo effective). Renews annually.';
         incentive.textContent = 'Save 25% · best long-term value';
       }
       cta.textContent = 'Get Started';
@@ -1267,9 +1306,11 @@
       amount.textContent = '$299';
       unit.textContent = '';
       sub.textContent = 'SmartBrush bundle. Yours to keep, no recurring charges.';
-      incentive.textContent = 'Pay once · free shipping';
-      cta.textContent = 'Add to Cart';
-      terms.innerHTML = 'Includes SmartBrush, 3 Feno Foam tubes, and 1 TrueFit Mouthpiece. Add Quarterly Refills above to save $30 on this order.';
+      incentive.textContent = addonCheckbox.checked ? '$30 off applied · skips cart' : 'Pay once · free shipping';
+      cta.textContent = addonCheckbox.checked ? 'Checkout · $269' : 'Add to Cart';
+      terms.innerHTML = addonCheckbox.checked
+        ? 'Quarterly Refills added. $30 first-order bonus applied. Clicking Checkout takes you straight to confirmation — no cart review.'
+        : 'Includes SmartBrush, 3 Feno Foam tubes, and 1 TrueFit Mouthpiece. Add Quarterly Refills above to save $30 on this order.';
       list.innerHTML = '<li><span class="check">✓</span>SmartBrush device</li><li><span class="check">✓</span>3 Feno Foam tubes</li><li><span class="check">✓</span>1 TrueFit Mouthpiece</li>';
     }
   }
