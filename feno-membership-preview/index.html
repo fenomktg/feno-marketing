@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#E8E8E8">
-<title>Feno Membership Section — Wireframe</title>
+<title>Feno — Build Your Routine</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -19,9 +19,7 @@
     overflow-x: hidden;
   }
 
-  body.cart-open {
-    overflow: hidden;
-  }
+  body.cart-open { overflow: hidden; }
 
   .section {
     max-width: 1100px;
@@ -165,12 +163,7 @@
     gap: 6px;
   }
 
-  .phone-lines span {
-    height: 5px;
-    background: #E8E8E8;
-    border-radius: 2px;
-  }
-
+  .phone-lines span { height: 5px; background: #E8E8E8; border-radius: 2px; }
   .phone-lines span:nth-child(1) { width: 60%; }
   .phone-lines span:nth-child(2) { width: 90%; }
   .phone-lines span:nth-child(3) { width: 75%; }
@@ -184,10 +177,15 @@
     border-radius: 6px 6px 16px 16px;
   }
 
+  .media-placeholder-note {
+    font-style: italic;
+    color: #999999;
+  }
+
   .card {
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 16px;
   }
 
   .badges {
@@ -209,15 +207,32 @@
     font-weight: 500;
   }
 
-  .badge-icon {
-    width: 14px;
-    height: 14px;
-    display: inline-block;
+  .badge-icon { width: 14px; height: 14px; display: inline-block; }
+
+  /* Per-tab incentive callout */
+  .incentive {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #173404;
+    background: #DDEFC7;
+    padding: 6px 12px;
+    border-radius: 999px;
+    width: fit-content;
   }
 
-  .price-row {
-    padding: 8px 0 16px;
+  .incentive::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: #1D9E75;
   }
+
+  .price-row { padding: 4px 0 8px; }
 
   .price-main {
     font-family: Georgia, 'Times New Roman', serif;
@@ -267,10 +282,7 @@
     transition: all 0.15s ease;
   }
 
-  .billing button.active {
-    background: #E6F1FB;
-    color: #0C447C;
-  }
+  .billing button.active { background: #E6F1FB; color: #0C447C; }
 
   .save-badge {
     background: #C0DD97;
@@ -305,11 +317,108 @@
     flex-shrink: 0;
   }
 
+  /* Add-on subscription checkbox (One Time only) */
+  .addon {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    background: #FFFFFF;
+    border: 1.5px solid #DDDDDD;
+    border-radius: 12px;
+    padding: 14px;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background 0.15s ease;
+    user-select: none;
+  }
+
+  .addon:hover { border-color: #C5C5C5; }
+
+  .addon input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .addon__box {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border: 2px solid #C5C5C5;
+    border-radius: 6px;
+    background: #FFFFFF;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+    transition: all 0.15s ease;
+  }
+
+  .addon__box::after {
+    content: '';
+    width: 10px;
+    height: 6px;
+    border-left: 2px solid #FFFFFF;
+    border-bottom: 2px solid #FFFFFF;
+    transform: rotate(-45deg) translate(1px, -1px);
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+
+  .addon input:checked ~ .addon__box {
+    background: #1D9E75;
+    border-color: #1D9E75;
+  }
+
+  .addon input:checked ~ .addon__box::after { opacity: 1; }
+
+  .addon:has(input:checked) {
+    background: #F4FBF6;
+    border-color: #1D9E75;
+  }
+
+  .addon input:focus-visible ~ .addon__box {
+    outline: 2px solid #185FA5;
+    outline-offset: 2px;
+  }
+
+  .addon__content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+
+  .addon__title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1A1A1A;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .addon__save {
+    background: #C0DD97;
+    color: #173404;
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 999px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  .addon__sub {
+    font-size: 12px;
+    color: #6B6B6B;
+    line-height: 1.45;
+  }
+
   .qty-cta {
     display: flex;
     gap: 14px;
     align-items: center;
-    margin-top: 8px;
+    margin-top: 4px;
   }
 
   .qty {
@@ -357,15 +466,16 @@
   }
 
   .cta:hover { background: #0C447C; }
+  .cta:focus-visible { outline: 2px solid #1A1A1A; outline-offset: 2px; }
 
   .terms {
     font-size: 12px;
     color: #888888;
     line-height: 1.6;
-    margin-top: 8px;
+    margin-top: 4px;
   }
 
-  /* === Cart drawer (real slide cart, replaces inline preview) === */
+  /* === Cart drawer === */
 
   .cart-backdrop {
     position: fixed;
@@ -377,10 +487,7 @@
     z-index: 1000;
   }
 
-  .cart-backdrop.open {
-    opacity: 1;
-    pointer-events: auto;
-  }
+  .cart-backdrop.open { opacity: 1; pointer-events: auto; }
 
   .cart-drawer {
     position: fixed;
@@ -399,14 +506,9 @@
     pointer-events: none;
   }
 
-  .cart-drawer.open {
-    transform: translateX(0);
-    pointer-events: auto;
-  }
+  .cart-drawer.open { transform: translateX(0); pointer-events: auto; }
 
-  .cart-drawer__handle {
-    display: none;
-  }
+  .cart-drawer__handle { display: none; }
 
   .cart-drawer__body {
     flex: 1;
@@ -454,17 +556,9 @@
     font-size: 14px;
   }
 
-  .scp-line .left {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
+  .scp-line .left { display: flex; flex-direction: column; gap: 4px; }
   .scp-line .item-name { font-weight: 600; }
-  .scp-line .item-detail {
-    font-size: 12px;
-    color: #888888;
-  }
+  .scp-line .item-detail { font-size: 12px; color: #888888; }
 
   .scp-sub {
     background: #E1F5EE;
@@ -495,18 +589,8 @@
     letter-spacing: 0.03em;
   }
 
-  .scp-sub-detail {
-    font-size: 12px;
-    color: #085041;
-    line-height: 1.5;
-  }
-
-  .scp-sub-price {
-    font-size: 13px;
-    font-weight: 600;
-    color: #04342C;
-    margin-top: 6px;
-  }
+  .scp-sub-detail { font-size: 12px; color: #085041; line-height: 1.5; }
+  .scp-sub-price { font-size: 13px; font-weight: 600; color: #04342C; margin-top: 6px; }
 
   .scp-remove {
     color: #04342C;
@@ -535,19 +619,25 @@
     margin-top: 10px;
   }
 
+  .scp-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #6B6B6B;
+    margin-bottom: 6px;
+  }
+
+  .scp-row--discount { color: #1D9E75; font-weight: 600; }
+
   .scp-total {
     display: flex;
     justify-content: space-between;
     font-size: 15px;
     font-weight: 600;
+    margin-top: 6px;
   }
 
-  .scp-recurring-note {
-    font-size: 11px;
-    color: #888888;
-    margin-top: 6px;
-    line-height: 1.5;
-  }
+  .scp-recurring-note { font-size: 11px; color: #888888; margin-top: 6px; line-height: 1.5; }
 
   .scp-checkout {
     background: #185FA5;
@@ -565,6 +655,159 @@
   .scp-checkout:hover { background: #0C447C; }
   .scp-checkout:focus-visible { outline: 2px solid #1A1A1A; outline-offset: 2px; }
 
+  /* Upsell + confirmation drawer views */
+  .upsell-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #185FA5;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .upsell-title {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 22px;
+    line-height: 1.25;
+    margin-bottom: 10px;
+    color: #1A1A1A;
+  }
+
+  .upsell-body {
+    font-size: 14px;
+    color: #4A4A4A;
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+
+  .upsell-card {
+    background: #F8FBFD;
+    border: 1px solid #CFE0EF;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 18px;
+  }
+
+  .upsell-card__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .upsell-card__title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1A1A1A;
+    margin-bottom: 4px;
+  }
+
+  .upsell-card__sub { font-size: 12px; color: #6B6B6B; line-height: 1.5; }
+
+  .upsell-card__price {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1A1A1A;
+    white-space: nowrap;
+  }
+
+  .upsell-card__price small {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    color: #888888;
+    margin-top: 2px;
+  }
+
+  .upsell-accept {
+    background: #185FA5;
+    color: white;
+    border: none;
+    border-radius: 999px;
+    padding: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .upsell-accept:hover { background: #0C447C; }
+  .upsell-accept:focus-visible { outline: 2px solid #1A1A1A; outline-offset: 2px; }
+
+  .upsell-decline {
+    background: transparent;
+    color: #6B6B6B;
+    border: none;
+    padding: 14px;
+    font-size: 13px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 4px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .upsell-decline:hover { color: #1A1A1A; }
+
+  /* Confirmation view */
+  .confirm-check {
+    width: 56px;
+    height: 56px;
+    border-radius: 999px;
+    background: #1D9E75;
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    margin: 8px 0 14px;
+    line-height: 1;
+  }
+
+  .confirm-title {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 24px;
+    margin-bottom: 8px;
+    color: #1A1A1A;
+  }
+
+  .confirm-sub {
+    font-size: 14px;
+    color: #6B6B6B;
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+
+  .confirm-summary {
+    background: #F4F4F4;
+    border-radius: 10px;
+    padding: 14px;
+    font-size: 13px;
+    color: #4A4A4A;
+    line-height: 1.6;
+    margin-bottom: 18px;
+    text-align: left;
+  }
+
+  .confirm-summary strong { color: #1A1A1A; }
+
+  .confirm-done {
+    background: #1A1A1A;
+    color: white;
+    border: none;
+    border-radius: 999px;
+    padding: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .confirm-done:hover { background: #000000; }
+
+  .view { display: flex; flex-direction: column; }
+  .view--center { align-items: center; text-align: center; }
+
   .hidden { display: none !important; }
 
   .footnote {
@@ -576,7 +819,7 @@
     border-top: 1px solid #D5D5D5;
   }
 
-  /* Tablet: hold two-column, tighten the gap */
+  /* Tablet */
   @media (max-width: 1024px) and (min-width: 769px) {
     body { padding: 20px; }
     .section { padding: 48px 32px; }
@@ -584,162 +827,68 @@
     .media { min-height: 400px; }
   }
 
-  /* Mobile polish (< 768px). Drawer switches to a bottom sheet. */
+  /* Mobile */
   @media (max-width: 768px) {
     body { padding: 0; }
-
-    .section {
-      padding: 32px 20px;
-      border-radius: 0;
-    }
-
+    .section { padding: 32px 20px; border-radius: 0; }
     .eyebrow { margin-bottom: 10px; }
-
-    .headline {
-      font-size: 27px;
-      line-height: 1.18;
-      margin-bottom: 12px;
-    }
-
-    .subhead {
-      font-size: 14px;
-      margin-bottom: 26px;
-      padding: 0 4px;
-    }
-
-    .toggle-wrap {
-      margin: 0 auto 26px;
-      padding-top: 14px;
-    }
-
+    .headline { font-size: 27px; line-height: 1.18; margin-bottom: 12px; }
+    .subhead { font-size: 14px; margin-bottom: 26px; padding: 0 4px; }
+    .toggle-wrap { margin: 0 auto 26px; padding-top: 14px; }
     .primary-toggle { padding: 4px; }
-
-    .primary-toggle button {
-      padding: 12px 26px;
-      min-height: 44px;
-      font-size: 14px;
-    }
-
-    .recommended-tag {
-      right: 14px;
-      font-size: 10px;
-      padding: 3px 8px;
-    }
-
-    .grid {
-      grid-template-columns: 1fr;
-      gap: 22px;
-    }
-
-    .media {
-      min-height: 280px;
-      padding: 20px;
-    }
-
+    .primary-toggle button { padding: 12px 26px; min-height: 44px; font-size: 14px; }
+    .recommended-tag { right: 14px; font-size: 10px; padding: 3px 8px; }
+    .grid { grid-template-columns: 1fr; gap: 22px; }
+    .media { min-height: 280px; padding: 20px; }
     .media-shapes { margin-bottom: 14px; gap: 12px; }
-
     .phone { width: 86px; height: 156px; }
     .phone::before { width: 24px; }
     .phone-lines { top: 22px; left: 9px; right: 9px; gap: 5px; }
     .phone-lines span { height: 4px; }
     .tube { width: 28px; height: 72px; }
-
-    .card { gap: 16px; }
-
+    .card { gap: 14px; }
     .badges { gap: 6px; }
-
-    .badge {
-      font-size: 12px;
-      padding: 8px 12px;
-    }
-
-    .price-row { padding: 4px 0 12px; }
+    .badge { font-size: 12px; padding: 8px 12px; }
+    .price-row { padding: 2px 0 6px; }
     .price-main { font-size: 30px; }
     .price-unit { font-size: 16px; }
-
-    .billing button {
-      padding: 12px 8px;
-      min-height: 44px;
-      font-size: 13px;
-    }
-
+    .billing button { padding: 12px 8px; min-height: 44px; font-size: 13px; }
     .save-badge { font-size: 10px; }
-
-    .qty-cta {
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 4px;
-    }
-
-    .qty {
-      padding: 4px 6px;
-      gap: 4px;
-      flex: 0 0 auto;
-    }
-
-    .qty button {
-      width: 44px;
-      height: 44px;
-      font-size: 18px;
-    }
-
-    .qty span {
-      min-width: 24px;
-      font-size: 15px;
-    }
-
-    .cta {
-      flex: 1 1 180px;
-      min-height: 48px;
-      font-size: 15px;
-      padding: 14px 20px;
-    }
-
+    .addon { padding: 14px; }
+    .addon__title { font-size: 14px; }
+    .addon__sub { font-size: 12px; }
+    .qty-cta { flex-wrap: wrap; gap: 12px; margin-top: 2px; }
+    .qty { padding: 4px 6px; gap: 4px; flex: 0 0 auto; }
+    .qty button { width: 44px; height: 44px; font-size: 18px; }
+    .qty span { min-width: 24px; font-size: 15px; }
+    .cta { flex: 1 1 180px; min-height: 48px; font-size: 15px; padding: 14px 20px; }
     .terms { font-size: 12px; }
 
-    /* Drawer becomes a bottom sheet on mobile */
+    /* Bottom sheet drawer */
     .cart-drawer {
-      top: auto;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      max-width: 100%;
-      max-height: 92vh;
+      top: auto; right: 0; bottom: 0; left: 0;
+      width: 100%; max-width: 100%; max-height: 92vh;
       border-radius: 16px 16px 0 0;
       transform: translateY(100%);
       box-shadow: 0 -10px 36px rgba(0, 0, 0, 0.18);
     }
-
-    .cart-drawer.open {
-      transform: translateY(0);
-    }
-
+    .cart-drawer.open { transform: translateY(0); }
     .cart-drawer__handle {
-      display: block;
-      width: 40px;
-      height: 4px;
-      background: #DDDDDD;
-      border-radius: 999px;
-      margin: 10px auto 0;
-      flex-shrink: 0;
+      display: block; width: 40px; height: 4px;
+      background: #DDDDDD; border-radius: 999px;
+      margin: 10px auto 0; flex-shrink: 0;
     }
-
     .cart-drawer__body { padding: 16px 20px 20px; }
-
     .scp-close { width: 44px; height: 44px; font-size: 24px; }
     .scp-remove { width: 44px; height: 44px; font-size: 22px; }
+    .scp-checkout, .upsell-accept, .confirm-done { padding: 14px; min-height: 48px; font-size: 14px; }
+    .upsell-title { font-size: 20px; }
+    .confirm-title { font-size: 22px; }
 
-    .scp-checkout { padding: 14px; min-height: 48px; font-size: 14px; }
-
-    .footnote {
-      font-size: 12px;
-      margin-top: 20px;
-      padding-top: 16px;
-    }
+    .footnote { font-size: 12px; margin-top: 20px; padding-top: 16px; }
   }
 
-  /* Very narrow phones */
+  /* Very narrow */
   @media (max-width: 360px) {
     .section { padding: 28px 16px; }
     .headline { font-size: 26px; }
@@ -748,21 +897,19 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-      transition-duration: 0.01ms !important;
-    }
+    *, *::before, *::after { transition-duration: 0.01ms !important; }
   }
 </style>
 </head>
 <body>
 
 <div class="section">
-  <p class="eyebrow">Feno Membership</p>
-  <h1 class="headline">Everything you need, one membership</h1>
-  <p class="subhead">SmartBrush. Monthly foam. AI coaching. We ship it. You show up.</p>
+  <p class="eyebrow">Build your routine</p>
+  <h1 class="headline">Everything for your routine, delivered</h1>
+  <p class="subhead">SmartBrush. Quarterly refills. AI coaching. We ship it. You show up.</p>
 
   <div class="toggle-wrap">
-    <span class="recommended-tag">Recommended</span>
+    <span class="recommended-tag">Best value</span>
     <div class="primary-toggle" role="tablist">
       <button id="tab-onetime" type="button" role="tab" aria-selected="false" onclick="setPrimary('onetime')">One Time</button>
       <button class="active" id="tab-membership" type="button" role="tab" aria-selected="true" onclick="setPrimary('membership')">Membership</button>
@@ -778,7 +925,7 @@
             <div class="phone-lines"><span></span><span></span><span></span><span></span><span></span></div>
           </div>
         </div>
-        Existing video / phone mockup<br>+ product imagery (unchanged)
+        <span class="media-placeholder-note">Bloom-designed graphic goes here<br>showcasing the offer + app</span>
       </div>
     </div>
 
@@ -798,9 +945,11 @@
         </span>
       </div>
 
+      <span class="incentive" id="incentive"></span>
+
       <div class="price-row">
         <p class="price-main"><span id="price-amount">$35</span><span class="price-unit" id="price-unit">/mo</span></p>
-        <p class="price-sub" id="price-sub">Everything included. Cancel anytime after SmartBrush is paid off.</p>
+        <p class="price-sub" id="price-sub"></p>
       </div>
 
       <div class="billing" id="billing">
@@ -810,25 +959,39 @@
 
       <ul class="included" id="included"></ul>
 
+      <label class="addon hidden" id="addon-toggle">
+        <input type="checkbox" id="addon-checkbox">
+        <span class="addon__box" aria-hidden="true"></span>
+        <span class="addon__content">
+          <span class="addon__title">
+            Add Quarterly Refills
+            <span class="addon__save">Save $30 today</span>
+          </span>
+          <span class="addon__sub">3 Feno Foam + 1 TrueFit Mouthpiece every 90 days. $65/quarter after, cancel anytime.</span>
+        </span>
+      </label>
+
       <div class="qty-cta">
         <div class="qty" aria-label="Quantity">
           <button type="button" aria-label="Decrease quantity">−</button><span>1</span><button type="button" aria-label="Increase quantity">+</button>
         </div>
-        <button class="cta" type="button" id="cta" onclick="handleCtaClick()">Start My Membership</button>
+        <button class="cta" type="button" id="cta" onclick="handleCtaClick()">Get Started</button>
       </div>
 
       <p class="terms" id="terms"></p>
     </div>
   </div>
 
-  <div class="footnote">Variant for ~20% traffic split test. Slide cart auto-subscribe wrapped behind feature flag (disable without redeploy).</div>
+  <div class="footnote">Variant for ~20% traffic split test. Add-on subscription + post-purchase upsell wrapped behind feature flag (disable without redeploy).</div>
 </div>
 
 <div class="cart-backdrop" id="cart-backdrop" aria-hidden="true"></div>
 
 <aside class="cart-drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title" aria-hidden="true" tabindex="-1">
   <div class="cart-drawer__handle" aria-hidden="true"></div>
-  <div class="cart-drawer__body">
+
+  <!-- View 1: Cart -->
+  <div class="cart-drawer__body view" id="view-cart">
     <div class="scp-header">
       <span id="cart-title">Your Cart</span>
       <button type="button" class="scp-close" id="cart-close" aria-label="Close cart">×</button>
@@ -842,32 +1005,86 @@
     </div>
     <div class="scp-sub" id="scp-sub">
       <div class="scp-sub-top">
-        <span><span class="scp-sub-auto">Auto-added</span>Quarterly Refills</span>
+        <span><span class="scp-sub-auto">Added</span>Quarterly Refills</span>
         <button type="button" class="scp-remove" id="scp-sub-remove" aria-label="Remove quarterly refills">×</button>
       </div>
       <div class="scp-sub-detail">3 Feno Foam tubes + 1 TrueFit Mouthpiece, shipped every 90 days. Cancel anytime.</div>
       <div class="scp-sub-price">$65 / quarter · First charge in 90 days</div>
     </div>
     <div class="scp-totals">
+      <div class="scp-row" id="scp-row-subtotal"><span>Subtotal</span><span>$299</span></div>
+      <div class="scp-row scp-row--discount" id="scp-row-discount"><span>First-order bonus</span><span>−$30</span></div>
       <div class="scp-total">
         <span>Today</span>
-        <span>$299</span>
+        <span id="scp-total-today">$299</span>
       </div>
       <div class="scp-recurring-note" id="scp-recurring-note">Then $65 every 90 days, starting 90 days from today.</div>
     </div>
-    <button class="scp-checkout" type="button">Checkout</button>
+    <button class="scp-checkout" type="button" id="cart-checkout">Checkout</button>
+  </div>
+
+  <!-- View 2: Post-purchase upsell -->
+  <div class="cart-drawer__body view hidden" id="view-upsell">
+    <div class="scp-header">
+      <span>One last thing</span>
+      <button type="button" class="scp-close" id="upsell-close" aria-label="Close">×</button>
+    </div>
+    <p class="upsell-eyebrow">One-click add</p>
+    <h2 class="upsell-title">Want refills handled for you?</h2>
+    <p class="upsell-body">Your SmartBrush works best with fresh foam and a clean mouthpiece. Add Quarterly Refills now — no checkout, no card re-entry.</p>
+    <div class="upsell-card">
+      <div class="upsell-card__row">
+        <div>
+          <div class="upsell-card__title">Quarterly Refills</div>
+          <div class="upsell-card__sub">3 Feno Foam · 1 TrueFit Mouthpiece<br>Ships every 90 days · Cancel anytime</div>
+        </div>
+        <div class="upsell-card__price">
+          $65<small>per quarter</small>
+        </div>
+      </div>
+    </div>
+    <button class="upsell-accept" type="button" id="upsell-accept">Yes, add to my order</button>
+    <button class="upsell-decline" type="button" id="upsell-decline">No thanks, I'll order refills later</button>
+  </div>
+
+  <!-- View 3: Confirmation -->
+  <div class="cart-drawer__body view view--center hidden" id="view-confirm">
+    <div class="scp-header" style="width:100%">
+      <span>Order confirmed</span>
+      <button type="button" class="scp-close" id="confirm-close" aria-label="Close">×</button>
+    </div>
+    <div class="confirm-check" aria-hidden="true">✓</div>
+    <h2 class="confirm-title">You're all set</h2>
+    <p class="confirm-sub" id="confirm-sub">Your SmartBrush ships in 2 business days. We'll email tracking shortly.</p>
+    <div class="confirm-summary" id="confirm-summary"></div>
+    <button class="confirm-done" type="button" id="confirm-done">Done</button>
   </div>
 </aside>
 
 <script>
   let primary = 'membership';
   let billing = 'monthly';
+  let subInCart = false;
+  let view = 'cart';
   let lastFocused = null;
 
   const drawer = document.getElementById('cart-drawer');
   const backdrop = document.getElementById('cart-backdrop');
+  const addonToggle = document.getElementById('addon-toggle');
+  const addonCheckbox = document.getElementById('addon-checkbox');
+  const incentive = document.getElementById('incentive');
+
   const scpSub = document.getElementById('scp-sub');
   const scpRecurring = document.getElementById('scp-recurring-note');
+  const scpRowSubtotal = document.getElementById('scp-row-subtotal');
+  const scpRowDiscount = document.getElementById('scp-row-discount');
+  const scpTotalToday = document.getElementById('scp-total-today');
+
+  const viewCart = document.getElementById('view-cart');
+  const viewUpsell = document.getElementById('view-upsell');
+  const viewConfirm = document.getElementById('view-confirm');
+  const confirmSummary = document.getElementById('confirm-summary');
+  const confirmSub = document.getElementById('confirm-sub');
 
   function setPrimary(val) {
     primary = val;
@@ -888,15 +1105,14 @@
   }
 
   function openCart() {
-    // Auto-add behavior: every fresh open restores the quarterly sub
-    scpSub.style.display = '';
-    scpRecurring.style.display = '';
+    subInCart = addonCheckbox.checked;
+    view = 'cart';
+    renderCart();
     lastFocused = document.activeElement;
     drawer.classList.add('open');
     backdrop.classList.add('open');
     drawer.setAttribute('aria-hidden', 'false');
     document.body.classList.add('cart-open');
-    // Wait for transition start, then focus inside drawer
     window.requestAnimationFrame(() => {
       document.getElementById('cart-close').focus();
     });
@@ -914,17 +1130,78 @@
   }
 
   function removeSub() {
-    scpSub.style.display = 'none';
-    scpRecurring.style.display = 'none';
+    subInCart = false;
+    renderCart();
   }
 
   function handleCtaClick() {
     if (primary === 'onetime') openCart();
-    // Membership CTA: would route to checkout flow in production.
+  }
+
+  function handleCheckout() {
+    if (subInCart) {
+      view = 'confirm';
+      renderConfirm(true);
+    } else {
+      view = 'upsell';
+      showView();
+      window.requestAnimationFrame(() => document.getElementById('upsell-accept').focus());
+    }
+  }
+
+  function acceptUpsell() {
+    subInCart = true;
+    view = 'confirm';
+    renderConfirm(true);
+  }
+
+  function declineUpsell() {
+    view = 'confirm';
+    renderConfirm(false);
+  }
+
+  function showView() {
+    viewCart.classList.toggle('hidden', view !== 'cart');
+    viewUpsell.classList.toggle('hidden', view !== 'upsell');
+    viewConfirm.classList.toggle('hidden', view !== 'confirm');
+  }
+
+  function renderCart() {
+    if (subInCart) {
+      scpSub.style.display = '';
+      scpRecurring.style.display = '';
+      scpRowSubtotal.style.display = '';
+      scpRowDiscount.style.display = '';
+      scpTotalToday.textContent = '$269';
+    } else {
+      scpSub.style.display = 'none';
+      scpRecurring.style.display = 'none';
+      scpRowSubtotal.style.display = 'none';
+      scpRowDiscount.style.display = 'none';
+      scpTotalToday.textContent = '$299';
+    }
+    showView();
+  }
+
+  function renderConfirm(withSub) {
+    if (withSub) {
+      confirmSub.textContent = 'Your SmartBrush ships in 2 business days. First refill ships in 90 days.';
+      confirmSummary.innerHTML = '<strong>SmartBrush Bundle</strong> · $299<br><strong>Quarterly Refills</strong> · $65 every 90 days, starting in 90 days';
+    } else {
+      confirmSub.textContent = 'Your SmartBrush ships in 2 business days. We\'ll email tracking shortly.';
+      confirmSummary.innerHTML = '<strong>SmartBrush Bundle</strong> · $299<br>You can add refills anytime from your account.';
+    }
+    showView();
   }
 
   document.getElementById('cart-close').addEventListener('click', closeCart);
+  document.getElementById('upsell-close').addEventListener('click', closeCart);
+  document.getElementById('confirm-close').addEventListener('click', closeCart);
   document.getElementById('scp-sub-remove').addEventListener('click', removeSub);
+  document.getElementById('cart-checkout').addEventListener('click', handleCheckout);
+  document.getElementById('upsell-accept').addEventListener('click', acceptUpsell);
+  document.getElementById('upsell-decline').addEventListener('click', declineUpsell);
+  document.getElementById('confirm-done').addEventListener('click', closeCart);
   backdrop.addEventListener('click', closeCart);
 
   document.addEventListener('keydown', (e) => {
@@ -935,8 +1212,9 @@
       return;
     }
     if (e.key === 'Tab') {
+      const active = view === 'cart' ? viewCart : view === 'upsell' ? viewUpsell : viewConfirm;
       const focusables = Array.from(
-        drawer.querySelectorAll('button:not([disabled]), [tabindex]:not([tabindex="-1"])')
+        active.querySelectorAll('button:not([disabled]), [tabindex]:not([tabindex="-1"])')
       ).filter((el) => el.offsetParent !== null);
       if (!focusables.length) return;
       const first = focusables[0];
@@ -962,25 +1240,30 @@
 
     if (primary === 'membership') {
       billingEl.classList.remove('hidden');
+      addonToggle.classList.add('hidden');
       if (billing === 'monthly') {
         amount.textContent = '$35';
         unit.textContent = '/mo';
-        sub.textContent = 'Everything included. Cancel anytime after SmartBrush is paid off.';
+        sub.textContent = 'Lowest monthly cost. Cancel anytime after SmartBrush is paid off.';
+        incentive.textContent = 'Lowest cost to start';
       } else {
         amount.textContent = '$360';
         unit.textContent = '/yr';
-        sub.textContent = 'Save ~25%. Renews annually at the same rate.';
+        sub.textContent = 'Save ~25% vs monthly. Renews annually at the same rate.';
+        incentive.textContent = 'Save 25% · best long-term value';
       }
-      cta.textContent = 'Start My Membership';
-      terms.innerHTML = 'If you cancel before your SmartBrush is paid off, the remaining balance is due at cancellation. Once paid off, your membership continues for refills, mouthpieces, and Feno Plus app access until you cancel.';
+      cta.textContent = 'Get Started';
+      terms.innerHTML = 'If you cancel before your SmartBrush is paid off, the remaining balance is due at cancellation. Once paid off, refills, mouthpieces, and Feno Plus app access continue until you cancel.';
       list.innerHTML = '<li><span class="check">✓</span>SmartBrush device</li><li><span class="check">✓</span>3 Feno Foam tubes per quarter</li><li><span class="check">✓</span>1 TrueFit Mouthpiece per quarter</li><li><span class="check">✓</span>Feno Plus premium app</li>';
     } else {
       billingEl.classList.add('hidden');
+      addonToggle.classList.remove('hidden');
       amount.textContent = '$299';
       unit.textContent = '';
-      sub.textContent = 'One-time purchase. SmartBrush bundle.';
+      sub.textContent = 'SmartBrush bundle. Yours to keep, no recurring charges.';
+      incentive.textContent = 'Pay once · free shipping';
       cta.textContent = 'Add to Cart';
-      terms.innerHTML = 'Includes SmartBrush, 3 Feno Foam tubes, and 1 TrueFit Mouthpiece. A $65/quarter refill subscription is auto-added on Add to Cart (you can remove it in the cart).';
+      terms.innerHTML = 'Includes SmartBrush, 3 Feno Foam tubes, and 1 TrueFit Mouthpiece. Add Quarterly Refills above to save $30 on this order.';
       list.innerHTML = '<li><span class="check">✓</span>SmartBrush device</li><li><span class="check">✓</span>3 Feno Foam tubes</li><li><span class="check">✓</span>1 TrueFit Mouthpiece</li>';
     }
   }
