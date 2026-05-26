@@ -19,7 +19,7 @@
     overflow-x: hidden;
   }
 
-  body.cart-open { overflow: hidden; }
+  body.lock-scroll { overflow: hidden; }
 
   .section {
     max-width: 1100px;
@@ -118,730 +118,469 @@
     padding: 24px;
   }
 
-  .media-inner {
-    text-align: center;
-    color: #999999;
-    font-size: 13px;
-    line-height: 1.6;
-  }
-
-  .media-shapes {
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    gap: 14px;
-    margin: 0 auto 16px;
-  }
-
-  .phone {
-    width: 100px;
-    height: 180px;
-    border: 2px solid #C5C5C5;
-    border-radius: 14px;
-    position: relative;
-  }
-
-  .phone::before {
-    content: '';
-    position: absolute;
-    top: 8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 28px;
-    height: 4px;
-    background: #C5C5C5;
-    border-radius: 2px;
-  }
-
-  .phone-lines {
-    position: absolute;
-    top: 24px;
-    left: 10px;
-    right: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
+  .media-inner { text-align: center; color: #999999; font-size: 13px; line-height: 1.6; }
+  .media-shapes { display: flex; align-items: flex-end; justify-content: center; gap: 14px; margin: 0 auto 16px; }
+  .phone { width: 100px; height: 180px; border: 2px solid #C5C5C5; border-radius: 14px; position: relative; }
+  .phone::before { content: ''; position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 28px; height: 4px; background: #C5C5C5; border-radius: 2px; }
+  .phone-lines { position: absolute; top: 24px; left: 10px; right: 10px; display: flex; flex-direction: column; gap: 6px; }
   .phone-lines span { height: 5px; background: #E8E8E8; border-radius: 2px; }
   .phone-lines span:nth-child(1) { width: 60%; }
   .phone-lines span:nth-child(2) { width: 90%; }
   .phone-lines span:nth-child(3) { width: 75%; }
   .phone-lines span:nth-child(4) { width: 50%; }
   .phone-lines span:nth-child(5) { width: 80%; }
+  .tube { width: 32px; height: 85px; border: 2px solid #C5C5C5; border-radius: 6px 6px 16px 16px; }
+  .media-placeholder-note { font-style: italic; color: #999999; }
 
-  .tube {
-    width: 32px;
-    height: 85px;
-    border: 2px solid #C5C5C5;
-    border-radius: 6px 6px 16px 16px;
-  }
-
-  .media-placeholder-note {
-    font-style: italic;
-    color: #999999;
-  }
-
-  .card {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .badges {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    padding: 6px 12px;
-    background: #FFFFFF;
-    border: 1px solid #DDDDDD;
-    border-radius: 999px;
-    color: #6B6B6B;
-    font-weight: 500;
-  }
-
+  .card { display: flex; flex-direction: column; gap: 16px; }
+  .badges { display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; padding: 6px 12px; background: #FFFFFF; border: 1px solid #DDDDDD; border-radius: 999px; color: #6B6B6B; font-weight: 500; }
   .badge-icon { width: 14px; height: 14px; display: inline-block; }
 
-  /* Per-tab incentive callout */
-  .incentive {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    font-weight: 600;
-    color: #173404;
-    background: #DDEFC7;
-    padding: 6px 12px;
-    border-radius: 999px;
-    width: fit-content;
-  }
-
-  .incentive::before {
-    content: '';
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    border-radius: 999px;
-    background: #1D9E75;
-  }
+  .incentive { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: #173404; background: #DDEFC7; padding: 6px 12px; border-radius: 999px; width: fit-content; }
+  .incentive::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 999px; background: #1D9E75; }
 
   .price-row { padding: 4px 0 8px; }
+  .price-main { font-family: Georgia, 'Times New Roman', serif; font-size: 36px; font-weight: 400; margin: 0; line-height: 1.1; color: #1A1A1A; }
+  .price-unit { font-size: 18px; color: #6B6B6B; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+  .price-sub { font-size: 13px; color: #6B6B6B; margin-top: 8px; font-style: italic; }
 
-  .price-main {
-    font-family: Georgia, 'Times New Roman', serif;
-    font-size: 36px;
-    font-weight: 400;
-    margin: 0;
-    line-height: 1.1;
-    color: #1A1A1A;
-  }
-
-  .price-unit {
-    font-size: 18px;
-    color: #6B6B6B;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  }
-
-  .price-sub {
-    font-size: 13px;
-    color: #6B6B6B;
-    margin-top: 8px;
-    font-style: italic;
-  }
-
-  .billing {
-    display: flex;
-    gap: 4px;
-    background: #FFFFFF;
-    padding: 4px;
-    border-radius: 10px;
-    border: 1px solid #DDDDDD;
-  }
-
-  .billing button {
-    flex: 1;
-    border: none;
-    background: transparent;
-    padding: 10px 8px;
-    border-radius: 7px;
-    font-size: 13px;
-    cursor: pointer;
-    color: #6B6B6B;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    font-weight: 500;
-    transition: all 0.15s ease;
-  }
-
+  .billing { display: flex; gap: 4px; background: #FFFFFF; padding: 4px; border-radius: 10px; border: 1px solid #DDDDDD; }
+  .billing button { flex: 1; border: none; background: transparent; padding: 10px 8px; border-radius: 7px; font-size: 13px; cursor: pointer; color: #6B6B6B; display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 500; transition: all 0.15s ease; }
   .billing button.active { background: #E6F1FB; color: #0C447C; }
+  .save-badge { background: #C0DD97; color: #173404; font-size: 10px; padding: 2px 7px; border-radius: 999px; font-weight: 600; }
 
-  .save-badge {
-    background: #C0DD97;
-    color: #173404;
-    font-size: 10px;
-    padding: 2px 7px;
-    border-radius: 999px;
-    font-weight: 600;
-  }
+  .included { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+  .included li { font-size: 14px; color: #1A1A1A; display: flex; align-items: center; gap: 10px; }
+  .check { color: #1D9E75; font-weight: 700; font-size: 16px; flex-shrink: 0; }
 
-  .included {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .included li {
-    font-size: 14px;
-    color: #1A1A1A;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .check {
-    color: #1D9E75;
-    font-weight: 700;
-    font-size: 16px;
-    flex-shrink: 0;
-  }
-
-  /* Add-on subscription checkbox (One Time only) */
-  .addon {
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-    background: #FFFFFF;
-    border: 1.5px solid #DDDDDD;
-    border-radius: 12px;
-    padding: 14px;
-    cursor: pointer;
-    transition: border-color 0.15s ease, background 0.15s ease;
-    user-select: none;
-  }
-
+  .addon { display: flex; gap: 12px; align-items: flex-start; background: #FFFFFF; border: 1.5px solid #DDDDDD; border-radius: 12px; padding: 14px; cursor: pointer; transition: border-color 0.15s ease, background 0.15s ease; user-select: none; position: relative; }
   .addon:hover { border-color: #C5C5C5; }
-
-  .addon input[type="checkbox"] {
-    position: absolute;
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  .addon__box {
-    flex-shrink: 0;
-    width: 22px;
-    height: 22px;
-    border: 2px solid #C5C5C5;
-    border-radius: 6px;
-    background: #FFFFFF;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 1px;
-    transition: all 0.15s ease;
-  }
-
-  .addon__box::after {
-    content: '';
-    width: 10px;
-    height: 6px;
-    border-left: 2px solid #FFFFFF;
-    border-bottom: 2px solid #FFFFFF;
-    transform: rotate(-45deg) translate(1px, -1px);
-    opacity: 0;
-    transition: opacity 0.15s ease;
-  }
-
-  .addon input:checked ~ .addon__box {
-    background: #1D9E75;
-    border-color: #1D9E75;
-  }
-
+  .addon input[type="checkbox"] { position: absolute; opacity: 0; pointer-events: none; }
+  .addon__box { flex-shrink: 0; width: 22px; height: 22px; border: 2px solid #C5C5C5; border-radius: 6px; background: #FFFFFF; display: inline-flex; align-items: center; justify-content: center; margin-top: 1px; transition: all 0.15s ease; }
+  .addon__box::after { content: ''; width: 10px; height: 6px; border-left: 2px solid #FFFFFF; border-bottom: 2px solid #FFFFFF; transform: rotate(-45deg) translate(1px, -1px); opacity: 0; transition: opacity 0.15s ease; }
+  .addon input:checked ~ .addon__box { background: #1D9E75; border-color: #1D9E75; }
   .addon input:checked ~ .addon__box::after { opacity: 1; }
+  .addon:has(input:checked) { background: #F4FBF6; border-color: #1D9E75; }
+  .addon input:focus-visible ~ .addon__box { outline: 2px solid #185FA5; outline-offset: 2px; }
+  .addon__content { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  .addon__title { font-size: 14px; font-weight: 600; color: #1A1A1A; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .addon__save { background: #C0DD97; color: #173404; font-size: 10px; padding: 2px 7px; border-radius: 999px; font-weight: 700; letter-spacing: 0.02em; }
+  .addon__sub { font-size: 12px; color: #6B6B6B; line-height: 1.45; }
 
-  .addon:has(input:checked) {
-    background: #F4FBF6;
-    border-color: #1D9E75;
-  }
-
-  .addon input:focus-visible ~ .addon__box {
-    outline: 2px solid #185FA5;
-    outline-offset: 2px;
-  }
-
-  .addon__content {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    min-width: 0;
-  }
-
-  .addon__title {
-    font-size: 14px;
-    font-weight: 600;
-    color: #1A1A1A;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
-  .addon__save {
-    background: #C0DD97;
-    color: #173404;
-    font-size: 10px;
-    padding: 2px 7px;
-    border-radius: 999px;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-  }
-
-  .addon__sub {
-    font-size: 12px;
-    color: #6B6B6B;
-    line-height: 1.45;
-  }
-
-  .qty-cta {
-    display: flex;
-    gap: 14px;
-    align-items: center;
-    margin-top: 4px;
-  }
-
-  .qty {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: #FFFFFF;
-    border: 1px solid #DDDDDD;
-    border-radius: 999px;
-    padding: 4px 6px;
-  }
-
-  .qty button {
-    width: 30px;
-    height: 30px;
-    border-radius: 999px;
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    font-size: 16px;
-    color: #6B6B6B;
-    line-height: 1;
-  }
-
+  .qty-cta { display: flex; gap: 14px; align-items: center; margin-top: 4px; }
+  .qty { display: flex; align-items: center; gap: 8px; background: #FFFFFF; border: 1px solid #DDDDDD; border-radius: 999px; padding: 4px 6px; }
+  .qty button { width: 30px; height: 30px; border-radius: 999px; border: none; background: transparent; cursor: pointer; font-size: 16px; color: #6B6B6B; line-height: 1; }
   .qty button:hover { background: #F0F0F0; }
+  .qty span { font-size: 14px; min-width: 20px; text-align: center; font-weight: 500; }
 
-  .qty span {
-    font-size: 14px;
-    min-width: 20px;
-    text-align: center;
-    font-weight: 500;
-  }
-
-  .cta {
-    flex: 1;
-    background: #185FA5;
-    color: white;
-    border: none;
-    border-radius: 999px;
-    padding: 14px 20px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.15s ease;
-  }
-
+  .cta { flex: 1; background: #185FA5; color: white; border: none; border-radius: 999px; padding: 14px 20px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.15s ease; }
   .cta:hover { background: #0C447C; }
   .cta:focus-visible { outline: 2px solid #1A1A1A; outline-offset: 2px; }
+  .terms { font-size: 12px; color: #888888; line-height: 1.6; margin-top: 4px; }
 
-  .terms {
-    font-size: 12px;
-    color: #888888;
-    line-height: 1.6;
-    margin-top: 4px;
-  }
-
-  /* === Cart drawer === */
-
-  .cart-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(15, 18, 22, 0.5);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.25s ease;
-    z-index: 1000;
-  }
-
+  /* === Cart drawer (unchecked path only) === */
+  .cart-backdrop { position: fixed; inset: 0; background: rgba(15, 18, 22, 0.5); opacity: 0; pointer-events: none; transition: opacity 0.25s ease; z-index: 1000; }
   .cart-backdrop.open { opacity: 1; pointer-events: auto; }
-
-  .cart-drawer {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 420px;
-    max-width: 100vw;
-    background: #FFFFFF;
-    z-index: 1001;
-    transform: translateX(100%);
-    transition: transform 0.32s cubic-bezier(0.32, 0.72, 0, 1);
-    display: flex;
-    flex-direction: column;
-    box-shadow: -12px 0 36px rgba(0, 0, 0, 0.18);
-    pointer-events: none;
-  }
-
+  .cart-drawer { position: fixed; top: 0; right: 0; bottom: 0; width: 420px; max-width: 100vw; background: #FFFFFF; z-index: 1001; transform: translateX(100%); transition: transform 0.32s cubic-bezier(0.32, 0.72, 0, 1); display: flex; flex-direction: column; box-shadow: -12px 0 36px rgba(0, 0, 0, 0.18); pointer-events: none; }
   .cart-drawer.open { transform: translateX(0); pointer-events: auto; }
-
   .cart-drawer__handle { display: none; }
-
-  .cart-drawer__body {
-    flex: 1;
-    overflow-y: auto;
-    padding: 24px;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .scp-header {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 16px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid #EEEEEE;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .scp-close {
-    color: #999999;
-    cursor: pointer;
-    font-size: 22px;
-    line-height: 1;
-    background: transparent;
-    border: none;
-    padding: 0;
-    width: 36px;
-    height: 36px;
-    border-radius: 999px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.15s ease, color 0.15s ease;
-  }
-
+  .cart-drawer__body { flex: 1; overflow-y: auto; padding: 24px; -webkit-overflow-scrolling: touch; }
+  .scp-header { font-size: 16px; font-weight: 600; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #EEEEEE; display: flex; justify-content: space-between; align-items: center; }
+  .scp-close { color: #999999; cursor: pointer; font-size: 22px; line-height: 1; background: transparent; border: none; padding: 0; width: 36px; height: 36px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; transition: background 0.15s ease, color 0.15s ease; }
   .scp-close:hover { background: #F4F4F4; color: #1A1A1A; }
-  .scp-close:focus-visible { outline: 2px solid #185FA5; outline-offset: 2px; }
-
-  .scp-line {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 12px;
-    font-size: 14px;
-  }
-
+  .scp-line { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; font-size: 14px; }
   .scp-line .left { display: flex; flex-direction: column; gap: 4px; }
   .scp-line .item-name { font-weight: 600; }
   .scp-line .item-detail { font-size: 12px; color: #888888; }
+  .scp-totals { border-top: 1px solid #EEEEEE; padding-top: 14px; margin-top: 10px; }
+  .scp-total { display: flex; justify-content: space-between; font-size: 15px; font-weight: 600; }
+  .scp-checkout { background: #185FA5; color: white; border: none; border-radius: 999px; padding: 13px; font-size: 14px; font-weight: 600; cursor: pointer; width: 100%; margin-top: 18px; }
+  .scp-checkout:hover { background: #0C447C; }
 
-  .scp-sub {
-    background: #E1F5EE;
-    border: 1px solid #5DCAA5;
-    border-radius: 8px;
-    padding: 14px;
-    margin: 14px 0;
+  /* === Shopify-style checkout overlay === */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: #FFFFFF;
+    z-index: 1100;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(12px);
+    transition: opacity 0.28s ease, transform 0.28s ease;
+  }
+  .overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
   }
 
-  .scp-sub-top {
+  .co-header {
+    border-bottom: 1px solid #E8E8E8;
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #FFFFFF;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+
+  .co-brand {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: #1A1A1A;
+  }
+
+  .co-cart-icon {
+    width: 26px;
+    height: 26px;
+    color: #6B6B6B;
+  }
+
+  .co-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+
+  .co-form, .co-summary {
+    padding: 40px 48px;
+  }
+
+  .co-form { border-right: 1px solid #E8E8E8; }
+
+  .co-section { margin-bottom: 32px; }
+
+  .co-section__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .co-section__title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1A1A1A;
+  }
+
+  .co-section__link {
+    font-size: 13px;
+    color: #185FA5;
+    text-decoration: none;
+  }
+
+  .co-section__link:hover { text-decoration: underline; }
+
+  .co-field {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #D5D5D5;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #1A1A1A;
+    font-family: inherit;
+    background: #FFFFFF;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .co-field:focus {
+    border-color: #185FA5;
+    outline: none;
+    box-shadow: 0 0 0 1px #185FA5;
+  }
+
+  .co-field::placeholder { color: #B0B0B0; }
+
+  .co-row { display: flex; gap: 10px; margin-top: 10px; }
+  .co-row .co-field { flex: 1; min-width: 0; }
+  .co-field-stack > .co-field + .co-field { margin-top: 10px; }
+
+  .co-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+    font-size: 13px;
+    color: #6B6B6B;
+    cursor: pointer;
+  }
+
+  .co-checkbox input { width: 16px; height: 16px; accent-color: #185FA5; }
+
+  .co-method {
+    border: 1px solid #185FA5;
+    border-radius: 6px;
+    padding: 14px 16px;
+    background: #F4F8FC;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 13px;
-    font-weight: 600;
-    color: #04342C;
-    margin-bottom: 6px;
+    margin-top: 4px;
   }
 
-  .scp-sub-auto {
-    background: #1D9E75;
-    color: white;
-    font-size: 9px;
-    padding: 3px 7px;
+  .co-method__radio {
+    width: 18px;
+    height: 18px;
     border-radius: 999px;
-    margin-right: 8px;
-    font-weight: 600;
-    letter-spacing: 0.03em;
+    border: 5px solid #185FA5;
+    background: white;
+    flex-shrink: 0;
+    margin-right: 12px;
   }
 
-  .scp-sub-detail { font-size: 12px; color: #085041; line-height: 1.5; }
-  .scp-sub-price { font-size: 13px; font-weight: 600; color: #04342C; margin-top: 6px; }
+  .co-method__left { display: flex; align-items: center; gap: 0; font-size: 14px; color: #1A1A1A; font-weight: 500; }
+  .co-method__price { font-size: 14px; font-weight: 600; color: #1A1A1A; }
 
-  .scp-remove {
-    color: #04342C;
+  .co-payment-card {
+    background: #F4F4F4;
+    border-radius: 6px 6px 0 0;
+    padding: 14px 16px;
+    font-size: 13px;
+    color: #6B6B6B;
+    border: 1px solid #D5D5D5;
+    border-bottom: none;
+  }
+
+  .co-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 28px; flex-wrap: wrap; gap: 12px; }
+
+  .co-back-link {
+    font-size: 14px;
+    color: #185FA5;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
     cursor: pointer;
-    font-size: 20px;
-    line-height: 1;
     background: transparent;
     border: none;
     padding: 0;
-    width: 32px;
-    height: 32px;
+  }
+
+  .co-back-link:hover { text-decoration: underline; }
+
+  .co-place {
+    background: #185FA5;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 16px 28px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    min-width: 220px;
+  }
+
+  .co-place:hover { background: #0C447C; }
+  .co-place:disabled { background: #6B6B6B; cursor: progress; opacity: 0.85; }
+  .co-place:focus-visible { outline: 2px solid #1A1A1A; outline-offset: 2px; }
+
+  .co-summary-mobile-toggle {
+    display: none;
+    background: #FAFAFA;
+    border-bottom: 1px solid #E8E8E8;
+    padding: 14px 20px;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #185FA5;
+    cursor: pointer;
+    width: 100%;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    text-align: left;
+  }
+
+  .co-summary { background: #FAFAFA; }
+  .co-summary[hidden] { display: none; }
+
+  .co-summary-item { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 18px; }
+
+  .co-summary-img {
+    width: 56px; height: 56px;
+    background: #E8E8E8;
+    border-radius: 8px;
+    flex-shrink: 0;
+    position: relative;
+    border: 1px solid #D5D5D5;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 11px;
+  }
+
+  .co-summary-item__title { font-size: 14px; font-weight: 600; color: #1A1A1A; line-height: 1.3; }
+  .co-summary-item__sub { font-size: 12px; color: #888; margin-top: 2px; }
+  .co-summary-item__qty { flex: 1; }
+  .co-summary-item__price { font-size: 14px; color: #1A1A1A; font-weight: 500; white-space: nowrap; }
+
+  .co-summary-divider { border-top: 1px solid #E1E1E1; margin: 18px 0; }
+
+  .co-totals-row { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 8px; color: #1A1A1A; }
+  .co-totals-row--muted { color: #6B6B6B; }
+  .co-totals-row--discount { color: #1D9E75; font-weight: 600; }
+  .co-totals-row--total { font-size: 18px; font-weight: 700; margin-top: 12px; padding-top: 14px; border-top: 1px solid #E1E1E1; }
+  .co-totals-row--total small { font-size: 12px; font-weight: 500; color: #6B6B6B; margin-right: 4px; }
+
+  /* === Post-purchase overlay === */
+  .pp-wrap {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 40px 32px 80px;
+  }
+
+  .pp-head { text-align: center; margin-bottom: 28px; }
+
+  .pp-check-icon {
+    width: 56px; height: 56px;
+    background: #1D9E75; color: white;
     border-radius: 999px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
-    transition: background 0.15s ease;
+    font-size: 26px;
+    margin-bottom: 16px;
   }
 
-  .scp-remove:hover { background: rgba(4, 52, 44, 0.08); }
-  .scp-remove:focus-visible { outline: 2px solid #185FA5; outline-offset: 2px; }
+  .pp-eyebrow { font-size: 12px; color: #6B6B6B; letter-spacing: 0.06em; margin-bottom: 4px; }
+  .pp-title { font-family: Georgia, serif; font-size: 28px; font-weight: 400; margin-bottom: 8px; line-height: 1.25; }
+  .pp-sub { font-size: 14px; color: #6B6B6B; }
+  .pp-sub strong { color: #1A1A1A; }
 
-  .scp-totals {
-    border-top: 1px solid #EEEEEE;
-    padding-top: 14px;
-    margin-top: 10px;
+  .pp-card {
+    background: #FFFFFF;
+    border: 1px solid #E1E1E1;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 16px;
   }
 
-  .scp-row {
-    display: flex;
-    justify-content: space-between;
-    font-size: 13px;
-    color: #6B6B6B;
+  .pp-card__title { font-size: 15px; font-weight: 600; margin-bottom: 14px; color: #1A1A1A; }
+
+  .pp-upsell {
+    background: linear-gradient(180deg, #F8FBFD 0%, #F4FBF6 100%);
+    border: 1.5px solid #185FA5;
+    box-shadow: 0 6px 24px rgba(24, 95, 165, 0.08);
+  }
+
+  .pp-upsell__eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    color: #185FA5;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
     margin-bottom: 6px;
   }
 
-  .scp-row--discount { color: #1D9E75; font-weight: 600; }
+  .pp-upsell__title { font-family: Georgia, serif; font-size: 22px; line-height: 1.25; margin-bottom: 8px; color: #1A1A1A; }
+  .pp-upsell__body { font-size: 14px; color: #4A4A4A; margin-bottom: 18px; line-height: 1.5; }
 
-  .scp-total {
-    display: flex;
-    justify-content: space-between;
-    font-size: 15px;
-    font-weight: 600;
-    margin-top: 6px;
-  }
-
-  .scp-recurring-note { font-size: 11px; color: #888888; margin-top: 6px; line-height: 1.5; }
-
-  .scp-checkout {
-    background: #185FA5;
-    color: white;
-    border: none;
-    border-radius: 999px;
-    padding: 13px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    width: 100%;
-    margin-top: 18px;
-  }
-
-  .scp-checkout:hover { background: #0C447C; }
-  .scp-checkout:focus-visible { outline: 2px solid #1A1A1A; outline-offset: 2px; }
-
-  /* Upsell + confirmation drawer views */
-  .upsell-eyebrow {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    color: #185FA5;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-
-  .upsell-title {
-    font-family: Georgia, 'Times New Roman', serif;
-    font-size: 22px;
-    line-height: 1.25;
-    margin-bottom: 10px;
-    color: #1A1A1A;
-  }
-
-  .upsell-body {
-    font-size: 14px;
-    color: #4A4A4A;
-    margin-bottom: 16px;
-    line-height: 1.5;
-  }
-
-  .upsell-card {
-    background: #F8FBFD;
-    border: 1px solid #CFE0EF;
-    border-radius: 12px;
-    padding: 16px;
+  .pp-upsell__product {
+    background: #FFFFFF;
+    border: 1px solid #E1E1E1;
+    border-radius: 8px;
+    padding: 14px;
     margin-bottom: 18px;
-  }
-
-  .upsell-card__row {
     display: flex;
-    justify-content: space-between;
+    gap: 14px;
     align-items: flex-start;
-    gap: 12px;
   }
 
-  .upsell-card__title {
-    font-size: 14px;
-    font-weight: 600;
-    color: #1A1A1A;
-    margin-bottom: 4px;
-  }
-
-  .upsell-card__sub { font-size: 12px; color: #6B6B6B; line-height: 1.5; }
-
-  .upsell-card__price {
-    font-size: 14px;
-    font-weight: 600;
-    color: #1A1A1A;
-    white-space: nowrap;
-  }
-
-  .upsell-card__price small {
-    display: block;
+  .pp-upsell__thumb {
+    width: 64px;
+    height: 64px;
+    background: #E8E8E8;
+    border-radius: 6px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
     font-size: 11px;
-    font-weight: 500;
-    color: #888888;
-    margin-top: 2px;
   }
 
-  .upsell-accept {
+  .pp-upsell__name { font-size: 14px; font-weight: 600; color: #1A1A1A; }
+  .pp-upsell__detail { font-size: 12px; color: #6B6B6B; margin-top: 3px; line-height: 1.45; }
+  .pp-upsell__price { font-size: 15px; font-weight: 600; color: #1A1A1A; white-space: nowrap; }
+  .pp-upsell__price small { display: block; font-size: 11px; font-weight: 500; color: #888888; }
+
+  .pp-upsell__cta-row { display: flex; gap: 10px; align-items: center; }
+
+  .pp-upsell__accept {
+    flex: 1;
     background: #185FA5;
     color: white;
     border: none;
-    border-radius: 999px;
+    border-radius: 8px;
     padding: 14px;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-    width: 100%;
   }
 
-  .upsell-accept:hover { background: #0C447C; }
-  .upsell-accept:focus-visible { outline: 2px solid #1A1A1A; outline-offset: 2px; }
+  .pp-upsell__accept:hover { background: #0C447C; }
+  .pp-upsell__accept:disabled { background: #1D9E75; cursor: default; }
 
-  .upsell-decline {
+  .pp-upsell__decline {
     background: transparent;
-    color: #6B6B6B;
     border: none;
-    padding: 14px;
+    color: #6B6B6B;
+    padding: 14px 12px;
     font-size: 13px;
     cursor: pointer;
-    width: 100%;
-    margin-top: 4px;
     text-decoration: underline;
     text-underline-offset: 3px;
   }
 
-  .upsell-decline:hover { color: #1A1A1A; }
+  .pp-upsell__decline:hover { color: #1A1A1A; }
 
-  /* Confirmation view */
-  .confirm-check {
-    width: 56px;
-    height: 56px;
-    border-radius: 999px;
-    background: #1D9E75;
-    color: white;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 28px;
-    margin: 8px 0 14px;
-    line-height: 1;
-  }
-
-  .confirm-title {
-    font-family: Georgia, 'Times New Roman', serif;
-    font-size: 24px;
-    margin-bottom: 8px;
-    color: #1A1A1A;
-  }
-
-  .confirm-sub {
-    font-size: 14px;
-    color: #6B6B6B;
-    line-height: 1.5;
-    margin-bottom: 16px;
-  }
-
-  .confirm-summary {
-    background: #F4F4F4;
-    border-radius: 10px;
-    padding: 14px;
-    font-size: 13px;
-    color: #4A4A4A;
-    line-height: 1.5;
-    margin-bottom: 18px;
-    text-align: left;
-    width: 100%;
-  }
-
-  .confirm-summary strong { color: #1A1A1A; }
-
-  .confirm-summary__row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 6px;
-  }
-
-  .confirm-summary__row--discount { color: #1D9E75; font-weight: 600; }
-
-  .confirm-summary__total {
-    border-top: 1px solid #E1E1E1;
-    padding-top: 10px;
-    margin-top: 8px;
-    font-size: 15px;
-  }
-
-  .confirm-summary__note {
+  .pp-upsell__note {
     font-size: 11px;
-    color: #888888;
-    margin-top: 8px;
-    line-height: 1.5;
+    color: #888;
+    margin-top: 10px;
+    text-align: center;
     font-style: italic;
   }
 
-  .confirm-done {
+  .pp-upsell--added {
+    background: #F4FBF6;
+    border-color: #1D9E75;
+  }
+
+  .pp-row { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 8px; color: #1A1A1A; }
+  .pp-row--muted { color: #6B6B6B; }
+  .pp-row--discount { color: #1D9E75; font-weight: 600; }
+  .pp-row--total { font-size: 16px; font-weight: 700; margin-top: 10px; padding-top: 14px; border-top: 1px solid #E1E1E1; }
+
+  .pp-next { font-size: 13px; color: #6B6B6B; line-height: 1.6; }
+  .pp-next strong { color: #1A1A1A; }
+
+  .pp-done {
     background: #1A1A1A;
     color: white;
     border: none;
     border-radius: 999px;
-    padding: 14px;
+    padding: 14px 32px;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-    width: 100%;
+    display: block;
+    margin: 24px auto 0;
+    min-width: 220px;
   }
 
-  .confirm-done:hover { background: #000000; }
-
-  .view { display: flex; flex-direction: column; }
-  .view--center { align-items: center; text-align: center; }
+  .pp-done:hover { background: #000000; }
 
   .hidden { display: none !important; }
-
-  .footnote {
-    margin-top: 24px;
-    padding-top: 20px;
-    font-size: 12px;
-    color: #888888;
-    text-align: center;
-    border-top: 1px solid #D5D5D5;
-  }
 
   /* Tablet */
   @media (max-width: 1024px) and (min-width: 769px) {
@@ -849,9 +588,10 @@
     .section { padding: 48px 32px; }
     .grid { gap: 20px; }
     .media { min-height: 400px; }
+    .co-form, .co-summary { padding: 32px; }
   }
 
-  /* Mobile — content-first layout, offer above the fold */
+  /* Mobile */
   @media (max-width: 768px) {
     body { padding: 0; }
     .section { padding: 22px 18px 28px; border-radius: 0; }
@@ -862,8 +602,6 @@
     .primary-toggle { padding: 4px; }
     .primary-toggle button { padding: 11px 24px; min-height: 44px; font-size: 14px; }
     .recommended-tag { right: 14px; font-size: 10px; padding: 3px 8px; }
-
-    /* Stack + swap: offer card above the media on mobile */
     .grid { grid-template-columns: 1fr; gap: 16px; }
     .card { order: 1; gap: 12px; }
     .media { order: 2; min-height: 160px; padding: 16px; }
@@ -874,7 +612,6 @@
     .phone-lines span { height: 3px; }
     .tube { width: 22px; height: 56px; }
     .media-inner { font-size: 12px; }
-
     .badges { gap: 6px; }
     .badge { font-size: 12px; padding: 7px 11px; }
     .price-row { padding: 0 0 4px; }
@@ -894,35 +631,42 @@
     .cta { flex: 1 1 170px; min-height: 48px; font-size: 15px; padding: 13px 20px; }
     .terms { font-size: 11px; margin-top: 2px; }
 
-    /* Bottom sheet drawer */
-    .cart-drawer {
-      top: auto; right: 0; bottom: 0; left: 0;
-      width: 100%; max-width: 100%; max-height: 92vh;
-      border-radius: 16px 16px 0 0;
-      transform: translateY(100%);
-      box-shadow: 0 -10px 36px rgba(0, 0, 0, 0.18);
-    }
+    /* Drawer becomes bottom sheet */
+    .cart-drawer { top: auto; right: 0; bottom: 0; left: 0; width: 100%; max-width: 100%; max-height: 92vh; border-radius: 16px 16px 0 0; transform: translateY(100%); box-shadow: 0 -10px 36px rgba(0, 0, 0, 0.18); }
     .cart-drawer.open { transform: translateY(0); }
-    .cart-drawer__handle {
-      display: block; width: 40px; height: 4px;
-      background: #DDDDDD; border-radius: 999px;
-      margin: 10px auto 0; flex-shrink: 0;
-    }
+    .cart-drawer__handle { display: block; width: 40px; height: 4px; background: #DDDDDD; border-radius: 999px; margin: 10px auto 0; flex-shrink: 0; }
     .cart-drawer__body { padding: 16px 20px 20px; }
     .scp-close { width: 44px; height: 44px; font-size: 24px; }
-    .scp-remove { width: 44px; height: 44px; font-size: 22px; }
-    .scp-checkout, .upsell-accept, .confirm-done { padding: 14px; min-height: 48px; font-size: 14px; }
-    .upsell-title { font-size: 20px; }
-    .confirm-title { font-size: 22px; }
+    .scp-checkout { padding: 14px; min-height: 48px; font-size: 14px; }
 
-    .footnote { font-size: 11px; margin-top: 14px; padding-top: 12px; line-height: 1.5; }
+    /* Shopify checkout mobile */
+    .co-header { padding: 14px 18px; }
+    .co-brand { font-size: 19px; }
+    .co-grid { grid-template-columns: 1fr; }
+    .co-summary-mobile-toggle { display: flex; }
+    .co-summary { padding: 18px 18px 24px; border-top: 1px solid #E8E8E8; }
+    .co-form { padding: 18px; border-right: none; }
+    .co-section { margin-bottom: 24px; }
+    .co-section__title { font-size: 16px; }
+    .co-actions { flex-direction: column-reverse; gap: 14px; align-items: stretch; }
+    .co-place { width: 100%; padding: 14px; font-size: 15px; min-height: 48px; }
+    .co-back-link { align-self: center; padding: 8px; min-height: 44px; display: inline-flex; align-items: center; }
+
+    /* Post-purchase mobile */
+    .pp-wrap { padding: 24px 16px 60px; }
+    .pp-title { font-size: 22px; }
+    .pp-card { padding: 18px; }
+    .pp-upsell__title { font-size: 19px; }
+    .pp-upsell__cta-row { flex-direction: column; gap: 6px; }
+    .pp-upsell__accept { width: 100%; min-height: 48px; }
+    .pp-upsell__decline { padding: 12px; }
+    .pp-done { width: 100%; min-height: 48px; }
   }
 
-  /* Very narrow */
   @media (max-width: 360px) {
-    .section { padding: 28px 16px; }
-    .headline { font-size: 26px; }
-    .primary-toggle button { padding: 12px 22px; font-size: 13px; }
+    .section { padding: 20px 14px 24px; }
+    .headline { font-size: 22px; }
+    .primary-toggle button { padding: 11px 20px; font-size: 13px; }
     .recommended-tag { right: 10px; }
   }
 
@@ -961,18 +705,9 @@
 
     <div class="card">
       <div class="badges">
-        <span class="badge">
-          <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2L4 6v6c0 5 4 9 8 10 4-1 8-5 8-10V6l-8-4z"/><path d="M9 12l2 2 4-4"/></svg>
-          Money Back
-        </span>
-        <span class="badge">
-          <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="1" y="6" width="15" height="11"/><path d="M16 11h4l3 3v3h-7"/><circle cx="6" cy="19" r="2"/><circle cx="19" cy="19" r="2"/></svg>
-          Free Shipping
-        </span>
-        <span class="badge">
-          <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M13 2L3 14h7v8l10-12h-7V2z"/></svg>
-          Ships Fast
-        </span>
+        <span class="badge"><svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2L4 6v6c0 5 4 9 8 10 4-1 8-5 8-10V6l-8-4z"/><path d="M9 12l2 2 4-4"/></svg>Money Back</span>
+        <span class="badge"><svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="1" y="6" width="15" height="11"/><path d="M16 11h4l3 3v3h-7"/><circle cx="6" cy="19" r="2"/><circle cx="19" cy="19" r="2"/></svg>Free Shipping</span>
+        <span class="badge"><svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M13 2L3 14h7v8l10-12h-7V2z"/></svg>Ships Fast</span>
       </div>
 
       <span class="incentive" id="incentive"></span>
@@ -993,10 +728,7 @@
         <input type="checkbox" id="addon-checkbox">
         <span class="addon__box" aria-hidden="true"></span>
         <span class="addon__content">
-          <span class="addon__title">
-            Add Quarterly Refills
-            <span class="addon__save">Save $30 today</span>
-          </span>
+          <span class="addon__title">Add Quarterly Refills <span class="addon__save">Save $30 today</span></span>
           <span class="addon__sub">3 Feno Foam + 1 TrueFit Mouthpiece every 90 days. $65/quarter after, cancel anytime.</span>
         </span>
       </label>
@@ -1011,17 +743,13 @@
       <p class="terms" id="terms"></p>
     </div>
   </div>
-
-  <div class="footnote">Variant for ~20% traffic split test. Add-on subscription + post-purchase upsell wrapped behind feature flag (disable without redeploy).</div>
 </div>
 
+<!-- Cart drawer (only shown when sub is unchecked + Add to Cart) -->
 <div class="cart-backdrop" id="cart-backdrop" aria-hidden="true"></div>
-
 <aside class="cart-drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title" aria-hidden="true" tabindex="-1">
   <div class="cart-drawer__handle" aria-hidden="true"></div>
-
-  <!-- View 1: Cart -->
-  <div class="cart-drawer__body view" id="view-cart">
+  <div class="cart-drawer__body">
     <div class="scp-header">
       <span id="cart-title">Your Cart</span>
       <button type="button" class="scp-close" id="cart-close" aria-label="Close cart">×</button>
@@ -1033,90 +761,204 @@
       </div>
       <span>$299</span>
     </div>
-    <div class="scp-sub" id="scp-sub">
-      <div class="scp-sub-top">
-        <span><span class="scp-sub-auto">Added</span>Quarterly Refills</span>
-        <button type="button" class="scp-remove" id="scp-sub-remove" aria-label="Remove quarterly refills">×</button>
-      </div>
-      <div class="scp-sub-detail">3 Feno Foam tubes + 1 TrueFit Mouthpiece, shipped every 90 days. Cancel anytime.</div>
-      <div class="scp-sub-price">$65 / quarter · First charge in 90 days</div>
-    </div>
     <div class="scp-totals">
-      <div class="scp-row" id="scp-row-subtotal"><span>Subtotal</span><span>$299</span></div>
-      <div class="scp-row scp-row--discount" id="scp-row-discount"><span>First-order bonus</span><span>−$30</span></div>
-      <div class="scp-total">
-        <span>Today</span>
-        <span id="scp-total-today">$299</span>
-      </div>
-      <div class="scp-recurring-note" id="scp-recurring-note">Then $65 every 90 days, starting 90 days from today.</div>
+      <div class="scp-total"><span>Today</span><span>$299</span></div>
     </div>
     <button class="scp-checkout" type="button" id="cart-checkout">Checkout</button>
   </div>
-
-  <!-- View 2: Post-purchase upsell -->
-  <div class="cart-drawer__body view hidden" id="view-upsell">
-    <div class="scp-header">
-      <span>One last thing</span>
-      <button type="button" class="scp-close" id="upsell-close" aria-label="Close">×</button>
-    </div>
-    <p class="upsell-eyebrow">One-click add</p>
-    <h2 class="upsell-title">Want refills handled for you?</h2>
-    <p class="upsell-body">Your SmartBrush works best with fresh foam and a clean mouthpiece. Add Quarterly Refills now — no checkout, no card re-entry.</p>
-    <div class="upsell-card">
-      <div class="upsell-card__row">
-        <div>
-          <div class="upsell-card__title">Quarterly Refills</div>
-          <div class="upsell-card__sub">3 Feno Foam · 1 TrueFit Mouthpiece<br>Ships every 90 days · Cancel anytime</div>
-        </div>
-        <div class="upsell-card__price">
-          $65<small>per quarter</small>
-        </div>
-      </div>
-    </div>
-    <button class="upsell-accept" type="button" id="upsell-accept">Yes, add to my order</button>
-    <button class="upsell-decline" type="button" id="upsell-decline">No thanks, I'll order refills later</button>
-  </div>
-
-  <!-- View 3: Confirmation -->
-  <div class="cart-drawer__body view view--center hidden" id="view-confirm">
-    <div class="scp-header" style="width:100%">
-      <span>Order confirmed</span>
-      <button type="button" class="scp-close" id="confirm-close" aria-label="Close">×</button>
-    </div>
-    <div class="confirm-check" aria-hidden="true">✓</div>
-    <h2 class="confirm-title">You're all set</h2>
-    <p class="confirm-sub" id="confirm-sub">Your SmartBrush ships in 2 business days. We'll email tracking shortly.</p>
-    <div class="confirm-summary" id="confirm-summary"></div>
-    <button class="confirm-done" type="button" id="confirm-done">Done</button>
-  </div>
 </aside>
 
+<!-- Shopify-style checkout overlay -->
+<section class="overlay" id="checkout-overlay" role="dialog" aria-modal="true" aria-labelledby="checkout-title" aria-hidden="true">
+  <header class="co-header">
+    <span class="co-brand">FENO</span>
+    <svg class="co-cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 6h15l-1.5 9h-12L5 3H2"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/></svg>
+  </header>
+
+  <button type="button" class="co-summary-mobile-toggle" id="co-summary-toggle" aria-expanded="false" aria-controls="co-summary">
+    <span><span id="co-summary-toggle-text">Show order summary</span> ▾</span>
+    <strong id="co-summary-toggle-price">$0.00</strong>
+  </button>
+
+  <div class="co-grid">
+    <div class="co-form">
+      <h2 id="checkout-title" class="hidden">Checkout</h2>
+
+      <section class="co-section">
+        <div class="co-section__head">
+          <span class="co-section__title">Contact</span>
+          <a href="#" class="co-section__link" tabindex="-1">Log in</a>
+        </div>
+        <input type="email" class="co-field" placeholder="Email" autocomplete="email">
+        <label class="co-checkbox"><input type="checkbox" checked> Email me with news and offers</label>
+      </section>
+
+      <section class="co-section">
+        <div class="co-section__head">
+          <span class="co-section__title">Delivery</span>
+        </div>
+        <input type="text" class="co-field" placeholder="Country/Region" value="United States" readonly>
+        <div class="co-row" style="margin-top:10px">
+          <input type="text" class="co-field" placeholder="First name">
+          <input type="text" class="co-field" placeholder="Last name">
+        </div>
+        <div class="co-field-stack" style="margin-top:10px">
+          <input type="text" class="co-field" placeholder="Address" autocomplete="street-address">
+          <input type="text" class="co-field" placeholder="Apartment, suite, etc. (optional)">
+        </div>
+        <div class="co-row">
+          <input type="text" class="co-field" placeholder="City">
+          <input type="text" class="co-field" placeholder="State">
+          <input type="text" class="co-field" placeholder="ZIP code" inputmode="numeric">
+        </div>
+      </section>
+
+      <section class="co-section">
+        <div class="co-section__head"><span class="co-section__title">Shipping method</span></div>
+        <div class="co-method">
+          <div class="co-method__left">
+            <span class="co-method__radio" aria-hidden="true"></span>
+            Free Shipping (2–4 business days)
+          </div>
+          <span class="co-method__price">FREE</span>
+        </div>
+      </section>
+
+      <section class="co-section">
+        <div class="co-section__head"><span class="co-section__title">Payment</span></div>
+        <div class="co-payment-card">All transactions are secure and encrypted</div>
+        <input type="text" class="co-field" style="border-radius: 0; border-top: none;" placeholder="Card number" inputmode="numeric">
+        <div class="co-row" style="margin-top: 0">
+          <input type="text" class="co-field" style="border-radius: 0 0 0 6px; border-top: none;" placeholder="Expiration (MM/YY)" inputmode="numeric">
+          <input type="text" class="co-field" style="border-radius: 0 0 6px 0; border-top: none; border-left: none;" placeholder="Security code" inputmode="numeric">
+        </div>
+        <input type="text" class="co-field" style="margin-top: 10px" placeholder="Name on card">
+      </section>
+
+      <div class="co-actions">
+        <button type="button" class="co-back-link" id="co-back">← Return to cart</button>
+        <button type="button" class="co-place" id="co-place">Place order</button>
+      </div>
+    </div>
+
+    <aside class="co-summary" id="co-summary">
+      <div class="co-summary-item" id="co-item-bundle">
+        <div class="co-summary-img" aria-hidden="true">img</div>
+        <div class="co-summary-item__qty">
+          <div class="co-summary-item__title">SmartBrush Bundle</div>
+          <div class="co-summary-item__sub">3 Feno Foam · 1 TrueFit Mouthpiece</div>
+        </div>
+        <div class="co-summary-item__price">$299.00</div>
+      </div>
+      <div class="co-summary-item" id="co-item-sub">
+        <div class="co-summary-img" aria-hidden="true">sub</div>
+        <div class="co-summary-item__qty">
+          <div class="co-summary-item__title">Quarterly Refills <span class="addon__save" style="margin-left:4px">Sub</span></div>
+          <div class="co-summary-item__sub">$65 every 90 days · First charge in 90 days</div>
+        </div>
+        <div class="co-summary-item__price">$0.00<br><small style="font-size:11px;color:#888">today</small></div>
+      </div>
+
+      <div class="co-summary-divider"></div>
+
+      <div class="co-totals-row co-totals-row--muted"><span>Subtotal · 1 item</span><span id="co-subtotal">$299.00</span></div>
+      <div class="co-totals-row co-totals-row--discount" id="co-discount-row"><span>First-order bonus</span><span>−$30.00</span></div>
+      <div class="co-totals-row co-totals-row--muted"><span>Shipping</span><span>FREE</span></div>
+      <div class="co-totals-row co-totals-row--total"><span><small>USD</small>Total</span><span id="co-total">$299.00</span></div>
+    </aside>
+  </div>
+</section>
+
+<!-- Post-purchase overlay -->
+<section class="overlay" id="post-purchase-overlay" role="dialog" aria-modal="true" aria-labelledby="pp-title" aria-hidden="true">
+  <header class="co-header">
+    <span class="co-brand">FENO</span>
+  </header>
+
+  <div class="pp-wrap">
+    <div class="pp-head">
+      <div class="pp-check-icon" aria-hidden="true">✓</div>
+      <p class="pp-eyebrow">Order <span id="pp-order-no">#FEN-1042</span></p>
+      <h1 class="pp-title" id="pp-title">Thank you — your order is confirmed</h1>
+      <p class="pp-sub">Confirmation email sent to <strong id="pp-email">your address</strong>. SmartBrush ships in 2 business days.</p>
+    </div>
+
+    <!-- Upsell card: only shown for orders WITHOUT the subscription -->
+    <div class="pp-card pp-upsell" id="pp-upsell-card">
+      <p class="pp-upsell__eyebrow">One last thing · one-click add</p>
+      <h2 class="pp-upsell__title">Want refills handled automatically?</h2>
+      <p class="pp-upsell__body">Add Quarterly Refills to this order — no second checkout, no re-entering your card.</p>
+
+      <div class="pp-upsell__product">
+        <div class="pp-upsell__thumb" aria-hidden="true">img</div>
+        <div style="flex:1;min-width:0">
+          <div class="pp-upsell__name">Quarterly Refills</div>
+          <div class="pp-upsell__detail">3 Feno Foam · 1 TrueFit Mouthpiece<br>Ships every 90 days · Cancel anytime</div>
+        </div>
+        <div class="pp-upsell__price">$65<small>per quarter</small></div>
+      </div>
+
+      <div class="pp-upsell__cta-row">
+        <button type="button" class="pp-upsell__accept" id="pp-upsell-accept">Add to my order</button>
+        <button type="button" class="pp-upsell__decline" id="pp-upsell-decline">No thanks</button>
+      </div>
+      <p class="pp-upsell__note">Charged with your existing payment method. First charge in 90 days.</p>
+    </div>
+
+    <div class="pp-card" id="pp-summary-card">
+      <p class="pp-card__title">Order summary</p>
+      <div id="pp-summary"></div>
+    </div>
+
+    <div class="pp-card">
+      <p class="pp-card__title">What's next</p>
+      <p class="pp-next" id="pp-next">Your <strong>SmartBrush</strong> ships in 2 business days. Track it from the Feno app.</p>
+    </div>
+
+    <button type="button" class="pp-done" id="pp-done">Continue browsing</button>
+  </div>
+</section>
+
 <script>
+  // --- State
   let primary = 'membership';
   let billing = 'monthly';
-  let subInCart = false;
-  let discountApplied = false;
-  let view = 'cart';
+  let subAtDecision = false;     // committed at decision time via the checkbox
+  let subAdded = false;          // sub is on the order (either from checkbox or upsell-accept)
+  let discountApplied = false;   // $30 first-order bonus active
   let lastFocused = null;
 
-  const drawer = document.getElementById('cart-drawer');
-  const backdrop = document.getElementById('cart-backdrop');
+  // --- Refs
   const addonToggle = document.getElementById('addon-toggle');
   const addonCheckbox = document.getElementById('addon-checkbox');
   const incentive = document.getElementById('incentive');
 
-  const scpSub = document.getElementById('scp-sub');
-  const scpRecurring = document.getElementById('scp-recurring-note');
-  const scpRowSubtotal = document.getElementById('scp-row-subtotal');
-  const scpRowDiscount = document.getElementById('scp-row-discount');
-  const scpTotalToday = document.getElementById('scp-total-today');
+  const drawer = document.getElementById('cart-drawer');
+  const backdrop = document.getElementById('cart-backdrop');
+  const cartCloseBtn = document.getElementById('cart-close');
+  const cartCheckoutBtn = document.getElementById('cart-checkout');
 
-  const viewCart = document.getElementById('view-cart');
-  const viewUpsell = document.getElementById('view-upsell');
-  const viewConfirm = document.getElementById('view-confirm');
-  const confirmSummary = document.getElementById('confirm-summary');
-  const confirmSub = document.getElementById('confirm-sub');
+  const coOverlay = document.getElementById('checkout-overlay');
+  const coBackBtn = document.getElementById('co-back');
+  const coPlaceBtn = document.getElementById('co-place');
+  const coItemSub = document.getElementById('co-item-sub');
+  const coDiscountRow = document.getElementById('co-discount-row');
+  const coSubtotal = document.getElementById('co-subtotal');
+  const coTotal = document.getElementById('co-total');
+  const coSummary = document.getElementById('co-summary');
+  const coSummaryToggle = document.getElementById('co-summary-toggle');
+  const coSummaryToggleText = document.getElementById('co-summary-toggle-text');
+  const coSummaryTogglePrice = document.getElementById('co-summary-toggle-price');
 
+  const ppOverlay = document.getElementById('post-purchase-overlay');
+  const ppDone = document.getElementById('pp-done');
+  const ppUpsellCard = document.getElementById('pp-upsell-card');
+  const ppUpsellAccept = document.getElementById('pp-upsell-accept');
+  const ppUpsellDecline = document.getElementById('pp-upsell-decline');
+  const ppSummary = document.getElementById('pp-summary');
+  const ppNext = document.getElementById('pp-next');
+
+  // --- Tabs / billing / addon
   function setPrimary(val) {
     primary = val;
     const onetime = document.getElementById('tab-onetime');
@@ -1135,153 +977,209 @@
     render();
   }
 
-  function openDrawer(initialView) {
-    view = initialView;
-    if (view === 'cart') renderCart();
-    else if (view === 'upsell') showView();
-    else if (view === 'confirm') renderConfirm(subInCart);
+  addonCheckbox.addEventListener('change', render);
+
+  // --- Cart drawer (unchecked path)
+  function openCart() {
     lastFocused = document.activeElement;
     drawer.classList.add('open');
     backdrop.classList.add('open');
     drawer.setAttribute('aria-hidden', 'false');
-    document.body.classList.add('cart-open');
-    window.requestAnimationFrame(() => {
-      const activeView = document.getElementById('view-' + view);
-      const firstFocus = activeView && activeView.querySelector('.scp-close, button:not([disabled])');
-      if (firstFocus) firstFocus.focus();
-    });
+    document.body.classList.add('lock-scroll');
+    window.requestAnimationFrame(() => cartCloseBtn.focus());
   }
 
-  function closeCart() {
-    if (!drawer.classList.contains('open')) return;
+  function closeCart(restoreFocus = true) {
     drawer.classList.remove('open');
     backdrop.classList.remove('open');
     drawer.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('cart-open');
+    document.body.classList.remove('lock-scroll');
+    if (restoreFocus && lastFocused && typeof lastFocused.focus === 'function') {
+      lastFocused.focus();
+    }
+  }
+
+  cartCloseBtn.addEventListener('click', () => closeCart(true));
+  backdrop.addEventListener('click', () => closeCart(true));
+  cartCheckoutBtn.addEventListener('click', () => {
+    closeCart(false);
+    openCheckout();
+  });
+
+  // --- Shopify-style checkout overlay
+  function openCheckout() {
+    renderCheckoutSummary();
+    coOverlay.classList.add('open');
+    coOverlay.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('lock-scroll');
+    window.scrollTo(0, 0);
+    coOverlay.scrollTop = 0;
+    window.requestAnimationFrame(() => {
+      const firstField = coOverlay.querySelector('.co-field');
+      if (firstField) firstField.focus();
+    });
+  }
+
+  function closeCheckout(restoreFocus = true) {
+    coOverlay.classList.remove('open');
+    coOverlay.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('lock-scroll');
+    coPlaceBtn.disabled = false;
+    coPlaceBtn.textContent = 'Place order';
+    if (restoreFocus && lastFocused && typeof lastFocused.focus === 'function') {
+      lastFocused.focus();
+    }
+  }
+
+  function renderCheckoutSummary() {
+    // Show/hide subscription line based on commitment
+    if (subAtDecision) {
+      coItemSub.classList.remove('hidden');
+      coDiscountRow.classList.remove('hidden');
+      coSubtotal.textContent = '$299.00';
+      coTotal.textContent = '$269.00';
+      coSummaryTogglePrice.textContent = '$269.00';
+    } else {
+      coItemSub.classList.add('hidden');
+      coDiscountRow.classList.add('hidden');
+      coSubtotal.textContent = '$299.00';
+      coTotal.textContent = '$299.00';
+      coSummaryTogglePrice.textContent = '$299.00';
+    }
+  }
+
+  coBackBtn.addEventListener('click', () => {
+    closeCheckout(false);
+    // If the user came through the cart (unchecked path), re-open it
+    if (!subAtDecision) {
+      openCart();
+    } else if (lastFocused && typeof lastFocused.focus === 'function') {
+      lastFocused.focus();
+    }
+  });
+
+  coPlaceBtn.addEventListener('click', () => {
+    coPlaceBtn.disabled = true;
+    coPlaceBtn.textContent = 'Processing…';
+    window.setTimeout(() => {
+      closeCheckout(false);
+      openPostPurchase();
+    }, 1100);
+  });
+
+  // Mobile summary expander
+  coSummaryToggle.addEventListener('click', () => {
+    const expanded = coSummaryToggle.getAttribute('aria-expanded') === 'true';
+    coSummaryToggle.setAttribute('aria-expanded', String(!expanded));
+    coSummary.hidden = expanded;
+    coSummaryToggleText.textContent = expanded ? 'Show order summary' : 'Hide order summary';
+  });
+
+  function syncMobileSummaryDefault() {
+    if (window.matchMedia('(max-width: 768px)').matches) {
+      coSummary.hidden = true;
+      coSummaryToggle.setAttribute('aria-expanded', 'false');
+      coSummaryToggleText.textContent = 'Show order summary';
+    } else {
+      coSummary.hidden = false;
+    }
+  }
+
+  window.addEventListener('resize', syncMobileSummaryDefault);
+
+  // --- Post-purchase overlay
+  function openPostPurchase() {
+    subAdded = subAtDecision;
+    discountApplied = subAtDecision;
+    renderPostPurchase();
+    ppOverlay.classList.add('open');
+    ppOverlay.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('lock-scroll');
+    ppOverlay.scrollTop = 0;
+    window.requestAnimationFrame(() => ppDone.focus({ preventScroll: true }));
+  }
+
+  function closePostPurchase() {
+    ppOverlay.classList.remove('open');
+    ppOverlay.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('lock-scroll');
+    // Reset upsell visual state for next session
+    ppUpsellAccept.disabled = false;
+    ppUpsellAccept.textContent = 'Add to my order';
+    ppUpsellCard.classList.remove('pp-upsell--added');
     if (lastFocused && typeof lastFocused.focus === 'function') {
       lastFocused.focus();
     }
   }
 
-  function removeSub() {
-    subInCart = false;
-    renderCart();
-  }
+  function renderPostPurchase() {
+    // Upsell card visibility
+    ppUpsellCard.classList.toggle('hidden', subAdded);
 
-  function handleCtaClick() {
-    if (primary !== 'onetime') return;
-    subInCart = addonCheckbox.checked;
-    discountApplied = subInCart; // $30 only when sub is committed at decision time
-    openDrawer(subInCart ? 'confirm' : 'cart');
-  }
+    // Build order summary
+    let html = '';
+    html += '<div class="pp-row"><span>SmartBrush Bundle</span><span>$299.00</span></div>';
+    if (subAdded) {
+      html += '<div class="pp-row pp-row--muted"><span>Quarterly Refills · $65/qtr</span><span>—</span></div>';
+    }
+    if (discountApplied) {
+      html += '<div class="pp-row pp-row--discount"><span>First-order bonus</span><span>−$30.00</span></div>';
+    }
+    html += '<div class="pp-row pp-row--muted"><span>Shipping</span><span>Free</span></div>';
+    const total = discountApplied ? '$269.00' : '$299.00';
+    html += '<div class="pp-row pp-row--total"><span>Charged today</span><span>' + total + '</span></div>';
+    ppSummary.innerHTML = html;
 
-  function handleCheckout() {
-    if (subInCart) {
-      view = 'confirm';
-      renderConfirm(true);
+    // "What's next" copy
+    if (subAdded) {
+      ppNext.innerHTML = 'Your <strong>SmartBrush</strong> ships in 2 business days. Your first <strong>Quarterly Refill</strong> ships in 90 days. Manage shipments from the Feno app — cancel anytime.';
     } else {
-      view = 'upsell';
-      showView();
-      window.requestAnimationFrame(() => document.getElementById('upsell-accept').focus());
+      ppNext.innerHTML = 'Your <strong>SmartBrush</strong> ships in 2 business days. Track it from the Feno app.';
     }
   }
 
-  // Update CTA copy + price when the addon checkbox flips.
-  addonCheckbox.addEventListener('change', render);
+  // Upsell on the post-purchase page (one-click, no checkout)
+  ppUpsellAccept.addEventListener('click', () => {
+    subAdded = true;
+    // No discount on the post-purchase upsell — it's a regret-recovery offer at full price.
+    renderPostPurchase();
+    ppUpsellAccept.disabled = true;
+    ppUpsellAccept.textContent = '✓ Added to your order';
+    ppUpsellCard.classList.add('pp-upsell--added');
+  });
 
-  function acceptUpsell() {
-    subInCart = true;
-    view = 'confirm';
-    renderConfirm(true);
-  }
+  ppUpsellDecline.addEventListener('click', () => {
+    ppUpsellCard.classList.add('hidden');
+  });
 
-  function declineUpsell() {
-    view = 'confirm';
-    renderConfirm(false);
-  }
+  ppDone.addEventListener('click', closePostPurchase);
 
-  function showView() {
-    viewCart.classList.toggle('hidden', view !== 'cart');
-    viewUpsell.classList.toggle('hidden', view !== 'upsell');
-    viewConfirm.classList.toggle('hidden', view !== 'confirm');
-  }
-
-  function renderCart() {
-    if (subInCart) {
-      scpSub.style.display = '';
-      scpRecurring.style.display = '';
-      scpRowSubtotal.style.display = '';
-      scpRowDiscount.style.display = '';
-      scpTotalToday.textContent = '$269';
-    } else {
-      scpSub.style.display = 'none';
-      scpRecurring.style.display = 'none';
-      scpRowSubtotal.style.display = 'none';
-      scpRowDiscount.style.display = 'none';
-      scpTotalToday.textContent = '$299';
-    }
-    showView();
-  }
-
-  function renderConfirm(withSub) {
-    if (withSub && discountApplied) {
-      confirmSub.textContent = 'SmartBrush ships in 2 business days. First refill ships in 90 days.';
-      confirmSummary.innerHTML =
-        '<div class="confirm-summary__row"><span>SmartBrush Bundle</span><span>$299</span></div>' +
-        '<div class="confirm-summary__row confirm-summary__row--discount"><span>First-order bonus</span><span>−$30</span></div>' +
-        '<div class="confirm-summary__row confirm-summary__total"><strong>Charged today</strong><strong>$269</strong></div>' +
-        '<div class="confirm-summary__note">Quarterly Refills: $65 every 90 days, starting in 90 days. Cancel anytime.</div>';
-    } else if (withSub) {
-      confirmSub.textContent = 'SmartBrush ships in 2 business days. First refill ships in 90 days.';
-      confirmSummary.innerHTML =
-        '<div class="confirm-summary__row"><span>SmartBrush Bundle</span><span>$299</span></div>' +
-        '<div class="confirm-summary__row confirm-summary__total"><strong>Charged today</strong><strong>$299</strong></div>' +
-        '<div class="confirm-summary__note">Quarterly Refills added. First charge of $65 in 90 days, then every 90 days. Cancel anytime.</div>';
-    } else {
-      confirmSub.textContent = 'SmartBrush ships in 2 business days. We\'ll email tracking shortly.';
-      confirmSummary.innerHTML =
-        '<div class="confirm-summary__row"><span>SmartBrush Bundle</span><span>$299</span></div>' +
-        '<div class="confirm-summary__row confirm-summary__total"><strong>Charged today</strong><strong>$299</strong></div>' +
-        '<div class="confirm-summary__note">Add refills anytime from your Feno account.</div>';
-    }
-    showView();
-  }
-
-  document.getElementById('cart-close').addEventListener('click', closeCart);
-  document.getElementById('upsell-close').addEventListener('click', closeCart);
-  document.getElementById('confirm-close').addEventListener('click', closeCart);
-  document.getElementById('scp-sub-remove').addEventListener('click', removeSub);
-  document.getElementById('cart-checkout').addEventListener('click', handleCheckout);
-  document.getElementById('upsell-accept').addEventListener('click', acceptUpsell);
-  document.getElementById('upsell-decline').addEventListener('click', declineUpsell);
-  document.getElementById('confirm-done').addEventListener('click', closeCart);
-  backdrop.addEventListener('click', closeCart);
-
+  // Close overlays with Esc
   document.addEventListener('keydown', (e) => {
-    if (!drawer.classList.contains('open')) return;
-    if (e.key === 'Escape') {
-      e.preventDefault();
-      closeCart();
-      return;
-    }
-    if (e.key === 'Tab') {
-      const active = view === 'cart' ? viewCart : view === 'upsell' ? viewUpsell : viewConfirm;
-      const focusables = Array.from(
-        active.querySelectorAll('button:not([disabled]), [tabindex]:not([tabindex="-1"])')
-      ).filter((el) => el.offsetParent !== null);
-      if (!focusables.length) return;
-      const first = focusables[0];
-      const last = focusables[focusables.length - 1];
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
-      }
+    if (e.key !== 'Escape') return;
+    if (ppOverlay.classList.contains('open')) {
+      closePostPurchase();
+    } else if (coOverlay.classList.contains('open')) {
+      closeCheckout(true);
+    } else if (drawer.classList.contains('open')) {
+      closeCart(true);
     }
   });
 
+  // --- CTA routing
+  function handleCtaClick() {
+    if (primary !== 'onetime') return; // Membership flow not wired
+    lastFocused = document.activeElement;
+    subAtDecision = addonCheckbox.checked;
+    if (subAtDecision) {
+      // Skip cart, go straight to Shopify-style checkout
+      openCheckout();
+    } else {
+      openCart();
+    }
+  }
+
+  // --- Main render
   function render() {
     const billingEl = document.getElementById('billing');
     const amount = document.getElementById('price-amount');
@@ -1314,15 +1212,16 @@
       amount.textContent = '$299';
       unit.textContent = '';
       sub.textContent = 'SmartBrush bundle. Yours to keep, no recurring charges.';
-      incentive.textContent = addonCheckbox.checked ? '$30 off applied · skips cart' : 'Pay once · free shipping';
+      incentive.textContent = 'Pay once · free shipping';
       cta.textContent = addonCheckbox.checked ? 'Checkout · $269' : 'Add to Cart';
       terms.innerHTML = addonCheckbox.checked
-        ? 'Quarterly Refills added. $30 first-order bonus applied. Clicking Checkout takes you straight to confirmation — no cart review.'
+        ? 'Quarterly Refills added · $30 first-order bonus applies at checkout.'
         : 'Includes SmartBrush, 3 Feno Foam tubes, and 1 TrueFit Mouthpiece. Add Quarterly Refills above to save $30 on this order.';
       list.innerHTML = '<li><span class="check">✓</span>SmartBrush device</li><li><span class="check">✓</span>3 Feno Foam tubes</li><li><span class="check">✓</span>1 TrueFit Mouthpiece</li>';
     }
   }
 
+  syncMobileSummaryDefault();
   render();
 </script>
 
