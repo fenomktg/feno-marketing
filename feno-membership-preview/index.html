@@ -19,6 +19,10 @@
     overflow-x: hidden;
   }
 
+  body.cart-open {
+    overflow: hidden;
+  }
+
   .section {
     max-width: 1100px;
     margin: 0 auto;
@@ -361,28 +365,54 @@
     margin-top: 8px;
   }
 
-  .scp-wrap {
-    margin-top: 36px;
-    padding-top: 28px;
-    border-top: 1px dashed #C5C5C5;
+  /* === Cart drawer (real slide cart, replaces inline preview) === */
+
+  .cart-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 18, 22, 0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    z-index: 1000;
   }
 
-  .scp-arrow {
-    text-align: center;
-    font-size: 13px;
-    color: #6B6B6B;
-    margin-bottom: 16px;
-    font-style: italic;
+  .cart-backdrop.open {
+    opacity: 1;
+    pointer-events: auto;
   }
 
-  .scp-card {
+  .cart-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 420px;
+    max-width: 100vw;
     background: #FFFFFF;
-    border: 1px solid #DDDDDD;
-    border-radius: 12px;
-    padding: 20px;
-    max-width: 420px;
-    margin: 0 auto;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    z-index: 1001;
+    transform: translateX(100%);
+    transition: transform 0.32s cubic-bezier(0.32, 0.72, 0, 1);
+    display: flex;
+    flex-direction: column;
+    box-shadow: -12px 0 36px rgba(0, 0, 0, 0.18);
+    pointer-events: none;
+  }
+
+  .cart-drawer.open {
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+
+  .cart-drawer__handle {
+    display: none;
+  }
+
+  .cart-drawer__body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+    -webkit-overflow-scrolling: touch;
   }
 
   .scp-header {
@@ -399,16 +429,22 @@
   .scp-close {
     color: #999999;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 22px;
     line-height: 1;
+    background: transparent;
+    border: none;
+    padding: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 28px;
-    height: 28px;
-    border-radius: 999px;
-    user-select: none;
+    transition: background 0.15s ease, color 0.15s ease;
   }
+
+  .scp-close:hover { background: #F4F4F4; color: #1A1A1A; }
+  .scp-close:focus-visible { outline: 2px solid #185FA5; outline-offset: 2px; }
 
   .scp-line {
     display: flex;
@@ -473,19 +509,25 @@
   }
 
   .scp-remove {
-    color: #6B6B6B;
+    color: #04342C;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 20px;
     line-height: 1;
+    background: transparent;
+    border: none;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 28px;
-    height: 28px;
-    border-radius: 999px;
-    user-select: none;
     flex-shrink: 0;
+    transition: background 0.15s ease;
   }
+
+  .scp-remove:hover { background: rgba(4, 52, 44, 0.08); }
+  .scp-remove:focus-visible { outline: 2px solid #185FA5; outline-offset: 2px; }
 
   .scp-totals {
     border-top: 1px solid #EEEEEE;
@@ -517,10 +559,11 @@
     font-weight: 600;
     cursor: pointer;
     width: 100%;
-    margin-top: 14px;
+    margin-top: 18px;
   }
 
   .scp-checkout:hover { background: #0C447C; }
+  .scp-checkout:focus-visible { outline: 2px solid #1A1A1A; outline-offset: 2px; }
 
   .hidden { display: none !important; }
 
@@ -539,10 +582,9 @@
     .section { padding: 48px 32px; }
     .grid { gap: 20px; }
     .media { min-height: 400px; }
-    .scp-card { margin: 0 auto; }
   }
 
-  /* Mobile polish (< 768px) */
+  /* Mobile polish (< 768px). Drawer switches to a bottom sheet. */
   @media (max-width: 768px) {
     body { padding: 0; }
 
@@ -655,54 +697,40 @@
 
     .terms { font-size: 12px; }
 
-    .scp-wrap {
-      margin-top: 28px;
-      padding-top: 24px;
+    /* Drawer becomes a bottom sheet on mobile */
+    .cart-drawer {
+      top: auto;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      max-width: 100%;
+      max-height: 92vh;
+      border-radius: 16px 16px 0 0;
+      transform: translateY(100%);
+      box-shadow: 0 -10px 36px rgba(0, 0, 0, 0.18);
     }
 
-    .scp-arrow {
-      font-size: 13px;
-      margin-bottom: 14px;
-      padding: 0 4px;
+    .cart-drawer.open {
+      transform: translateY(0);
     }
 
-    .scp-card {
-      padding: 16px;
-      max-width: calc(100% + 8px);
-      margin-left: -4px;
-      margin-right: -4px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    .cart-drawer__handle {
+      display: block;
+      width: 40px;
+      height: 4px;
+      background: #DDDDDD;
+      border-radius: 999px;
+      margin: 10px auto 0;
+      flex-shrink: 0;
     }
 
-    .scp-header {
-      font-size: 16px;
-      margin-bottom: 14px;
-      padding-bottom: 10px;
-    }
+    .cart-drawer__body { padding: 16px 20px 20px; }
 
-    .scp-close,
-    .scp-remove {
-      width: 44px;
-      height: 44px;
-      font-size: 22px;
-    }
+    .scp-close { width: 44px; height: 44px; font-size: 24px; }
+    .scp-remove { width: 44px; height: 44px; font-size: 22px; }
 
-    .scp-line { font-size: 14px; }
-
-    .scp-sub { padding: 12px; }
-    .scp-sub-top { font-size: 13px; }
-    .scp-sub-detail { font-size: 12px; }
-    .scp-sub-price { font-size: 13px; }
-
-    .scp-total { font-size: 15px; }
-    .scp-recurring-note { font-size: 11px; }
-
-    .scp-checkout {
-      padding: 14px;
-      min-height: 48px;
-      font-size: 14px;
-    }
+    .scp-checkout { padding: 14px; min-height: 48px; font-size: 14px; }
 
     .footnote {
       font-size: 12px;
@@ -711,7 +739,7 @@
     }
   }
 
-  /* Very narrow phones (iPhone SE-ish at 320–360px) */
+  /* Very narrow phones */
   @media (max-width: 360px) {
     .section { padding: 28px 16px; }
     .headline { font-size: 26px; }
@@ -719,7 +747,6 @@
     .recommended-tag { right: 10px; }
   }
 
-  /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       transition-duration: 0.01ms !important;
@@ -787,52 +814,60 @@
         <div class="qty" aria-label="Quantity">
           <button type="button" aria-label="Decrease quantity">−</button><span>1</span><button type="button" aria-label="Increase quantity">+</button>
         </div>
-        <button class="cta" type="button" id="cta">Start My Membership</button>
+        <button class="cta" type="button" id="cta" onclick="handleCtaClick()">Start My Membership</button>
       </div>
 
       <p class="terms" id="terms"></p>
     </div>
   </div>
 
-  <div class="scp-wrap hidden" id="scp-wrap">
-    <div class="scp-arrow">↓ Slide cart opens on Add to Cart (One Time only)</div>
-    <div class="scp-card">
-      <div class="scp-header">
-        <span>Your Cart</span>
-        <span class="scp-close" role="button" aria-label="Close cart" tabindex="0">×</span>
-      </div>
-      <div class="scp-line">
-        <div class="left">
-          <span class="item-name">SmartBrush Bundle</span>
-          <span class="item-detail">3 Feno Foam · 1 TrueFit Mouthpiece</span>
-        </div>
-        <span>$299</span>
-      </div>
-      <div class="scp-sub">
-        <div class="scp-sub-top">
-          <span><span class="scp-sub-auto">Auto-added</span>Quarterly Refills</span>
-          <span class="scp-remove" role="button" aria-label="Remove subscription" tabindex="0">×</span>
-        </div>
-        <div class="scp-sub-detail">3 Feno Foam tubes + 1 TrueFit Mouthpiece, shipped every 90 days. Cancel anytime.</div>
-        <div class="scp-sub-price">$65 / quarter · First charge in 90 days</div>
-      </div>
-      <div class="scp-totals">
-        <div class="scp-total">
-          <span>Today</span>
-          <span>$299</span>
-        </div>
-        <div class="scp-recurring-note">Then $65 every 90 days, starting 90 days from today.</div>
-      </div>
-      <button class="scp-checkout" type="button">Checkout</button>
-    </div>
-  </div>
-
   <div class="footnote">Variant for ~20% traffic split test. Slide cart auto-subscribe wrapped behind feature flag (disable without redeploy).</div>
 </div>
+
+<div class="cart-backdrop" id="cart-backdrop" aria-hidden="true"></div>
+
+<aside class="cart-drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title" aria-hidden="true" tabindex="-1">
+  <div class="cart-drawer__handle" aria-hidden="true"></div>
+  <div class="cart-drawer__body">
+    <div class="scp-header">
+      <span id="cart-title">Your Cart</span>
+      <button type="button" class="scp-close" id="cart-close" aria-label="Close cart">×</button>
+    </div>
+    <div class="scp-line">
+      <div class="left">
+        <span class="item-name">SmartBrush Bundle</span>
+        <span class="item-detail">3 Feno Foam · 1 TrueFit Mouthpiece</span>
+      </div>
+      <span>$299</span>
+    </div>
+    <div class="scp-sub" id="scp-sub">
+      <div class="scp-sub-top">
+        <span><span class="scp-sub-auto">Auto-added</span>Quarterly Refills</span>
+        <button type="button" class="scp-remove" id="scp-sub-remove" aria-label="Remove quarterly refills">×</button>
+      </div>
+      <div class="scp-sub-detail">3 Feno Foam tubes + 1 TrueFit Mouthpiece, shipped every 90 days. Cancel anytime.</div>
+      <div class="scp-sub-price">$65 / quarter · First charge in 90 days</div>
+    </div>
+    <div class="scp-totals">
+      <div class="scp-total">
+        <span>Today</span>
+        <span>$299</span>
+      </div>
+      <div class="scp-recurring-note" id="scp-recurring-note">Then $65 every 90 days, starting 90 days from today.</div>
+    </div>
+    <button class="scp-checkout" type="button">Checkout</button>
+  </div>
+</aside>
 
 <script>
   let primary = 'membership';
   let billing = 'monthly';
+  let lastFocused = null;
+
+  const drawer = document.getElementById('cart-drawer');
+  const backdrop = document.getElementById('cart-backdrop');
+  const scpSub = document.getElementById('scp-sub');
+  const scpRecurring = document.getElementById('scp-recurring-note');
 
   function setPrimary(val) {
     primary = val;
@@ -842,7 +877,6 @@
     membership.classList.toggle('active', val === 'membership');
     onetime.setAttribute('aria-selected', val === 'onetime');
     membership.setAttribute('aria-selected', val === 'membership');
-    document.getElementById('scp-wrap').classList.toggle('hidden', val !== 'onetime');
     render();
   }
 
@@ -852,6 +886,70 @@
     document.getElementById('bill-annual').classList.toggle('active', val === 'annual');
     render();
   }
+
+  function openCart() {
+    // Auto-add behavior: every fresh open restores the quarterly sub
+    scpSub.style.display = '';
+    scpRecurring.style.display = '';
+    lastFocused = document.activeElement;
+    drawer.classList.add('open');
+    backdrop.classList.add('open');
+    drawer.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('cart-open');
+    // Wait for transition start, then focus inside drawer
+    window.requestAnimationFrame(() => {
+      document.getElementById('cart-close').focus();
+    });
+  }
+
+  function closeCart() {
+    if (!drawer.classList.contains('open')) return;
+    drawer.classList.remove('open');
+    backdrop.classList.remove('open');
+    drawer.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('cart-open');
+    if (lastFocused && typeof lastFocused.focus === 'function') {
+      lastFocused.focus();
+    }
+  }
+
+  function removeSub() {
+    scpSub.style.display = 'none';
+    scpRecurring.style.display = 'none';
+  }
+
+  function handleCtaClick() {
+    if (primary === 'onetime') openCart();
+    // Membership CTA: would route to checkout flow in production.
+  }
+
+  document.getElementById('cart-close').addEventListener('click', closeCart);
+  document.getElementById('scp-sub-remove').addEventListener('click', removeSub);
+  backdrop.addEventListener('click', closeCart);
+
+  document.addEventListener('keydown', (e) => {
+    if (!drawer.classList.contains('open')) return;
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      closeCart();
+      return;
+    }
+    if (e.key === 'Tab') {
+      const focusables = Array.from(
+        drawer.querySelectorAll('button:not([disabled]), [tabindex]:not([tabindex="-1"])')
+      ).filter((el) => el.offsetParent !== null);
+      if (!focusables.length) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  });
 
   function render() {
     const billingEl = document.getElementById('billing');
@@ -882,7 +980,7 @@
       unit.textContent = '';
       sub.textContent = 'One-time purchase. SmartBrush bundle.';
       cta.textContent = 'Add to Cart';
-      terms.innerHTML = 'Includes SmartBrush, 3 Feno Foam tubes, and 1 TrueFit Mouthpiece. Slide cart will auto-add a $65/quarter refill subscription on Add to Cart (preview below).';
+      terms.innerHTML = 'Includes SmartBrush, 3 Feno Foam tubes, and 1 TrueFit Mouthpiece. A $65/quarter refill subscription is auto-added on Add to Cart (you can remove it in the cart).';
       list.innerHTML = '<li><span class="check">✓</span>SmartBrush device</li><li><span class="check">✓</span>3 Feno Foam tubes</li><li><span class="check">✓</span>1 TrueFit Mouthpiece</li>';
     }
   }
