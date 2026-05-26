@@ -117,16 +117,19 @@
     margin: 18px 0 8px;
   }
 
-  .scp-bundle-hint {
-    background: #DDEFC7;
-    color: #173404;
-    border-radius: 8px;
-    padding: 8px 12px;
-    font-size: 12px;
-    margin-bottom: 10px;
-    line-height: 1.4;
+  .savings-bar {
+    background: linear-gradient(180deg, #F4FBF6 0%, #EEF8E3 100%);
+    border: 1px solid #C0DD97;
+    border-radius: 10px;
+    padding: 11px 13px;
+    margin: 14px 0 12px;
   }
-  .scp-bundle-hint strong { font-weight: 700; }
+  .savings-bar__head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 7px; }
+  .savings-bar__label { font-size: 11px; font-weight: 700; color: #173404; letter-spacing: 0.04em; text-transform: uppercase; }
+  .savings-bar__amount { font-size: 13px; font-weight: 700; color: #173404; font-variant-numeric: tabular-nums; }
+  .savings-bar__track { height: 6px; background: #E5F0D3; border-radius: 999px; overflow: hidden; }
+  .savings-bar__fill { height: 100%; background: linear-gradient(90deg, #1D9E75 0%, #74C44C 100%); border-radius: 999px; width: 0%; transition: width 0.32s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  .savings-bar__msg { font-size: 11.5px; color: #3F5E14; margin-top: 7px; line-height: 1.4; }
 
   .cu-card {
     background: #FFFFFF;
@@ -247,6 +250,10 @@
   .co-totals-row--total { font-size: 18px; font-weight: 700; margin-top: 12px; padding-top: 14px; border-top: 1px solid #E1E1E1; }
   .co-totals-row--total small { font-size: 12px; font-weight: 500; color: #6B6B6B; margin-right: 4px; }
 
+  .co-future { margin-top: 18px; padding-top: 14px; border-top: 1px solid #E1E1E1; }
+  .co-future__title { font-size: 11px; font-weight: 700; color: #6B6B6B; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+  .co-future__row { display: flex; justify-content: space-between; font-size: 13px; color: #4A4A4A; margin-bottom: 5px; }
+
   /* === Post-purchase === */
   .pp-wrap { max-width: 880px; margin: 0 auto; padding: 40px 32px 80px; }
   .pp-head { text-align: center; margin-bottom: 28px; }
@@ -341,10 +348,22 @@
     .cart-drawer { top: auto; right: 0; bottom: 0; left: 0; width: 100%; max-width: 100%; max-height: 92vh; border-radius: 16px 16px 0 0; transform: translateY(100%); box-shadow: 0 -10px 36px rgba(0, 0, 0, 0.18); }
     .cart-drawer.open { transform: translateY(0); }
     .cart-drawer__handle { display: block; width: 40px; height: 4px; background: #DDDDDD; border-radius: 999px; margin: 10px auto 0; flex-shrink: 0; }
-    .cart-drawer__body { padding: 16px 18px 20px; }
+    .cart-drawer__body { padding: 14px 16px 18px; }
     .scp-close { width: 44px; height: 44px; font-size: 24px; }
-    .cu-card__btn { min-height: 40px; padding: 9px 14px; }
-    .scp-checkout { padding: 14px; min-height: 48px; font-size: 14px; }
+    .scp-upsells-label { margin: 14px 0 6px; }
+    .cu-card { padding: 10px; gap: 10px; margin-bottom: 8px; }
+    .cu-card__thumb { width: 40px; height: 40px; }
+    .cu-card__title { font-size: 13px; }
+    .cu-card__sub { font-size: 11.5px; margin-top: 2px; }
+    .cu-card__price { font-size: 11.5px; margin-top: 4px; }
+    .cu-card__btn { min-height: 38px; padding: 8px 12px; font-size: 12px; }
+    .savings-bar { padding: 9px 11px; margin: 12px 0 10px; }
+    .savings-bar__label { font-size: 10.5px; }
+    .savings-bar__amount { font-size: 12px; }
+    .savings-bar__msg { font-size: 11px; margin-top: 5px; }
+    .scp-totals { padding-top: 12px; margin-top: 10px; }
+    .scp-row, .scp-total { font-size: 13px; }
+    .scp-checkout { padding: 14px; min-height: 48px; font-size: 14px; margin-top: 12px; }
 
     .co-header { padding: 14px 18px; }
     .co-brand { font-size: 19px; }
@@ -385,7 +404,7 @@
 <div class="section">
   <p class="eyebrow">Diagnostic-grade oral care</p>
   <h1 class="headline">The toothbrush your dentist actually wants you to use</h1>
-  <p class="subhead">A toothbrush that scans. The Feno app turns those scans into oral health biomarkers — tongue health, teeth health — synced to your dentist between visits.</p>
+  <p class="subhead">A toothbrush that scans. The Feno app maps your oral health biomarkers — tongue, teeth — and syncs them to your dentist.</p>
 
   <div class="toggle-wrap">
     <span class="recommended-tag">Best value</span>
@@ -434,7 +453,7 @@
         <span class="addon__box" aria-hidden="true"></span>
         <span class="addon__content">
           <span class="addon__title">Add Quarterly Refills <span class="addon__save">Save $30 today</span></span>
-          <span class="addon__sub">3 Feno Foam + 1 TrueFit Mouthpiece every 90 days. Keeps your Smartbrush scanner calibrated. $65/quarter, cancel anytime.</span>
+          <span class="addon__sub">3 Feno Foam + 1 TrueFit Mouthpiece every 90 days. $65/quarter, cancel anytime.</span>
         </span>
       </label>
 
@@ -468,15 +487,22 @@
       <span>$299</span>
     </div>
 
-    <div class="scp-upsells-label">Recommended for you</div>
+    <div class="savings-bar" id="savings-bar">
+      <div class="savings-bar__head">
+        <span class="savings-bar__label">Bundle savings</span>
+        <span class="savings-bar__amount" id="savings-amount">$0 of $45</span>
+      </div>
+      <div class="savings-bar__track"><div class="savings-bar__fill" id="savings-fill"></div></div>
+      <p class="savings-bar__msg" id="savings-msg">Add Refills + Feno Plus to save $45 on this order.</p>
+    </div>
 
-    <p class="scp-bundle-hint" id="scp-bundle-hint">Add both and save an extra <strong>$15</strong> on this order.</p>
+    <div class="scp-upsells-label">Recommended for you</div>
 
     <div class="cu-card cu-card--featured" id="cu-qr">
       <div class="cu-card__thumb" aria-hidden="true">refill</div>
       <div class="cu-card__content">
-        <div class="cu-card__title">Quarterly Refills <span class="cu-card__save" id="cu-qr-save">Save $30 today</span></div>
-        <div class="cu-card__sub">3 Feno Foam + 1 TrueFit Mouthpiece every 90 days. Keeps scanner calibrated.</div>
+        <div class="cu-card__title">Quarterly Refills <span class="cu-card__save" id="cu-qr-save">Save $30</span></div>
+        <div class="cu-card__sub">3 Foam + 1 Mouthpiece every 90 days.</div>
         <div class="cu-card__price">$65 / quarter · First charge in 90 days</div>
       </div>
       <button type="button" class="cu-card__btn" id="cu-qr-btn">Add</button>
@@ -486,7 +512,7 @@
       <div class="cu-card__thumb" aria-hidden="true">app</div>
       <div class="cu-card__content">
         <div class="cu-card__title">Feno Plus</div>
-        <div class="cu-card__sub">AI coaching · tongue + teeth biomarker dashboards · dentist sync.</div>
+        <div class="cu-card__sub">AI coaching · biomarker dashboards · dentist sync.</div>
         <div class="cu-card__price">$10 / month · Cancel anytime</div>
       </div>
       <button type="button" class="cu-card__btn" id="cu-app-btn">Add</button>
@@ -610,6 +636,12 @@
       <div class="co-totals-row co-totals-row--discount hidden" id="co-bundle-row"><span>Bundle savings</span><span>−$15.00</span></div>
       <div class="co-totals-row co-totals-row--muted"><span>Shipping</span><span>FREE</span></div>
       <div class="co-totals-row co-totals-row--total"><span><small>USD</small>Total</span><span id="co-total">$299.00</span></div>
+
+      <div class="co-future hidden" id="co-future">
+        <p class="co-future__title">After today</p>
+        <div class="co-future__row hidden" id="co-future-qr"><span>Quarterly Refills</span><span>$65 every 90 days</span></div>
+        <div class="co-future__row hidden" id="co-future-app"><span>Feno Plus</span><span>$10 every month</span></div>
+      </div>
     </aside>
   </div>
 </section>
@@ -673,6 +705,11 @@
       <div id="pp-summary"></div>
     </div>
 
+    <div class="pp-card hidden" id="pp-future-card">
+      <p class="pp-card__title">After today</p>
+      <div id="pp-future"></div>
+    </div>
+
     <div class="pp-card">
       <p class="pp-card__title">What's next</p>
       <p class="pp-next" id="pp-next"></p>
@@ -712,9 +749,12 @@
   const scpSubtotal = document.getElementById('scp-subtotal');
   const scpRowDiscount = document.getElementById('scp-row-discount');
   const scpRowBundle = document.getElementById('scp-row-bundle');
-  const scpBundleHint = document.getElementById('scp-bundle-hint');
   const scpTotalToday = document.getElementById('scp-total-today');
   const scpRecurringNote = document.getElementById('scp-recurring-note');
+
+  const savingsAmount = document.getElementById('savings-amount');
+  const savingsFill = document.getElementById('savings-fill');
+  const savingsMsg = document.getElementById('savings-msg');
 
   const coOverlay = document.getElementById('checkout-overlay');
   const coBackBtn = document.getElementById('co-back');
@@ -723,6 +763,9 @@
   const coItemApp = document.getElementById('co-item-app');
   const coDiscountRow = document.getElementById('co-discount-row');
   const coBundleRow = document.getElementById('co-bundle-row');
+  const coFuture = document.getElementById('co-future');
+  const coFutureQr = document.getElementById('co-future-qr');
+  const coFutureApp = document.getElementById('co-future-app');
   const coSubtotal = document.getElementById('co-subtotal');
   const coTotal = document.getElementById('co-total');
   const coSummary = document.getElementById('co-summary');
@@ -740,6 +783,8 @@
   const ppAppDecline = document.getElementById('pp-app-decline');
   const ppSummary = document.getElementById('pp-summary');
   const ppNext = document.getElementById('pp-next');
+  const ppFutureCard = document.getElementById('pp-future-card');
+  const ppFuture = document.getElementById('pp-future');
 
   // --- Helpers
   function money(n) {
@@ -795,6 +840,22 @@
       lastFocused.focus();
     }
   }
+  function updateSavingsBar() {
+    const saved = (qrDiscountEarned ? 30 : 0) + (bundleSavingsEarned ? 15 : 0);
+    const pct = (saved / 45) * 100;
+    savingsAmount.textContent = '$' + saved + ' of $45';
+    savingsFill.style.width = pct + '%';
+    if (saved === 0) {
+      savingsMsg.textContent = appAdded
+        ? 'Add Quarterly Refills to unlock $30 + $15 bundle savings.'
+        : 'Add Refills + Feno Plus to save $45 on this order.';
+    } else if (saved === 30) {
+      savingsMsg.textContent = 'Add Feno Plus to unlock another $15 bundle savings.';
+    } else if (saved === 45) {
+      savingsMsg.textContent = 'You\'re saving $45 on this order. ✨';
+    }
+  }
+
   function renderCart() {
     // Quarterly Refills card
     cuQrCard.classList.toggle('cu-card--added', qrAdded);
@@ -804,8 +865,8 @@
     // Feno Plus card
     cuAppCard.classList.toggle('cu-card--added', appAdded);
     cuAppBtn.textContent = appAdded ? '✓ Added' : 'Add';
-    // Bundle hint: show only when both aren't yet added
-    scpBundleHint.classList.toggle('hidden', qrAdded && appAdded);
+    // Savings progress bar
+    updateSavingsBar();
     // Totals
     scpSubtotal.textContent = money(subtotalToday());
     scpRowDiscount.classList.toggle('hidden', !qrDiscountEarned);
@@ -871,6 +932,9 @@
     coItemApp.classList.toggle('hidden', !appAdded);
     coDiscountRow.classList.toggle('hidden', !qrDiscountEarned);
     coBundleRow.classList.toggle('hidden', !bundleSavingsEarned);
+    coFutureQr.classList.toggle('hidden', !qrAdded);
+    coFutureApp.classList.toggle('hidden', !appAdded);
+    coFuture.classList.toggle('hidden', !qrAdded && !appAdded);
     const sub = subtotalToday();
     coSubtotal.textContent = moneyDecimal(sub);
     const tot = todayTotal();
@@ -941,6 +1005,13 @@
     html += '<div class="pp-row pp-row--muted"><span>Shipping</span><span>Free</span></div>';
     html += '<div class="pp-row pp-row--total"><span>Charged today</span><span>' + moneyDecimal(todayTotal()) + '</span></div>';
     ppSummary.innerHTML = html;
+
+    // Future charges card
+    let futureHtml = '';
+    if (qrAdded) futureHtml += '<div class="pp-row pp-row--muted"><span>Quarterly Refills</span><span>$65 every 90 days</span></div>';
+    if (appAdded) futureHtml += '<div class="pp-row pp-row--muted"><span>Feno Plus</span><span>$10 every month</span></div>';
+    ppFuture.innerHTML = futureHtml;
+    ppFutureCard.classList.toggle('hidden', !qrAdded && !appAdded);
 
     // "What's next" copy
     let parts = ['Your <strong>Smartbrush</strong> ships in 2 business days.'];
