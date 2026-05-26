@@ -20,21 +20,21 @@
   }
   body.lock-scroll { overflow: hidden; }
 
-  .section { max-width: 1100px; margin: 0 auto; background: #E8E8E8; border-radius: 16px; padding: 56px 40px; }
+  .section { max-width: 1100px; margin: 0 auto; background: #E8E8E8; border-radius: 16px; padding: 32px 40px 36px; }
 
-  .eyebrow { font-size: 13px; color: #6B6B6B; text-align: center; margin-bottom: 14px; letter-spacing: 0.05em; }
-  .headline { font-family: Georgia, 'Times New Roman', serif; font-size: 38px; font-weight: 400; text-align: center; margin-bottom: 14px; line-height: 1.2; color: #1A1A1A; }
-  .subhead { font-size: 14px; color: #6B6B6B; text-align: center; margin: 0 auto 36px; max-width: 640px; }
+  .eyebrow { font-size: 13px; color: #6B6B6B; text-align: center; margin-bottom: 10px; letter-spacing: 0.05em; }
+  .headline { font-family: Georgia, 'Times New Roman', serif; font-size: 36px; font-weight: 400; text-align: center; margin-bottom: 10px; line-height: 1.18; color: #1A1A1A; }
+  .subhead { font-size: 14px; color: #6B6B6B; text-align: center; margin: 0 auto 20px; max-width: 640px; }
 
-  .toggle-wrap { position: relative; width: fit-content; margin: 0 auto 36px; padding-top: 14px; }
+  .toggle-wrap { position: relative; width: fit-content; margin: 0 auto 22px; padding-top: 14px; }
   .recommended-tag { position: absolute; top: 0; right: 18px; background: #C0DD97; color: #173404; font-size: 10px; padding: 3px 9px; border-radius: 999px; font-weight: 600; letter-spacing: 0.02em; white-space: nowrap; }
   .primary-toggle { display: flex; background: #FFFFFF; padding: 5px; border-radius: 999px; border: 1px solid #DDDDDD; }
   .primary-toggle button { border: none; background: transparent; padding: 10px 32px; border-radius: 999px; font-size: 14px; cursor: pointer; color: #6B6B6B; font-weight: 500; transition: all 0.15s ease; }
   .primary-toggle button.active { background: #1A1A1A; color: #FFFFFF; }
 
-  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: center; }
 
-  .media { background: #FFFFFF; border: 2px dashed #C5C5C5; border-radius: 12px; min-height: 460px; display: flex; align-items: center; justify-content: center; padding: 24px; }
+  .media { background: #FFFFFF; border: 2px dashed #C5C5C5; border-radius: 12px; min-height: 340px; display: flex; align-items: center; justify-content: center; padding: 20px; }
   .media-inner { text-align: center; color: #999999; font-size: 13px; line-height: 1.6; }
   .media-shapes { display: flex; align-items: flex-end; justify-content: center; gap: 14px; margin: 0 auto 16px; }
   .phone { width: 100px; height: 180px; border: 2px solid #C5C5C5; border-radius: 14px; position: relative; }
@@ -308,42 +308,39 @@
 
   @media (max-width: 768px) {
     body { padding: 0; }
-    .section { padding: 22px 18px 28px; border-radius: 0; }
-    .eyebrow { margin-bottom: 4px; font-size: 12px; }
-    .headline { font-size: 24px; line-height: 1.18; margin-bottom: 6px; }
-    .subhead { font-size: 13px; margin-bottom: 18px; padding: 0 4px; }
-    .toggle-wrap { margin: 0 auto 18px; padding-top: 14px; }
+    .section { padding: 20px 16px 24px; border-radius: 0; }
+    .eyebrow { display: none; }
+    .headline { font-size: 23px; line-height: 1.18; margin-bottom: 6px; }
+    .subhead { font-size: 13px; margin-bottom: 14px; padding: 0 4px; }
+    .toggle-wrap { margin: 0 auto 14px; padding-top: 14px; }
     .primary-toggle { padding: 4px; }
-    .primary-toggle button { padding: 11px 24px; min-height: 44px; font-size: 14px; }
+    .primary-toggle button { padding: 10px 22px; min-height: 44px; font-size: 14px; }
     .recommended-tag { right: 14px; font-size: 10px; padding: 3px 8px; }
-    .grid { grid-template-columns: 1fr; gap: 16px; }
-    .card { order: 1; gap: 12px; }
-    .media { order: 2; min-height: 160px; padding: 16px; }
-    .media-shapes { margin-bottom: 8px; gap: 10px; }
-    .phone { width: 60px; height: 108px; }
-    .phone::before { width: 20px; height: 3px; top: 6px; }
-    .phone-lines { top: 16px; left: 7px; right: 7px; gap: 4px; }
-    .phone-lines span { height: 3px; }
-    .tube { width: 22px; height: 56px; }
-    .media-inner { font-size: 12px; }
+    .grid { grid-template-columns: 1fr; gap: 12px; }
+    .card { order: 1; gap: 10px; }
+    .media { display: none; }
     .badges { gap: 6px; }
-    .badge { font-size: 12px; padding: 7px 11px; }
-    .price-row { padding: 0 0 4px; }
-    .price-main { font-size: 30px; }
-    .price-unit { font-size: 16px; }
+    .badge { font-size: 11px; padding: 6px 10px; gap: 5px; }
+    .badge-icon { width: 12px; height: 12px; }
+    .incentive { font-size: 11.5px; padding: 5px 10px; }
+    .price-row { padding: 0; }
+    .price-main { font-size: 28px; }
+    .price-unit { font-size: 15px; }
     .price-sub { font-size: 12px; margin-top: 4px; }
-    .billing button { padding: 11px 8px; min-height: 44px; font-size: 13px; }
+    .billing button { padding: 10px 8px; min-height: 42px; font-size: 13px; }
     .save-badge { font-size: 10px; }
-    .included li { font-size: 13px; }
-    .addon { padding: 12px; }
+    .included { gap: 5px; }
+    .included li { font-size: 12.5px; gap: 8px; }
+    .check { font-size: 14px; }
+    .addon { padding: 10px; gap: 10px; }
     .addon__title { font-size: 13px; gap: 6px; }
-    .addon__sub { font-size: 12px; }
+    .addon__sub { font-size: 11.5px; }
     .qty-cta { flex-wrap: wrap; gap: 10px; margin-top: 2px; }
     .qty { padding: 4px 6px; gap: 4px; flex: 0 0 auto; }
     .qty button { width: 44px; height: 44px; font-size: 18px; }
     .qty span { min-width: 24px; font-size: 15px; }
-    .cta { flex: 1 1 170px; min-height: 48px; font-size: 15px; padding: 13px 20px; }
-    .terms { font-size: 11px; margin-top: 2px; }
+    .cta { flex: 1 1 170px; min-height: 46px; font-size: 14px; padding: 12px 20px; }
+    .terms { font-size: 11px; margin-top: 2px; line-height: 1.5; }
 
     .cart-drawer { top: auto; right: 0; bottom: 0; left: 0; width: 100%; max-width: 100%; max-height: 92vh; border-radius: 16px 16px 0 0; transform: translateY(100%); box-shadow: 0 -10px 36px rgba(0, 0, 0, 0.18); }
     .cart-drawer.open { transform: translateY(0); }
