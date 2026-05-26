@@ -117,6 +117,17 @@
     margin: 18px 0 8px;
   }
 
+  .scp-bundle-hint {
+    background: #DDEFC7;
+    color: #173404;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 12px;
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+  .scp-bundle-hint strong { font-weight: 700; }
+
   .cu-card {
     background: #FFFFFF;
     border: 1.5px solid #DDDDDD;
@@ -459,6 +470,8 @@
 
     <div class="scp-upsells-label">Recommended for you</div>
 
+    <p class="scp-bundle-hint" id="scp-bundle-hint">Add both and save an extra <strong>$15</strong> on this order.</p>
+
     <div class="cu-card cu-card--featured" id="cu-qr">
       <div class="cu-card__thumb" aria-hidden="true">refill</div>
       <div class="cu-card__content">
@@ -482,6 +495,7 @@
     <div class="scp-totals">
       <div class="scp-row" id="scp-row-subtotal"><span>Subtotal</span><span id="scp-subtotal">$299</span></div>
       <div class="scp-row scp-row--discount hidden" id="scp-row-discount"><span>First-order bonus</span><span>−$30</span></div>
+      <div class="scp-row scp-row--discount hidden" id="scp-row-bundle"><span>Bundle savings</span><span>−$15</span></div>
       <div class="scp-total"><span>Today</span><span id="scp-total-today">$299</span></div>
       <div class="scp-recurring-note hidden" id="scp-recurring-note"></div>
     </div>
@@ -593,6 +607,7 @@
 
       <div class="co-totals-row co-totals-row--muted"><span>Subtotal</span><span id="co-subtotal">$299.00</span></div>
       <div class="co-totals-row co-totals-row--discount hidden" id="co-discount-row"><span>First-order bonus</span><span>−$30.00</span></div>
+      <div class="co-totals-row co-totals-row--discount hidden" id="co-bundle-row"><span>Bundle savings</span><span>−$15.00</span></div>
       <div class="co-totals-row co-totals-row--muted"><span>Shipping</span><span>FREE</span></div>
       <div class="co-totals-row co-totals-row--total"><span><small>USD</small>Total</span><span id="co-total">$299.00</span></div>
     </aside>
@@ -674,6 +689,7 @@
   let qrAdded = false;             // Quarterly Refills sub on the order
   let appAdded = false;            // Feno Plus app sub on the order
   let qrDiscountEarned = false;    // $30 off applies (QR added before Place Order)
+  let bundleSavingsEarned = false; // -$15 applies (both subs added before Place Order)
   let qrCheckedUpfront = false;    // committed via product-page checkbox
   let lastFocused = null;
 
@@ -695,6 +711,8 @@
 
   const scpSubtotal = document.getElementById('scp-subtotal');
   const scpRowDiscount = document.getElementById('scp-row-discount');
+  const scpRowBundle = document.getElementById('scp-row-bundle');
+  const scpBundleHint = document.getElementById('scp-bundle-hint');
   const scpTotalToday = document.getElementById('scp-total-today');
   const scpRecurringNote = document.getElementById('scp-recurring-note');
 
@@ -704,6 +722,7 @@
   const coItemQr = document.getElementById('co-item-qr');
   const coItemApp = document.getElementById('co-item-app');
   const coDiscountRow = document.getElementById('co-discount-row');
+  const coBundleRow = document.getElementById('co-bundle-row');
   const coSubtotal = document.getElementById('co-subtotal');
   const coTotal = document.getElementById('co-total');
   const coSummary = document.getElementById('co-summary');
@@ -731,8 +750,9 @@
   }
   function todayTotal() {
     const app = appAdded ? 10 : 0;
-    const discount = qrDiscountEarned ? 30 : 0;
-    return 299 + app - discount;
+    const qr = qrDiscountEarned ? 30 : 0;
+    const bundle = bundleSavingsEarned ? 15 : 0;
+    return 299 + app - qr - bundle;
   }
   function subtotalToday() {
     const app = appAdded ? 10 : 0;
@@ -784,9 +804,12 @@
     // Feno Plus card
     cuAppCard.classList.toggle('cu-card--added', appAdded);
     cuAppBtn.textContent = appAdded ? '✓ Added' : 'Add';
+    // Bundle hint: show only when both aren't yet added
+    scpBundleHint.classList.toggle('hidden', qrAdded && appAdded);
     // Totals
     scpSubtotal.textContent = money(subtotalToday());
     scpRowDiscount.classList.toggle('hidden', !qrDiscountEarned);
+    scpRowBundle.classList.toggle('hidden', !bundleSavingsEarned);
     const total = todayTotal();
     scpTotalToday.textContent = money(total);
     cartCheckoutAmt.textContent = money(total);
@@ -812,10 +835,12 @@
   cuQrBtn.addEventListener('click', () => {
     qrAdded = !qrAdded;
     qrDiscountEarned = qrAdded;
+    bundleSavingsEarned = qrAdded && appAdded;
     renderCart();
   });
   cuAppBtn.addEventListener('click', () => {
     appAdded = !appAdded;
+    bundleSavingsEarned = qrAdded && appAdded;
     renderCart();
   });
 
@@ -845,6 +870,7 @@
     coItemQr.classList.toggle('hidden', !qrAdded);
     coItemApp.classList.toggle('hidden', !appAdded);
     coDiscountRow.classList.toggle('hidden', !qrDiscountEarned);
+    coBundleRow.classList.toggle('hidden', !bundleSavingsEarned);
     const sub = subtotalToday();
     coSubtotal.textContent = moneyDecimal(sub);
     const tot = todayTotal();
@@ -911,6 +937,7 @@
     if (qrAdded) html += '<div class="pp-row pp-row--muted"><span>Quarterly Refills · $65/qtr</span><span>$0.00 today</span></div>';
     if (appAdded) html += '<div class="pp-row pp-row--muted"><span>Feno Plus · $10/mo</span><span>$10.00 today</span></div>';
     if (qrDiscountEarned) html += '<div class="pp-row pp-row--discount"><span>First-order bonus</span><span>−$30.00</span></div>';
+    if (bundleSavingsEarned) html += '<div class="pp-row pp-row--discount"><span>Bundle savings</span><span>−$15.00</span></div>';
     html += '<div class="pp-row pp-row--muted"><span>Shipping</span><span>Free</span></div>';
     html += '<div class="pp-row pp-row--total"><span>Charged today</span><span>' + moneyDecimal(todayTotal()) + '</span></div>';
     ppSummary.innerHTML = html;
@@ -958,6 +985,7 @@
     qrAdded = addonCheckbox.checked;
     qrDiscountEarned = qrAdded;
     appAdded = false;
+    bundleSavingsEarned = false;
     if (qrCheckedUpfront) openCheckout();
     else openCart();
   }
