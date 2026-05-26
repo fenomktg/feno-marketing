@@ -373,6 +373,9 @@
     .co-form { padding: 18px; border-right: none; }
     .co-section { margin-bottom: 24px; }
     .co-section__title { font-size: 16px; }
+    /* Stack city onto its own row, keep state+zip side-by-side on mobile */
+    .co-row--city { flex-wrap: wrap; }
+    .co-row--city > .co-field:first-child { flex: 1 1 100%; }
     .co-actions { flex-direction: column-reverse; gap: 14px; align-items: stretch; }
     .co-place { width: 100%; padding: 14px; font-size: 15px; min-height: 48px; }
     .co-back-link { align-self: center; padding: 8px; min-height: 44px; display: inline-flex; align-items: center; }
@@ -566,7 +569,7 @@
           <input type="text" class="co-field" placeholder="Address" value="123 Mission St" autocomplete="street-address">
           <input type="text" class="co-field" placeholder="Apartment, suite, etc. (optional)" value="Apt 4B">
         </div>
-        <div class="co-row">
+        <div class="co-row co-row--city">
           <input type="text" class="co-field" placeholder="City" value="San Francisco">
           <input type="text" class="co-field" placeholder="State" value="CA">
           <input type="text" class="co-field" placeholder="ZIP code" value="94103" inputmode="numeric">
