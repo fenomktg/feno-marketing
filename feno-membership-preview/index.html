@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#E8E8E8">
+<title>Feno Membership Section — Wireframe</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: #FFFFFF;
+    color: #1A1A1A;
+    padding: 24px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+    overflow-x: hidden;
+  }
+
+  .section {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: #E8E8E8;
+    border-radius: 16px;
+    padding: 56px 40px;
+  }
+
+  .eyebrow {
+    font-size: 13px;
+    color: #6B6B6B;
+    text-align: center;
+    margin-bottom: 14px;
+    letter-spacing: 0.05em;
+  }
+
+  .headline {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 38px;
+    font-weight: 400;
+    text-align: center;
+    margin-bottom: 14px;
+    line-height: 1.2;
+    color: #1A1A1A;
+  }
+
+  .subhead {
+    font-size: 14px;
+    color: #6B6B6B;
+    text-align: center;
+    margin-bottom: 36px;
+  }
+
+  .toggle-wrap {
+    position: relative;
+    width: fit-content;
+    margin: 0 auto 36px;
+    padding-top: 14px;
+  }
+
+  .recommended-tag {
+    position: absolute;
+    top: 0;
+    right: 18px;
+    background: #C0DD97;
+    color: #173404;
+    font-size: 10px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  .primary-toggle {
+    display: flex;
+    background: #FFFFFF;
+    padding: 5px;
+    border-radius: 999px;
+    border: 1px solid #DDDDDD;
+  }
+
+  .primary-toggle button {
+    border: none;
+    background: transparent;
+    padding: 10px 32px;
+    border-radius: 999px;
+    font-size: 14px;
+    cursor: pointer;
+    color: #6B6B6B;
+    font-weight: 500;
+    transition: all 0.15s ease;
+  }
+
+  .primary-toggle button.active {
+    background: #1A1A1A;
+    color: #FFFFFF;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    align-items: center;
+  }
+
+  .media {
+    background: #FFFFFF;
+    border: 2px dashed #C5C5C5;
+    border-radius: 12px;
+    min-height: 460px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .media-inner {
+    text-align: center;
+    color: #999999;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .media-shapes {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 14px;
+    margin: 0 auto 16px;
+  }
+
+  .phone {
+    width: 100px;
+    height: 180px;
+    border: 2px solid #C5C5C5;
+    border-radius: 14px;
+    position: relative;
+  }
+
+  .phone::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 28px;
+    height: 4px;
+    background: #C5C5C5;
+    border-radius: 2px;
+  }
+
+  .phone-lines {
+    position: absolute;
+    top: 24px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .phone-lines span {
+    height: 5px;
+    background: #E8E8E8;
+    border-radius: 2px;
+  }
+
+  .phone-lines span:nth-child(1) { width: 60%; }
+  .phone-lines span:nth-child(2) { width: 90%; }
+  .phone-lines span:nth-child(3) { width: 75%; }
+  .phone-lines span:nth-child(4) { width: 50%; }
+  .phone-lines span:nth-child(5) { width: 80%; }
+
+  .tube {
+    width: 32px;
+    height: 85px;
+    border: 2px solid #C5C5C5;
+    border-radius: 6px 6px 16px 16px;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .badges {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    padding: 6px 12px;
+    background: #FFFFFF;
+    border: 1px solid #DDDDDD;
+    border-radius: 999px;
+    color: #6B6B6B;
+    font-weight: 500;
+  }
+
+  .badge-icon {
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+  }
+
+  .price-row {
+    padding: 8px 0 16px;
+  }
+
+  .price-main {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 36px;
+    font-weight: 400;
+    margin: 0;
+    line-height: 1.1;
+    color: #1A1A1A;
+  }
+
+  .price-unit {
+    font-size: 18px;
+    color: #6B6B6B;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  .price-sub {
+    font-size: 13px;
+    color: #6B6B6B;
+    margin-top: 8px;
+    font-style: italic;
+  }
+
+  .billing {
+    display: flex;
+    gap: 4px;
+    background: #FFFFFF;
+    padding: 4px;
+    border-radius: 10px;
+    border: 1px solid #DDDDDD;
+  }
+
+  .billing button {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 10px 8px;
+    border-radius: 7px;
+    font-size: 13px;
+    cursor: pointer;
+    color: #6B6B6B;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-weight: 500;
+    transition: all 0.15s ease;
+  }
+
+  .billing button.active {
+    background: #E6F1FB;
+    color: #0C447C;
+  }
+
+  .save-badge {
+    background: #C0DD97;
+    color: #173404;
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+
+  .included {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .included li {
+    font-size: 14px;
+    color: #1A1A1A;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .check {
+    color: #1D9E75;
+    font-weight: 700;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .qty-cta {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    margin-top: 8px;
+  }
+
+  .qty {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #FFFFFF;
+    border: 1px solid #DDDDDD;
+    border-radius: 999px;
+    padding: 4px 6px;
+  }
+
+  .qty button {
+    width: 30px;
+    height: 30px;
+    border-radius: 999px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 16px;
+    color: #6B6B6B;
+    line-height: 1;
+  }
+
+  .qty button:hover { background: #F0F0F0; }
+
+  .qty span {
+    font-size: 14px;
+    min-width: 20px;
+    text-align: center;
+    font-weight: 500;
+  }
+
+  .cta {
+    flex: 1;
+    background: #185FA5;
+    color: white;
+    border: none;
+    border-radius: 999px;
+    padding: 14px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+
+  .cta:hover { background: #0C447C; }
+
+  .terms {
+    font-size: 12px;
+    color: #888888;
+    line-height: 1.6;
+    margin-top: 8px;
+  }
+
+  .scp-wrap {
+    margin-top: 36px;
+    padding-top: 28px;
+    border-top: 1px dashed #C5C5C5;
+  }
+
+  .scp-arrow {
+    text-align: center;
+    font-size: 13px;
+    color: #6B6B6B;
+    margin-bottom: 16px;
+    font-style: italic;
+  }
+
+  .scp-card {
+    background: #FFFFFF;
+    border: 1px solid #DDDDDD;
+    border-radius: 12px;
+    padding: 20px;
+    max-width: 420px;
+    margin: 0 auto;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  }
+
+  .scp-header {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #EEEEEE;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .scp-close {
+    color: #999999;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    user-select: none;
+  }
+
+  .scp-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+    font-size: 14px;
+  }
+
+  .scp-line .left {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .scp-line .item-name { font-weight: 600; }
+  .scp-line .item-detail {
+    font-size: 12px;
+    color: #888888;
+  }
+
+  .scp-sub {
+    background: #E1F5EE;
+    border: 1px solid #5DCAA5;
+    border-radius: 8px;
+    padding: 14px;
+    margin: 14px 0;
+  }
+
+  .scp-sub-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: #04342C;
+    margin-bottom: 6px;
+  }
+
+  .scp-sub-auto {
+    background: #1D9E75;
+    color: white;
+    font-size: 9px;
+    padding: 3px 7px;
+    border-radius: 999px;
+    margin-right: 8px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+  }
+
+  .scp-sub-detail {
+    font-size: 12px;
+    color: #085041;
+    line-height: 1.5;
+  }
+
+  .scp-sub-price {
+    font-size: 13px;
+    font-weight: 600;
+    color: #04342C;
+    margin-top: 6px;
+  }
+
+  .scp-remove {
+    color: #6B6B6B;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    user-select: none;
+    flex-shrink: 0;
+  }
+
+  .scp-totals {
+    border-top: 1px solid #EEEEEE;
+    padding-top: 14px;
+    margin-top: 10px;
+  }
+
+  .scp-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .scp-recurring-note {
+    font-size: 11px;
+    color: #888888;
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+
+  .scp-checkout {
+    background: #185FA5;
+    color: white;
+    border: none;
+    border-radius: 999px;
+    padding: 13px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 14px;
+  }
+
+  .scp-checkout:hover { background: #0C447C; }
+
+  .hidden { display: none !important; }
+
+  .footnote {
+    margin-top: 24px;
+    padding-top: 20px;
+    font-size: 12px;
+    color: #888888;
+    text-align: center;
+    border-top: 1px solid #D5D5D5;
+  }
+
+  /* Tablet: hold two-column, tighten the gap */
+  @media (max-width: 1024px) and (min-width: 769px) {
+    body { padding: 20px; }
+    .section { padding: 48px 32px; }
+    .grid { gap: 20px; }
+    .media { min-height: 400px; }
+    .scp-card { margin: 0 auto; }
+  }
+
+  /* Mobile polish (< 768px) */
+  @media (max-width: 768px) {
+    body { padding: 0; }
+
+    .section {
+      padding: 32px 20px;
+      border-radius: 0;
+    }
+
+    .eyebrow { margin-bottom: 10px; }
+
+    .headline {
+      font-size: 27px;
+      line-height: 1.18;
+      margin-bottom: 12px;
+    }
+
+    .subhead {
+      font-size: 14px;
+      margin-bottom: 26px;
+      padding: 0 4px;
+    }
+
+    .toggle-wrap {
+      margin: 0 auto 26px;
+      padding-top: 14px;
+    }
+
+    .primary-toggle { padding: 4px; }
+
+    .primary-toggle button {
+      padding: 12px 26px;
+      min-height: 44px;
+      font-size: 14px;
+    }
+
+    .recommended-tag {
+      right: 14px;
+      font-size: 10px;
+      padding: 3px 8px;
+    }
+
+    .grid {
+      grid-template-columns: 1fr;
+      gap: 22px;
+    }
+
+    .media {
+      min-height: 280px;
+      padding: 20px;
+    }
+
+    .media-shapes { margin-bottom: 14px; gap: 12px; }
+
+    .phone { width: 86px; height: 156px; }
+    .phone::before { width: 24px; }
+    .phone-lines { top: 22px; left: 9px; right: 9px; gap: 5px; }
+    .phone-lines span { height: 4px; }
+    .tube { width: 28px; height: 72px; }
+
+    .card { gap: 16px; }
+
+    .badges { gap: 6px; }
+
+    .badge {
+      font-size: 12px;
+      padding: 8px 12px;
+    }
+
+    .price-row { padding: 4px 0 12px; }
+    .price-main { font-size: 30px; }
+    .price-unit { font-size: 16px; }
+
+    .billing button {
+      padding: 12px 8px;
+      min-height: 44px;
+      font-size: 13px;
+    }
+
+    .save-badge { font-size: 10px; }
+
+    .qty-cta {
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .qty {
+      padding: 4px 6px;
+      gap: 4px;
+      flex: 0 0 auto;
+    }
+
+    .qty button {
+      width: 44px;
+      height: 44px;
+      font-size: 18px;
+    }
+
+    .qty span {
+      min-width: 24px;
+      font-size: 15px;
+    }
+
+    .cta {
+      flex: 1 1 180px;
+      min-height: 48px;
+      font-size: 15px;
+      padding: 14px 20px;
+    }
+
+    .terms { font-size: 12px; }
+
+    .scp-wrap {
+      margin-top: 28px;
+      padding-top: 24px;
+    }
+
+    .scp-arrow {
+      font-size: 13px;
+      margin-bottom: 14px;
+      padding: 0 4px;
+    }
+
+    .scp-card {
+      padding: 16px;
+      max-width: calc(100% + 8px);
+      margin-left: -4px;
+      margin-right: -4px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+
+    .scp-header {
+      font-size: 16px;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+    }
+
+    .scp-close,
+    .scp-remove {
+      width: 44px;
+      height: 44px;
+      font-size: 22px;
+    }
+
+    .scp-line { font-size: 14px; }
+
+    .scp-sub { padding: 12px; }
+    .scp-sub-top { font-size: 13px; }
+    .scp-sub-detail { font-size: 12px; }
+    .scp-sub-price { font-size: 13px; }
+
+    .scp-total { font-size: 15px; }
+    .scp-recurring-note { font-size: 11px; }
+
+    .scp-checkout {
+      padding: 14px;
+      min-height: 48px;
+      font-size: 14px;
+    }
+
+    .footnote {
+      font-size: 12px;
+      margin-top: 20px;
+      padding-top: 16px;
+    }
+  }
+
+  /* Very narrow phones (iPhone SE-ish at 320–360px) */
+  @media (max-width: 360px) {
+    .section { padding: 28px 16px; }
+    .headline { font-size: 26px; }
+    .primary-toggle button { padding: 12px 22px; font-size: 13px; }
+    .recommended-tag { right: 10px; }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="section">
+  <p class="eyebrow">Feno Membership</p>
+  <h1 class="headline">Everything you need, one membership</h1>
+  <p class="subhead">SmartBrush. Monthly foam. AI coaching. We ship it. You show up.</p>
+
+  <div class="toggle-wrap">
+    <span class="recommended-tag">Recommended</span>
+    <div class="primary-toggle" role="tablist">
+      <button id="tab-onetime" type="button" role="tab" aria-selected="false" onclick="setPrimary('onetime')">One Time</button>
+      <button class="active" id="tab-membership" type="button" role="tab" aria-selected="true" onclick="setPrimary('membership')">Membership</button>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="media">
+      <div class="media-inner">
+        <div class="media-shapes">
+          <div class="tube" aria-hidden="true"></div>
+          <div class="phone" aria-hidden="true">
+            <div class="phone-lines"><span></span><span></span><span></span><span></span><span></span></div>
+          </div>
+        </div>
+        Existing video / phone mockup<br>+ product imagery (unchanged)
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="badges">
+        <span class="badge">
+          <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2L4 6v6c0 5 4 9 8 10 4-1 8-5 8-10V6l-8-4z"/><path d="M9 12l2 2 4-4"/></svg>
+          Money Back
+        </span>
+        <span class="badge">
+          <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="1" y="6" width="15" height="11"/><path d="M16 11h4l3 3v3h-7"/><circle cx="6" cy="19" r="2"/><circle cx="19" cy="19" r="2"/></svg>
+          Free Shipping
+        </span>
+        <span class="badge">
+          <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M13 2L3 14h7v8l10-12h-7V2z"/></svg>
+          Ships Fast
+        </span>
+      </div>
+
+      <div class="price-row">
+        <p class="price-main"><span id="price-amount">$35</span><span class="price-unit" id="price-unit">/mo</span></p>
+        <p class="price-sub" id="price-sub">Everything included. Cancel anytime after SmartBrush is paid off.</p>
+      </div>
+
+      <div class="billing" id="billing">
+        <button class="active" type="button" onclick="setBilling('monthly')" id="bill-monthly">Monthly</button>
+        <button type="button" onclick="setBilling('annual')" id="bill-annual">Annual <span class="save-badge">Save ~25%</span></button>
+      </div>
+
+      <ul class="included" id="included"></ul>
+
+      <div class="qty-cta">
+        <div class="qty" aria-label="Quantity">
+          <button type="button" aria-label="Decrease quantity">−</button><span>1</span><button type="button" aria-label="Increase quantity">+</button>
+        </div>
+        <button class="cta" type="button" id="cta">Start My Membership</button>
+      </div>
+
+      <p class="terms" id="terms"></p>
+    </div>
+  </div>
+
+  <div class="scp-wrap hidden" id="scp-wrap">
+    <div class="scp-arrow">↓ Slide cart opens on Add to Cart (One Time only)</div>
+    <div class="scp-card">
+      <div class="scp-header">
+        <span>Your Cart</span>
+        <span class="scp-close" role="button" aria-label="Close cart" tabindex="0">×</span>
+      </div>
+      <div class="scp-line">
+        <div class="left">
+          <span class="item-name">SmartBrush Bundle</span>
+          <span class="item-detail">3 Feno Foam · 1 TrueFit Mouthpiece</span>
+        </div>
+        <span>$299</span>
+      </div>
+      <div class="scp-sub">
+        <div class="scp-sub-top">
+          <span><span class="scp-sub-auto">Auto-added</span>Quarterly Refills</span>
+          <span class="scp-remove" role="button" aria-label="Remove subscription" tabindex="0">×</span>
+        </div>
+        <div class="scp-sub-detail">3 Feno Foam tubes + 1 TrueFit Mouthpiece, shipped every 90 days. Cancel anytime.</div>
+        <div class="scp-sub-price">$65 / quarter · First charge in 90 days</div>
+      </div>
+      <div class="scp-totals">
+        <div class="scp-total">
+          <span>Today</span>
+          <span>$299</span>
+        </div>
+        <div class="scp-recurring-note">Then $65 every 90 days, starting 90 days from today.</div>
+      </div>
+      <button class="scp-checkout" type="button">Checkout</button>
+    </div>
+  </div>
+
+  <div class="footnote">Variant for ~20% traffic split test. Slide cart auto-subscribe wrapped behind feature flag (disable without redeploy).</div>
+</div>
+
+<script>
+  let primary = 'membership';
+  let billing = 'monthly';
+
+  function setPrimary(val) {
+    primary = val;
+    const onetime = document.getElementById('tab-onetime');
+    const membership = document.getElementById('tab-membership');
+    onetime.classList.toggle('active', val === 'onetime');
+    membership.classList.toggle('active', val === 'membership');
+    onetime.setAttribute('aria-selected', val === 'onetime');
+    membership.setAttribute('aria-selected', val === 'membership');
+    document.getElementById('scp-wrap').classList.toggle('hidden', val !== 'onetime');
+    render();
+  }
+
+  function setBilling(val) {
+    billing = val;
+    document.getElementById('bill-monthly').classList.toggle('active', val === 'monthly');
+    document.getElementById('bill-annual').classList.toggle('active', val === 'annual');
+    render();
+  }
+
+  function render() {
+    const billingEl = document.getElementById('billing');
+    const amount = document.getElementById('price-amount');
+    const unit = document.getElementById('price-unit');
+    const sub = document.getElementById('price-sub');
+    const cta = document.getElementById('cta');
+    const terms = document.getElementById('terms');
+    const list = document.getElementById('included');
+
+    if (primary === 'membership') {
+      billingEl.classList.remove('hidden');
+      if (billing === 'monthly') {
+        amount.textContent = '$35';
+        unit.textContent = '/mo';
+        sub.textContent = 'Everything included. Cancel anytime after SmartBrush is paid off.';
+      } else {
+        amount.textContent = '$360';
+        unit.textContent = '/yr';
+        sub.textContent = 'Save ~25%. Renews annually at the same rate.';
+      }
+      cta.textContent = 'Start My Membership';
+      terms.innerHTML = 'If you cancel before your SmartBrush is paid off, the remaining balance is due at cancellation. Once paid off, your membership continues for refills, mouthpieces, and Feno Plus app access until you cancel.';
+      list.innerHTML = '<li><span class="check">✓</span>SmartBrush device</li><li><span class="check">✓</span>3 Feno Foam tubes per quarter</li><li><span class="check">✓</span>1 TrueFit Mouthpiece per quarter</li><li><span class="check">✓</span>Feno Plus premium app</li>';
+    } else {
+      billingEl.classList.add('hidden');
+      amount.textContent = '$299';
+      unit.textContent = '';
+      sub.textContent = 'One-time purchase. SmartBrush bundle.';
+      cta.textContent = 'Add to Cart';
+      terms.innerHTML = 'Includes SmartBrush, 3 Feno Foam tubes, and 1 TrueFit Mouthpiece. Slide cart will auto-add a $65/quarter refill subscription on Add to Cart (preview below).';
+      list.innerHTML = '<li><span class="check">✓</span>SmartBrush device</li><li><span class="check">✓</span>3 Feno Foam tubes</li><li><span class="check">✓</span>1 TrueFit Mouthpiece</li>';
+    }
+  }
+
+  render();
+</script>
+
+</body>
+</html>
