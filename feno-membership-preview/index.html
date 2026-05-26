@@ -827,42 +827,48 @@
     .media { min-height: 400px; }
   }
 
-  /* Mobile */
+  /* Mobile — content-first layout, offer above the fold */
   @media (max-width: 768px) {
     body { padding: 0; }
-    .section { padding: 32px 20px; border-radius: 0; }
-    .eyebrow { margin-bottom: 10px; }
-    .headline { font-size: 27px; line-height: 1.18; margin-bottom: 12px; }
-    .subhead { font-size: 14px; margin-bottom: 26px; padding: 0 4px; }
-    .toggle-wrap { margin: 0 auto 26px; padding-top: 14px; }
+    .section { padding: 22px 18px 28px; border-radius: 0; }
+    .eyebrow { margin-bottom: 4px; font-size: 12px; }
+    .headline { font-size: 24px; line-height: 1.18; margin-bottom: 6px; }
+    .subhead { font-size: 13px; margin-bottom: 18px; padding: 0 4px; }
+    .toggle-wrap { margin: 0 auto 18px; padding-top: 14px; }
     .primary-toggle { padding: 4px; }
-    .primary-toggle button { padding: 12px 26px; min-height: 44px; font-size: 14px; }
+    .primary-toggle button { padding: 11px 24px; min-height: 44px; font-size: 14px; }
     .recommended-tag { right: 14px; font-size: 10px; padding: 3px 8px; }
-    .grid { grid-template-columns: 1fr; gap: 22px; }
-    .media { min-height: 280px; padding: 20px; }
-    .media-shapes { margin-bottom: 14px; gap: 12px; }
-    .phone { width: 86px; height: 156px; }
-    .phone::before { width: 24px; }
-    .phone-lines { top: 22px; left: 9px; right: 9px; gap: 5px; }
-    .phone-lines span { height: 4px; }
-    .tube { width: 28px; height: 72px; }
-    .card { gap: 14px; }
+
+    /* Stack + swap: offer card above the media on mobile */
+    .grid { grid-template-columns: 1fr; gap: 16px; }
+    .card { order: 1; gap: 12px; }
+    .media { order: 2; min-height: 160px; padding: 16px; }
+    .media-shapes { margin-bottom: 8px; gap: 10px; }
+    .phone { width: 60px; height: 108px; }
+    .phone::before { width: 20px; height: 3px; top: 6px; }
+    .phone-lines { top: 16px; left: 7px; right: 7px; gap: 4px; }
+    .phone-lines span { height: 3px; }
+    .tube { width: 22px; height: 56px; }
+    .media-inner { font-size: 12px; }
+
     .badges { gap: 6px; }
-    .badge { font-size: 12px; padding: 8px 12px; }
-    .price-row { padding: 2px 0 6px; }
+    .badge { font-size: 12px; padding: 7px 11px; }
+    .price-row { padding: 0 0 4px; }
     .price-main { font-size: 30px; }
     .price-unit { font-size: 16px; }
-    .billing button { padding: 12px 8px; min-height: 44px; font-size: 13px; }
+    .price-sub { font-size: 12px; margin-top: 4px; }
+    .billing button { padding: 11px 8px; min-height: 44px; font-size: 13px; }
     .save-badge { font-size: 10px; }
-    .addon { padding: 14px; }
-    .addon__title { font-size: 14px; }
+    .included li { font-size: 13px; }
+    .addon { padding: 12px; }
+    .addon__title { font-size: 13px; gap: 6px; }
     .addon__sub { font-size: 12px; }
-    .qty-cta { flex-wrap: wrap; gap: 12px; margin-top: 2px; }
+    .qty-cta { flex-wrap: wrap; gap: 10px; margin-top: 2px; }
     .qty { padding: 4px 6px; gap: 4px; flex: 0 0 auto; }
     .qty button { width: 44px; height: 44px; font-size: 18px; }
     .qty span { min-width: 24px; font-size: 15px; }
-    .cta { flex: 1 1 180px; min-height: 48px; font-size: 15px; padding: 14px 20px; }
-    .terms { font-size: 12px; }
+    .cta { flex: 1 1 170px; min-height: 48px; font-size: 15px; padding: 13px 20px; }
+    .terms { font-size: 11px; margin-top: 2px; }
 
     /* Bottom sheet drawer */
     .cart-drawer {
@@ -885,7 +891,7 @@
     .upsell-title { font-size: 20px; }
     .confirm-title { font-size: 22px; }
 
-    .footnote { font-size: 12px; margin-top: 20px; padding-top: 16px; }
+    .footnote { font-size: 11px; margin-top: 14px; padding-top: 12px; line-height: 1.5; }
   }
 
   /* Very narrow */
