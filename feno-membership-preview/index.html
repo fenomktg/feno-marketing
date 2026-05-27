@@ -1133,41 +1133,41 @@
     </div>
 
     <div class="pp-card pp-upsell hidden" id="pp-upsell-qr">
-      <p class="pp-upsell__eyebrow">One-click add · <span class="pp-upsell__savings">Save $30 on first refill</span></p>
-      <h2 class="pp-upsell__title">Want refills handled for you?</h2>
-      <p class="pp-upsell__body">3 Feno Foam tubes and 1 TrueFit Mouthpiece, shipped every 90 days. Keeps your Smartbrush scanner accurate.</p>
+      <p class="pp-upsell__eyebrow">One-click add · <span class="pp-upsell__savings">Save $30 today</span></p>
+      <h2 class="pp-upsell__title">Add refills, save $30 on your order</h2>
+      <p class="pp-upsell__body">3 Feno Foam tubes and 1 TrueFit Mouthpiece shipped every 90 days. Adds the $30 first-order bonus to today's total.</p>
       <div class="pp-upsell__product">
         <div class="pp-upsell__thumb" aria-hidden="true">refill</div>
         <div style="flex:1;min-width:0">
-          <div class="pp-upsell__name">Quarterly Refills <span class="pp-upsell__deal-badge">Save $30</span></div>
+          <div class="pp-upsell__name">Quarterly Refills <span class="pp-upsell__deal-badge">−$30 today</span></div>
           <div class="pp-upsell__detail">3 Feno Foam · 1 TrueFit Mouthpiece<br>Ships every 90 days · Cancel anytime</div>
         </div>
-        <div class="pp-upsell__price"><s>$65</s> $35<small>first refill, then $65/qtr</small></div>
+        <div class="pp-upsell__price">$65<small>per quarter, starts in 90 days</small></div>
       </div>
       <div class="pp-upsell__cta-row">
         <button type="button" class="pp-upsell__accept" id="pp-qr-accept">Add to my order · Save $30</button>
         <button type="button" class="pp-upsell__decline" id="pp-qr-decline">No thanks</button>
       </div>
-      <p class="pp-upsell__note">Charged with your existing payment method. First refill in 90 days at the discounted rate.</p>
+      <p class="pp-upsell__note">$30 first-order bonus credited to your card. First refill ships in 90 days.</p>
     </div>
 
     <div class="pp-card pp-upsell hidden" id="pp-upsell-app">
-      <p class="pp-upsell__eyebrow">One-click add · <span class="pp-upsell__savings">First month free</span></p>
+      <p class="pp-upsell__eyebrow">One-click add · <span class="pp-upsell__savings">Add for $10/mo</span></p>
       <h2 class="pp-upsell__title">See your biomarkers, not just your brushing</h2>
       <p class="pp-upsell__body">Your Smartbrush captures the scan. Feno Premium turns it into a tongue + teeth biomarker dashboard you can share with your dentist.</p>
       <div class="pp-upsell__product">
         <div class="pp-upsell__thumb" aria-hidden="true">app</div>
         <div style="flex:1;min-width:0">
-          <div class="pp-upsell__name">Feno Premium <span class="pp-upsell__deal-badge">1st month free</span></div>
+          <div class="pp-upsell__name">Feno Premium</div>
           <div class="pp-upsell__detail">AI coaching · biomarker dashboards<br>Dentist sync · cancel anytime</div>
         </div>
-        <div class="pp-upsell__price"><s>$10</s> Free<small>first month, then $10/mo</small></div>
+        <div class="pp-upsell__price">$10<small>per month</small></div>
       </div>
       <div class="pp-upsell__cta-row">
-        <button type="button" class="pp-upsell__accept" id="pp-app-accept">Add to my order · First month free</button>
+        <button type="button" class="pp-upsell__accept" id="pp-app-accept">Add to my order · $10/mo</button>
         <button type="button" class="pp-upsell__decline" id="pp-app-decline">No thanks</button>
       </div>
-      <p class="pp-upsell__note">Charged with your existing payment method after the first 30 days.</p>
+      <p class="pp-upsell__note">Charged $10 today, then $10/month with your existing payment method.</p>
     </div>
 
     <div class="pp-card">
@@ -1510,44 +1510,28 @@
     document.body.classList.remove('lock-scroll');
     [ppUpsellQr, ppUpsellApp].forEach(el => el.classList.remove('pp-upsell--added'));
     ppQrAccept.disabled = false; ppQrAccept.textContent = 'Add to my order · Save $30';
-    ppAppAccept.disabled = false; ppAppAccept.textContent = 'Add to my order · First month free';
+    ppAppAccept.disabled = false; ppAppAccept.textContent = 'Add to my order · $10/mo';
     if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
   }
   function renderPostPurchase() {
     ppUpsellQr.classList.toggle('hidden', qrAdded);
     ppUpsellApp.classList.toggle('hidden', appAdded);
 
+    // Unified math: same line items + discounts whether added in cart or accepted post-purchase
     let html = '';
     html += '<div class="pp-row"><span>Smartbrush Bundle</span><span>$299.00</span></div>';
-    if (qrAdded) {
-      const qrLabel = qrFromPostPurchase ? 'Quarterly Refills · $35 first, then $65/qtr' : 'Quarterly Refills · $65/qtr';
-      html += '<div class="pp-row pp-row--muted"><span>' + qrLabel + '</span><span>$0.00 today</span></div>';
-    }
-    if (appAdded) {
-      const appLabel = appFromPostPurchase ? 'Feno Premium · 1st month free, then $10/mo' : 'Feno Premium · $10/mo';
-      const appToday = appFromPostPurchase ? '$0.00 today' : '$10.00 today';
-      html += '<div class="pp-row pp-row--muted"><span>' + appLabel + '</span><span>' + appToday + '</span></div>';
-    }
+    if (qrAdded) html += '<div class="pp-row pp-row--muted"><span>Quarterly Refills · $65/qtr</span><span>$0.00 today</span></div>';
+    if (appAdded) html += '<div class="pp-row pp-row--muted"><span>Feno Premium · $10/mo</span><span>$10.00 today</span></div>';
     if (qrDiscountEarned) html += '<div class="pp-row pp-row--discount"><span>First-order bonus</span><span>−$30.00</span></div>';
     if (bundleSavingsEarned) html += '<div class="pp-row pp-row--discount"><span>Bundle savings</span><span>−$15.00</span></div>';
-    if (qrFromPostPurchase) html += '<div class="pp-row pp-row--discount"><span>Refills savings (first refill)</span><span>−$30.00 later</span></div>';
-    if (appFromPostPurchase) html += '<div class="pp-row pp-row--discount"><span>Feno Premium first month</span><span>Free</span></div>';
     html += '<div class="pp-row pp-row--muted"><span>Shipping</span><span>Free</span></div>';
-    // Today total: if app was added at post-purchase (free first month), don't charge $10 today
-    const todayAppDelta = (appAdded && appFromPostPurchase) ? -10 : 0;
-    const finalToday = todayTotal() + todayAppDelta;
-    html += '<div class="pp-row pp-row--total"><span>Charged today</span><span>' + moneyDecimal(finalToday) + '</span></div>';
+    html += '<div class="pp-row pp-row--total"><span>Charged today</span><span>' + moneyDecimal(todayTotal()) + '</span></div>';
     ppSummary.innerHTML = html;
 
+    // Future charges: just recurring schedule, no extra incentive framing
     let futureHtml = '';
-    if (qrAdded) {
-      const qrFut = qrFromPostPurchase ? '$35 (first refill, save $30) · then $65 every 90 days' : '$65 every 90 days';
-      futureHtml += '<div class="pp-row pp-row--muted"><span>Quarterly Refills</span><span>' + qrFut + '</span></div>';
-    }
-    if (appAdded) {
-      const appFut = appFromPostPurchase ? 'Free for 30 days · then $10/month' : '$10 every month';
-      futureHtml += '<div class="pp-row pp-row--muted"><span>Feno Premium</span><span>' + appFut + '</span></div>';
-    }
+    if (qrAdded) futureHtml += '<div class="pp-row pp-row--muted"><span>Quarterly Refills</span><span>$65 every 90 days</span></div>';
+    if (appAdded) futureHtml += '<div class="pp-row pp-row--muted"><span>Feno Premium</span><span>$10 every month</span></div>';
     ppFuture.innerHTML = futureHtml;
     ppFutureCard.classList.toggle('hidden', !qrAdded && !appAdded);
 
@@ -1560,16 +1544,19 @@
   ppQrAccept.addEventListener('click', () => {
     qrAdded = true;
     qrFromPostPurchase = true;
+    qrDiscountEarned = true;
+    bundleSavingsEarned = qrAdded && appAdded;
     renderPostPurchase();
-    ppQrAccept.disabled = true; ppQrAccept.textContent = '✓ Added · $30 saved';
+    ppQrAccept.disabled = true; ppQrAccept.textContent = '✓ Added · $30 off today';
     ppUpsellQr.classList.add('pp-upsell--added');
   });
   ppQrDecline.addEventListener('click', () => ppUpsellQr.classList.add('hidden'));
   ppAppAccept.addEventListener('click', () => {
     appAdded = true;
     appFromPostPurchase = true;
+    bundleSavingsEarned = qrAdded && appAdded;
     renderPostPurchase();
-    ppAppAccept.disabled = true; ppAppAccept.textContent = '✓ Added · first month free';
+    ppAppAccept.disabled = true; ppAppAccept.textContent = '✓ Added · $10/mo';
     ppUpsellApp.classList.add('pp-upsell--added');
   });
   ppAppDecline.addEventListener('click', () => ppUpsellApp.classList.add('hidden'));
