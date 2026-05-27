@@ -4,7 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#E8E8E8">
-<title>Feno — Diagnostic-grade oral care</title>
+<title>Feno Demo · Monthly Pass vs One Time · UI/UX Preview</title>
+<meta name="description" content="UX preview of the Feno offer page: pull-up plans sheet, slide cart with refills + Feno Plus upsells, Shopify-style checkout, and post-purchase one-click upsells.">
+<meta property="og:title" content="Feno Demo · Monthly Pass vs One Time · UI/UX">
+<meta property="og:description" content="Walk the membership vs one-time flow, slide-cart upsells, checkout simulation, and post-purchase upsell screen.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://feno-membership-preview.vercel.app">
+<meta name="twitter:card" content="summary">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -342,7 +348,10 @@
   .pp-card { background: #FFFFFF; border: 1px solid #E1E1E1; border-radius: 12px; padding: 24px; margin-bottom: 16px; }
   .pp-card__title { font-size: 15px; font-weight: 600; margin-bottom: 14px; color: #1A1A1A; }
   .pp-upsell { background: linear-gradient(180deg, #F8FBFD 0%, #F4FBF6 100%); border: 1.5px solid #185FA5; box-shadow: 0 6px 24px rgba(24, 95, 165, 0.08); }
-  .pp-upsell__eyebrow { font-size: 11px; font-weight: 700; color: #185FA5; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+  .pp-upsell__eyebrow { font-size: 11px; font-weight: 700; color: #185FA5; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .pp-upsell__savings { color: #1D9E75; text-transform: uppercase; letter-spacing: 0.1em; }
+  .pp-upsell__deal-badge { background: #C0DD97; color: #173404; font-size: 10px; padding: 2px 7px; border-radius: 999px; font-weight: 700; letter-spacing: 0.02em; margin-left: 4px; }
+  .pp-upsell__price s { color: #888; font-weight: 500; margin-right: 4px; font-size: 13px; }
   .pp-upsell__title { font-family: Georgia, serif; font-size: 22px; line-height: 1.25; margin-bottom: 8px; color: #1A1A1A; }
   .pp-upsell__body { font-size: 14px; color: #4A4A4A; margin-bottom: 18px; line-height: 1.5; }
   .pp-upsell__product { background: #FFFFFF; border: 1px solid #E1E1E1; border-radius: 8px; padding: 14px; margin-bottom: 18px; display: flex; gap: 14px; align-items: flex-start; }
@@ -371,6 +380,148 @@
   .hidden { display: none !important; }
   .desktop-only { display: initial; }
   .mobile-only { display: none; }
+
+  /* === Disclaimer modal === */
+  .disclaimer-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(15, 18, 22, 0.7);
+    z-index: 9998;
+    opacity: 0;
+    pointer-events: none;
+    -webkit-backdrop-filter: blur(0px);
+    backdrop-filter: blur(0px);
+    transition: opacity 0.3s ease, backdrop-filter 0.3s ease, -webkit-backdrop-filter 0.3s ease;
+  }
+  .disclaimer-backdrop.show { opacity: 1; pointer-events: auto; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+
+  .disclaimer-modal {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(0.96);
+    background: #FFFFFF;
+    border-radius: 18px;
+    padding: 28px 26px 26px;
+    max-width: 460px;
+    width: calc(100% - 32px);
+    z-index: 9999;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.35), 0 4px 12px rgba(0,0,0,0.1);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+    max-height: 92vh;
+    overflow-y: auto;
+  }
+  .disclaimer-modal.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  .disclaimer-eyebrow {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #888;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .disclaimer-title {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 10px;
+    color: #1A1A1A;
+  }
+  .disclaimer-body {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+  .disclaimer-steps {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 18px;
+    counter-reset: step;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .disclaimer-steps li {
+    display: flex;
+    gap: 12px;
+    font-size: 13px;
+    color: #4A4A4A;
+    line-height: 1.5;
+    counter-increment: step;
+  }
+  .disclaimer-steps li::before {
+    content: counter(step);
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    background: #1A1A1A;
+    color: white;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .disclaimer-steps strong { color: #1A1A1A; }
+  .disclaimer-check {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding: 12px;
+    background: #FAFBFC;
+    border: 1px solid #E1E1E1;
+    border-radius: 10px;
+    font-size: 13px;
+    color: #1A1A1A;
+    cursor: pointer;
+    user-select: none;
+    line-height: 1.4;
+  }
+  .disclaimer-check input { width: 18px; height: 18px; accent-color: #1A1A1A; flex-shrink: 0; margin-top: 1px; }
+  .disclaimer-btn {
+    width: 100%;
+    background: #1A1A1A;
+    color: white;
+    border: none;
+    border-radius: 999px;
+    padding: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    min-height: 48px;
+    transition: background 0.15s ease, opacity 0.15s ease;
+  }
+  .disclaimer-btn:disabled { background: #C5C5C5; cursor: not-allowed; opacity: 0.7; }
+  .disclaimer-btn:not(:disabled):hover { background: #000; }
+  .disclaimer-replay {
+    position: fixed;
+    bottom: 14px;
+    right: 14px;
+    z-index: 80;
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.95);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border: 1px solid #E1E1E1;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    color: #6B6B6B;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .disclaimer-replay:hover { background: #FFFFFF; color: #1A1A1A; }
 
   /* === Mobile plan cards (between hero and sticky/footer) === */
   .plan-cards { display: none; }
@@ -455,6 +606,39 @@
   .plan-card--featured .plan-card__cta:hover { background: #000; }
   .plan-card:not(.plan-card--featured) .plan-card__cta:hover { background: #1A1A1A; color: #FFFFFF; }
 
+  .plan-card__expand {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow: hidden;
+    max-height: 600px;
+    transition: max-height 0.3s ease, opacity 0.2s ease;
+  }
+  .plan-card__chevron {
+    display: none;
+    margin-left: auto;
+    color: #888;
+    font-size: 13px;
+    transition: transform 0.2s ease;
+  }
+  .plan-card--collapsed {
+    padding: 14px 16px;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+  }
+  .plan-card--collapsed .plan-card__badge { display: none; }
+  .plan-card--collapsed .plan-card__expand { max-height: 0; opacity: 0; pointer-events: none; margin: 0; }
+  .plan-card--collapsed .plan-card__chevron { display: inline; }
+  .plan-card--collapsed .plan-card__name { margin: 0; font-size: 11px; }
+  .plan-card--collapsed .plan-card__price {
+    margin: 0;
+    font-size: 20px;
+    margin-left: 2px;
+  }
+  .plan-card--collapsed .plan-card__unit { font-size: 12px; }
+
   .plan-or {
     display: flex;
     align-items: center;
@@ -491,12 +675,13 @@
   /* === Mobile: visual hero + plan cards + pull-up sheet === */
   @media (max-width: 768px) {
     body { padding: 0; }
-    .section { padding: 18px 16px 24px; border-radius: 0; }
-    .plan-cards { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
-    .main-trust { display: block; }
-    .eyebrow { font-size: 11px; margin-bottom: 6px; letter-spacing: 0.08em; text-transform: uppercase; color: #888; }
-    .headline { font-size: 26px; line-height: 1.16; margin-bottom: 8px; }
-    .subhead { font-size: 13.5px; margin-bottom: 12px; padding: 0 4px; line-height: 1.5; }
+    .section { padding: 14px 16px 20px; border-radius: 0; }
+    .plan-cards { display: flex; flex-direction: column; gap: 6px; margin-top: 2px; }
+    .plan-or { margin: 0; }
+    .main-trust { display: block; margin: 8px 0 8px; }
+    .eyebrow { font-size: 10.5px; margin-bottom: 4px; letter-spacing: 0.08em; text-transform: uppercase; color: #888; }
+    .headline { font-size: 22px; line-height: 1.18; margin-bottom: 6px; }
+    .subhead { font-size: 13px; margin-bottom: 8px; padding: 0 4px; line-height: 1.45; }
 
     /* Toggle hidden on main view (lives inside the sheet) */
     .toggle-wrap { display: none; }
@@ -505,19 +690,20 @@
     .grid { grid-template-columns: 1fr; gap: 0; }
     .card { display: none; }
 
-    /* Visual hero */
+    /* Visual hero — compact on mobile so both plan cards fit */
     .media {
-      min-height: 280px;
-      padding: 22px;
+      min-height: 200px;
+      padding: 16px;
       background: linear-gradient(155deg, #FFFFFF 0%, #ECEEF1 100%);
     }
-    .media-shapes { margin-bottom: 14px; gap: 14px; }
-    .phone { width: 100px; height: 180px; }
-    .phone::before { width: 30px; height: 4px; top: 8px; }
-    .phone-lines { top: 24px; left: 10px; right: 10px; gap: 6px; }
-    .tube { width: 32px; height: 88px; }
-    .media-inner { font-size: 12px; }
-    .media-placeholder-note { font-size: 10px; opacity: 0.7; }
+    .media-shapes { margin-bottom: 8px; gap: 12px; }
+    .phone { width: 78px; height: 140px; }
+    .phone::before { width: 24px; height: 3px; top: 6px; }
+    .phone-lines { top: 18px; left: 8px; right: 8px; gap: 5px; }
+    .phone-lines span { height: 4px; }
+    .tube { width: 26px; height: 68px; }
+    .media-inner { font-size: 11px; }
+    .media-placeholder-note { font-size: 10px; opacity: 0.65; }
 
     /* Sticky main CTA disabled — plan cards take over */
     .m-main-cta { display: none; }
@@ -656,35 +842,62 @@
 
   <!-- Mobile-only plan cards -->
   <div class="plan-cards" aria-label="Choose your plan">
-    <button class="plan-card plan-card--featured" type="button" onclick="openSheetWith('membership')">
+    <button class="plan-card plan-card--featured" type="button" data-plan="membership" onclick="onPlanCardClick('membership')">
       <span class="plan-card__badge">Best value</span>
       <span class="plan-card__name">Membership</span>
       <p class="plan-card__price"><span>$40</span><span class="plan-card__unit">/mo</span></p>
-      <p class="plan-card__price-anchor">$30/mo billed annually · or $360/yr</p>
-      <p class="plan-card__tagline">Smartbrush + quarterly refills + Feno Plus, all in.</p>
-      <ul class="plan-card__bullets">
-        <li>Smartbrush (brush + scanner)</li>
-        <li>3 Foam + 1 Mouthpiece every 90 days</li>
-        <li>Feno Plus — biomarkers + dentist sync</li>
-      </ul>
-      <span class="plan-card__cta">Choose Membership</span>
+      <span class="plan-card__chevron" aria-hidden="true">▾</span>
+      <div class="plan-card__expand">
+        <p class="plan-card__price-anchor">$30/mo billed annually · or $360/yr</p>
+        <p class="plan-card__tagline">Smartbrush + quarterly refills + Feno Plus, all in.</p>
+        <ul class="plan-card__bullets">
+          <li>Smartbrush (brush + scanner)</li>
+          <li>3 Foam + 1 Mouthpiece every 90 days</li>
+          <li>Feno Plus — biomarkers + dentist sync</li>
+        </ul>
+        <span class="plan-card__cta">Choose Membership</span>
+      </div>
     </button>
 
     <div class="plan-or" aria-hidden="true"><span>or</span></div>
 
-    <button class="plan-card" type="button" onclick="openSheetWith('onetime')">
+    <button class="plan-card" type="button" data-plan="onetime" onclick="onPlanCardClick('onetime')">
       <span class="plan-card__name">One Time</span>
       <p class="plan-card__price"><span>$299</span></p>
-      <p class="plan-card__tagline">Smartbrush bundle, yours to keep.</p>
-      <ul class="plan-card__bullets">
-        <li>Smartbrush (brush + scanner)</li>
-        <li>3 Feno Foam + 1 TrueFit Mouthpiece</li>
-        <li>Free Feno app · upgrade for biomarkers</li>
-      </ul>
-      <span class="plan-card__cta">Choose One Time</span>
+      <span class="plan-card__chevron" aria-hidden="true">▾</span>
+      <div class="plan-card__expand">
+        <p class="plan-card__tagline">Smartbrush bundle, yours to keep.</p>
+        <ul class="plan-card__bullets">
+          <li>Smartbrush (brush + scanner)</li>
+          <li>3 Feno Foam + 1 TrueFit Mouthpiece</li>
+          <li>Free Feno app · upgrade for biomarkers</li>
+        </ul>
+        <span class="plan-card__cta">Choose One Time</span>
+      </div>
     </button>
   </div>
 </div>
+
+<!-- Demo disclaimer modal -->
+<div class="disclaimer-backdrop" id="disclaimer-backdrop" aria-hidden="true"></div>
+<div class="disclaimer-modal" id="disclaimer-modal" role="dialog" aria-modal="true" aria-labelledby="disclaimer-title" aria-hidden="true">
+  <p class="disclaimer-eyebrow">Demo · UI/UX Preview</p>
+  <h2 class="disclaimer-title" id="disclaimer-title">Walk the offer flow</h2>
+  <p class="disclaimer-body">This is a wireframe demo, not a live store. Try it like a real shopper:</p>
+  <ol class="disclaimer-steps">
+    <li>Pick a plan. <strong>One Time</strong> shows the full upsell ladder.</li>
+    <li>In the slide cart, two upsells appear: <strong>Quarterly Refills</strong> + <strong>Feno Plus</strong>. Skip them to see what happens.</li>
+    <li>Hit <strong>Checkout</strong> — Shopify-style form, pre-filled. Just press <strong>Place Order</strong>.</li>
+    <li><strong>Post-purchase</strong> shows one-click upsells for anything you skipped — with their own incentives.</li>
+  </ol>
+  <label class="disclaimer-check">
+    <input type="checkbox" id="disclaimer-check-input">
+    <span>I understand this is a demo — flows simulate Shopify but no real charges happen.</span>
+  </label>
+  <button class="disclaimer-btn" type="button" id="disclaimer-btn" disabled>Got it — explore</button>
+</div>
+
+<button class="disclaimer-replay" type="button" id="disclaimer-replay" aria-label="Re-read demo intro" title="Re-read demo intro">?</button>
 
 <!-- Mobile main-view sticky CTA (unused now that plan cards exist; kept for desktop fallback) -->
 <div class="m-main-cta">
@@ -929,41 +1142,41 @@
     </div>
 
     <div class="pp-card pp-upsell hidden" id="pp-upsell-qr">
-      <p class="pp-upsell__eyebrow">One last thing · one-click add</p>
+      <p class="pp-upsell__eyebrow">One-click add · <span class="pp-upsell__savings">Save $30 on first refill</span></p>
       <h2 class="pp-upsell__title">Want refills handled for you?</h2>
       <p class="pp-upsell__body">3 Feno Foam tubes and 1 TrueFit Mouthpiece, shipped every 90 days. Keeps your Smartbrush scanner accurate.</p>
       <div class="pp-upsell__product">
         <div class="pp-upsell__thumb" aria-hidden="true">refill</div>
         <div style="flex:1;min-width:0">
-          <div class="pp-upsell__name">Quarterly Refills</div>
+          <div class="pp-upsell__name">Quarterly Refills <span class="pp-upsell__deal-badge">Save $30</span></div>
           <div class="pp-upsell__detail">3 Feno Foam · 1 TrueFit Mouthpiece<br>Ships every 90 days · Cancel anytime</div>
         </div>
-        <div class="pp-upsell__price">$65<small>per quarter</small></div>
+        <div class="pp-upsell__price"><s>$65</s> $35<small>first refill, then $65/qtr</small></div>
       </div>
       <div class="pp-upsell__cta-row">
-        <button type="button" class="pp-upsell__accept" id="pp-qr-accept">Add to my order</button>
+        <button type="button" class="pp-upsell__accept" id="pp-qr-accept">Add to my order · Save $30</button>
         <button type="button" class="pp-upsell__decline" id="pp-qr-decline">No thanks</button>
       </div>
-      <p class="pp-upsell__note">Charged with your existing payment method. First charge in 90 days.</p>
+      <p class="pp-upsell__note">Charged with your existing payment method. First refill in 90 days at the discounted rate.</p>
     </div>
 
     <div class="pp-card pp-upsell hidden" id="pp-upsell-app">
-      <p class="pp-upsell__eyebrow">One-click add · Feno Plus</p>
+      <p class="pp-upsell__eyebrow">One-click add · <span class="pp-upsell__savings">First month free</span></p>
       <h2 class="pp-upsell__title">See your biomarkers, not just your brushing</h2>
       <p class="pp-upsell__body">Your Smartbrush captures the scan. Feno Plus turns it into a tongue + teeth biomarker dashboard you can share with your dentist.</p>
       <div class="pp-upsell__product">
         <div class="pp-upsell__thumb" aria-hidden="true">app</div>
         <div style="flex:1;min-width:0">
-          <div class="pp-upsell__name">Feno Plus</div>
+          <div class="pp-upsell__name">Feno Plus <span class="pp-upsell__deal-badge">1st month free</span></div>
           <div class="pp-upsell__detail">AI coaching · biomarker dashboards<br>Dentist sync · cancel anytime</div>
         </div>
-        <div class="pp-upsell__price">$10<small>per month</small></div>
+        <div class="pp-upsell__price"><s>$10</s> Free<small>first month, then $10/mo</small></div>
       </div>
       <div class="pp-upsell__cta-row">
-        <button type="button" class="pp-upsell__accept" id="pp-app-accept">Add to my order</button>
+        <button type="button" class="pp-upsell__accept" id="pp-app-accept">Add to my order · First month free</button>
         <button type="button" class="pp-upsell__decline" id="pp-app-decline">No thanks</button>
       </div>
-      <p class="pp-upsell__note">Charged with your existing payment method. Billed monthly until cancelled.</p>
+      <p class="pp-upsell__note">Charged with your existing payment method after the first 30 days.</p>
     </div>
 
     <div class="pp-card">
@@ -994,6 +1207,8 @@
   let qrDiscountEarned = false;
   let bundleSavingsEarned = false;
   let qrCheckedUpfront = false;
+  let qrFromPostPurchase = false;
+  let appFromPostPurchase = false;
   let lastFocused = null;
   let cameFromSheet = false;
 
@@ -1226,6 +1441,9 @@
 
   // --- Checkout
   function openCheckout() {
+    // Fresh round of post-purchase decisions on next confirmation
+    qrFromPostPurchase = false;
+    appFromPostPurchase = false;
     renderCheckoutSummary();
     coOverlay.classList.add('open');
     coOverlay.setAttribute('aria-hidden', 'false');
@@ -1300,8 +1518,8 @@
     ppOverlay.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('lock-scroll');
     [ppUpsellQr, ppUpsellApp].forEach(el => el.classList.remove('pp-upsell--added'));
-    ppQrAccept.disabled = false; ppQrAccept.textContent = 'Add to my order';
-    ppAppAccept.disabled = false; ppAppAccept.textContent = 'Add to my order';
+    ppQrAccept.disabled = false; ppQrAccept.textContent = 'Add to my order · Save $30';
+    ppAppAccept.disabled = false; ppAppAccept.textContent = 'Add to my order · First month free';
     if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
   }
   function renderPostPurchase() {
@@ -1310,17 +1528,35 @@
 
     let html = '';
     html += '<div class="pp-row"><span>Smartbrush Bundle</span><span>$299.00</span></div>';
-    if (qrAdded) html += '<div class="pp-row pp-row--muted"><span>Quarterly Refills · $65/qtr</span><span>$0.00 today</span></div>';
-    if (appAdded) html += '<div class="pp-row pp-row--muted"><span>Feno Plus · $10/mo</span><span>$10.00 today</span></div>';
+    if (qrAdded) {
+      const qrLabel = qrFromPostPurchase ? 'Quarterly Refills · $35 first, then $65/qtr' : 'Quarterly Refills · $65/qtr';
+      html += '<div class="pp-row pp-row--muted"><span>' + qrLabel + '</span><span>$0.00 today</span></div>';
+    }
+    if (appAdded) {
+      const appLabel = appFromPostPurchase ? 'Feno Plus · 1st month free, then $10/mo' : 'Feno Plus · $10/mo';
+      const appToday = appFromPostPurchase ? '$0.00 today' : '$10.00 today';
+      html += '<div class="pp-row pp-row--muted"><span>' + appLabel + '</span><span>' + appToday + '</span></div>';
+    }
     if (qrDiscountEarned) html += '<div class="pp-row pp-row--discount"><span>First-order bonus</span><span>−$30.00</span></div>';
     if (bundleSavingsEarned) html += '<div class="pp-row pp-row--discount"><span>Bundle savings</span><span>−$15.00</span></div>';
+    if (qrFromPostPurchase) html += '<div class="pp-row pp-row--discount"><span>Refills savings (first refill)</span><span>−$30.00 later</span></div>';
+    if (appFromPostPurchase) html += '<div class="pp-row pp-row--discount"><span>Feno Plus first month</span><span>Free</span></div>';
     html += '<div class="pp-row pp-row--muted"><span>Shipping</span><span>Free</span></div>';
-    html += '<div class="pp-row pp-row--total"><span>Charged today</span><span>' + moneyDecimal(todayTotal()) + '</span></div>';
+    // Today total: if app was added at post-purchase (free first month), don't charge $10 today
+    const todayAppDelta = (appAdded && appFromPostPurchase) ? -10 : 0;
+    const finalToday = todayTotal() + todayAppDelta;
+    html += '<div class="pp-row pp-row--total"><span>Charged today</span><span>' + moneyDecimal(finalToday) + '</span></div>';
     ppSummary.innerHTML = html;
 
     let futureHtml = '';
-    if (qrAdded) futureHtml += '<div class="pp-row pp-row--muted"><span>Quarterly Refills</span><span>$65 every 90 days</span></div>';
-    if (appAdded) futureHtml += '<div class="pp-row pp-row--muted"><span>Feno Plus</span><span>$10 every month</span></div>';
+    if (qrAdded) {
+      const qrFut = qrFromPostPurchase ? '$35 (first refill, save $30) · then $65 every 90 days' : '$65 every 90 days';
+      futureHtml += '<div class="pp-row pp-row--muted"><span>Quarterly Refills</span><span>' + qrFut + '</span></div>';
+    }
+    if (appAdded) {
+      const appFut = appFromPostPurchase ? 'Free for 30 days · then $10/month' : '$10 every month';
+      futureHtml += '<div class="pp-row pp-row--muted"><span>Feno Plus</span><span>' + appFut + '</span></div>';
+    }
     ppFuture.innerHTML = futureHtml;
     ppFutureCard.classList.toggle('hidden', !qrAdded && !appAdded);
 
@@ -1332,15 +1568,17 @@
   }
   ppQrAccept.addEventListener('click', () => {
     qrAdded = true;
+    qrFromPostPurchase = true;
     renderPostPurchase();
-    ppQrAccept.disabled = true; ppQrAccept.textContent = '✓ Added to your order';
+    ppQrAccept.disabled = true; ppQrAccept.textContent = '✓ Added — $30 saved';
     ppUpsellQr.classList.add('pp-upsell--added');
   });
   ppQrDecline.addEventListener('click', () => ppUpsellQr.classList.add('hidden'));
   ppAppAccept.addEventListener('click', () => {
     appAdded = true;
+    appFromPostPurchase = true;
     renderPostPurchase();
-    ppAppAccept.disabled = true; ppAppAccept.textContent = '✓ Added to your order';
+    ppAppAccept.disabled = true; ppAppAccept.textContent = '✓ Added — first month free';
     ppUpsellApp.classList.add('pp-upsell--added');
   });
   ppAppDecline.addEventListener('click', () => ppUpsellApp.classList.add('hidden'));
@@ -1374,6 +1612,61 @@
     bundleSavingsEarned = false;
     if (qrCheckedUpfront) openCheckout();
     else openCart();
+  }
+
+  // --- Plan card accordion (mobile)
+  let expandedPlan = 'membership';
+  function onPlanCardClick(plan) {
+    if (expandedPlan === plan) {
+      openSheetWith(plan);
+    } else {
+      setExpandedPlan(plan);
+    }
+  }
+  function setExpandedPlan(plan) {
+    expandedPlan = plan;
+    document.querySelectorAll('.plan-card').forEach(card => {
+      card.classList.toggle('plan-card--collapsed', card.dataset.plan !== plan);
+    });
+  }
+
+  // --- Disclaimer modal
+  const disclaimerBackdrop = document.getElementById('disclaimer-backdrop');
+  const disclaimerModal = document.getElementById('disclaimer-modal');
+  const disclaimerCheck = document.getElementById('disclaimer-check-input');
+  const disclaimerBtn = document.getElementById('disclaimer-btn');
+  const disclaimerReplay = document.getElementById('disclaimer-replay');
+
+  function showDisclaimer() {
+    disclaimerCheck.checked = false;
+    disclaimerBtn.disabled = true;
+    disclaimerBackdrop.classList.add('show');
+    disclaimerModal.classList.add('show');
+    disclaimerBackdrop.setAttribute('aria-hidden', 'false');
+    disclaimerModal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('lock-scroll');
+    window.requestAnimationFrame(() => { try { disclaimerCheck.focus({ preventScroll: true }); } catch(e){} });
+  }
+  function hideDisclaimer() {
+    disclaimerBackdrop.classList.remove('show');
+    disclaimerModal.classList.remove('show');
+    disclaimerBackdrop.setAttribute('aria-hidden', 'true');
+    disclaimerModal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('lock-scroll');
+    try { localStorage.setItem('feno-demo-seen', '1'); } catch(e){}
+  }
+
+  disclaimerCheck.addEventListener('change', (e) => {
+    disclaimerBtn.disabled = !e.target.checked;
+  });
+  disclaimerBtn.addEventListener('click', hideDisclaimer);
+  disclaimerReplay.addEventListener('click', showDisclaimer);
+
+  // Show on first load (or if localStorage not available)
+  let seen = false;
+  try { seen = !!localStorage.getItem('feno-demo-seen'); } catch(e) { seen = false; }
+  if (!seen) {
+    window.requestAnimationFrame(showDisclaimer);
   }
 
   // --- Render
@@ -1424,6 +1717,7 @@
   }
 
   syncMobileSummaryDefault();
+  setExpandedPlan('membership');
   render();
 </script>
 
