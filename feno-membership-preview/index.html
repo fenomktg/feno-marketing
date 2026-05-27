@@ -1102,13 +1102,22 @@
     </div>
 
     <aside class="co-summary" id="co-summary">
-      <div class="co-summary-item">
+      <div class="co-summary-item" id="co-item-bundle">
         <div class="co-summary-img" aria-hidden="true">img</div>
         <div class="co-summary-item__qty">
           <div class="co-summary-item__title">Smartbrush Bundle</div>
           <div class="co-summary-item__sub">3 Feno Foam · 1 TrueFit Mouthpiece</div>
         </div>
         <div class="co-summary-item__price">$299.00</div>
+      </div>
+
+      <div class="co-summary-item hidden" id="co-item-membership">
+        <div class="co-summary-img" aria-hidden="true">plan</div>
+        <div class="co-summary-item__qty">
+          <div class="co-summary-item__title">Subscribe &amp; Save <span class="addon__save" style="margin-left:4px">Plan</span></div>
+          <div class="co-summary-item__sub" id="co-item-membership-sub">Monthly billing · cancel anytime</div>
+        </div>
+        <div class="co-summary-item__price" id="co-item-membership-price">$40.00<small>per month</small></div>
       </div>
 
       <div class="co-summary-item hidden" id="co-item-qr">
@@ -1157,7 +1166,7 @@
       <div class="pp-check-icon" aria-hidden="true">✓</div>
       <p class="pp-eyebrow">Order <span id="pp-order-no">#FEN-1042</span></p>
       <h1 class="pp-title" id="pp-title">Your order is confirmed</h1>
-      <p class="pp-sub">Confirmation email sent to <strong id="pp-email">jane@feno.co</strong>. Your Smartbrush ships in 2 business days.</p>
+      <p class="pp-sub" id="pp-sub">Confirmation email sent to <strong id="pp-email">jane@feno.co</strong>. Your Smartbrush ships in 2 business days.</p>
     </div>
 
     <div class="pp-card pp-upsell hidden" id="pp-upsell-qr">
@@ -1234,6 +1243,7 @@
   let qrCheckedUpfront = false;
   let qrFromPostPurchase = false;
   let appFromPostPurchase = false;
+  let purchasedAs = 'onetime';  // Captures 'onetime' or 'membership' when checkout opens
   let lastFocused = null;
   let cameFromSheet = false;
 
@@ -1263,6 +1273,10 @@
   const coOverlay = document.getElementById('checkout-overlay');
   const coBackBtn = document.getElementById('co-back');
   const coPlaceBtn = document.getElementById('co-place');
+  const coItemBundle = document.getElementById('co-item-bundle');
+  const coItemMembership = document.getElementById('co-item-membership');
+  const coItemMembershipSub = document.getElementById('co-item-membership-sub');
+  const coItemMembershipPrice = document.getElementById('co-item-membership-price');
   const coItemQr = document.getElementById('co-item-qr');
   const coItemApp = document.getElementById('co-item-app');
   const coDiscountRow = document.getElementById('co-discount-row');
@@ -1285,6 +1299,8 @@
   const ppQrDecline = document.getElementById('pp-qr-decline');
   const ppAppAccept = document.getElementById('pp-app-accept');
   const ppAppDecline = document.getElementById('pp-app-decline');
+  const ppTitle = document.getElementById('pp-title');
+  const ppSub = document.getElementById('pp-sub');
   const ppSummary = document.getElementById('pp-summary');
   const ppNext = document.getElementById('pp-next');
   const ppFutureCard = document.getElementById('pp-future-card');
@@ -1466,6 +1482,8 @@
 
   // --- Checkout
   function openCheckout() {
+    // Capture purchase type at checkout time so post-purchase + summary stay consistent
+    purchasedAs = primary; // 'onetime' or 'membership'
     // Fresh round of post-purchase decisions on next confirmation
     qrFromPostPurchase = false;
     appFromPostPurchase = false;
@@ -1490,6 +1508,34 @@
     }
   }
   function renderCheckoutSummary() {
+    if (purchasedAs === 'membership') {
+      // Subscribe & Save: single plan line, no addons, no discounts
+      coItemBundle.classList.add('hidden');
+      coItemQr.classList.add('hidden');
+      coItemApp.classList.add('hidden');
+      coDiscountRow.classList.add('hidden');
+      coBundleRow.classList.add('hidden');
+      coFuture.classList.add('hidden');
+      coItemMembership.classList.remove('hidden');
+
+      const isAnnual = billing === 'annual';
+      const planTotal = isAnnual ? 360 : 40;
+      coItemMembershipSub.textContent = isAnnual
+        ? 'Annual billing · saves $120 vs monthly'
+        : 'Monthly billing · cancel anytime after Smartbrush is paid off';
+      coItemMembershipPrice.innerHTML = isAnnual
+        ? '$360.00<small>per year</small>'
+        : '$40.00<small>per month</small>';
+
+      coSubtotal.textContent = moneyDecimal(planTotal);
+      coTotal.textContent = moneyDecimal(planTotal);
+      coSummaryTogglePrice.textContent = moneyDecimal(planTotal);
+      return;
+    }
+
+    // One Time path (existing behavior)
+    coItemBundle.classList.remove('hidden');
+    coItemMembership.classList.add('hidden');
     coItemQr.classList.toggle('hidden', !qrAdded);
     coItemApp.classList.toggle('hidden', !appAdded);
     coDiscountRow.classList.toggle('hidden', !qrDiscountEarned);
@@ -1548,6 +1594,32 @@
     if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
   }
   function renderPostPurchase() {
+    if (purchasedAs === 'membership') {
+      // Subscribe & Save: simple thanks, no upsells, plan summary only
+      ppUpsellQr.classList.add('hidden');
+      ppUpsellApp.classList.add('hidden');
+      ppTitle.textContent = 'Thanks for your order';
+      const isAnnual = billing === 'annual';
+      const planTotal = isAnnual ? '$360.00' : '$40.00';
+      const planLabel = isAnnual ? 'Annual' : 'Monthly';
+      const nextWhen = isAnnual ? '1 year' : '30 days';
+      ppSub.innerHTML = 'Confirmation email sent to <strong id="pp-email">jane@feno.co</strong>. Your Smartbrush ships in 2 business days.';
+
+      ppSummary.innerHTML =
+        '<div class="pp-row"><span>Subscribe &amp; Save · ' + planLabel + '</span><span>' + planTotal + '</span></div>' +
+        '<div class="pp-row pp-row--muted"><span>Shipping</span><span>Free</span></div>' +
+        '<div class="pp-row pp-row--total"><span>Charged today</span><span>' + planTotal + '</span></div>';
+
+      ppFuture.innerHTML = '<div class="pp-row pp-row--muted"><span>Next charge</span><span>' + planTotal + ' in ' + nextWhen + '</span></div>';
+      ppFutureCard.classList.remove('hidden');
+
+      ppNext.innerHTML = 'Your <strong>Smartbrush</strong> ships in 2 business days. Open the Feno app to activate <strong>Feno Premium</strong> and start tracking your tongue + teeth biomarkers. Connect your dentist in the app to share your biomarker history.';
+      return;
+    }
+
+    // One Time post-purchase (existing logic)
+    ppTitle.textContent = 'Your order is confirmed';
+    ppSub.innerHTML = 'Confirmation email sent to <strong id="pp-email">jane@feno.co</strong>. Your Smartbrush ships in 2 business days.';
     ppUpsellQr.classList.toggle('hidden', qrAdded);
     ppUpsellApp.classList.toggle('hidden', appAdded);
 
