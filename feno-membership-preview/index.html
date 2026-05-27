@@ -448,16 +448,19 @@
     gap: 8px;
   }
   .disclaimer-steps li {
-    display: flex;
-    gap: 12px;
     font-size: 13px;
     color: #4A4A4A;
     line-height: 1.5;
     counter-increment: step;
+    position: relative;
+    padding-left: 32px;
+    min-height: 22px;
   }
   .disclaimer-steps li::before {
     content: counter(step);
-    flex-shrink: 0;
+    position: absolute;
+    left: 0;
+    top: 1px;
     width: 22px;
     height: 22px;
     background: #1A1A1A;
