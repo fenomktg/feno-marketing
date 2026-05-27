@@ -34,16 +34,20 @@
 
   .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: center; }
 
-  .media { background: #FFFFFF; border: 2px dashed #C5C5C5; border-radius: 12px; min-height: 340px; display: flex; align-items: center; justify-content: center; padding: 20px; }
-  .media-inner { text-align: center; color: #999999; font-size: 13px; line-height: 1.6; }
+  .media { background: linear-gradient(155deg, #FFFFFF 0%, #F2F4F6 100%); border: 2px dashed #C5C5C5; border-radius: 12px; min-height: 340px; display: flex; align-items: center; justify-content: center; padding: 20px; position: relative; overflow: hidden; }
+  .media-inner { text-align: center; color: #999999; font-size: 13px; line-height: 1.6; position: relative; z-index: 2; }
   .media-shapes { display: flex; align-items: flex-end; justify-content: center; gap: 14px; margin: 0 auto 16px; }
-  .phone { width: 100px; height: 180px; border: 2px solid #C5C5C5; border-radius: 14px; position: relative; }
-  .phone::before { content: ''; position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 28px; height: 4px; background: #C5C5C5; border-radius: 2px; }
-  .phone-lines { position: absolute; top: 24px; left: 10px; right: 10px; display: flex; flex-direction: column; gap: 6px; }
+  .phone { width: 110px; height: 196px; border: 2px solid #C5C5C5; border-radius: 16px; position: relative; background: #FFFFFF; }
+  .phone::before { content: ''; position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 32px; height: 4px; background: #C5C5C5; border-radius: 2px; }
+  .phone-lines { position: absolute; top: 26px; left: 12px; right: 12px; display: flex; flex-direction: column; gap: 7px; }
   .phone-lines span { height: 5px; background: #E8E8E8; border-radius: 2px; }
-  .phone-lines span:nth-child(1) { width: 60%; } .phone-lines span:nth-child(2) { width: 90%; } .phone-lines span:nth-child(3) { width: 75%; } .phone-lines span:nth-child(4) { width: 50%; } .phone-lines span:nth-child(5) { width: 80%; }
-  .tube { width: 32px; height: 85px; border: 2px solid #C5C5C5; border-radius: 6px 6px 16px 16px; }
-  .media-placeholder-note { font-style: italic; color: #999999; }
+  .phone-lines span:nth-child(1) { width: 55%; background: #C0DD97; }
+  .phone-lines span:nth-child(2) { width: 90%; }
+  .phone-lines span:nth-child(3) { width: 75%; background: #E6F1FB; }
+  .phone-lines span:nth-child(4) { width: 50%; }
+  .phone-lines span:nth-child(5) { width: 80%; background: #C0DD97; }
+  .tube { width: 36px; height: 96px; border: 2px solid #C5C5C5; border-radius: 6px 6px 18px 18px; background: linear-gradient(180deg, #FFFFFF 0%, #F4F4F4 100%); }
+  .media-placeholder-note { font-style: italic; color: #888888; font-size: 12px; }
 
   .card { display: flex; flex-direction: column; gap: 16px; }
   .badges { display: flex; gap: 8px; flex-wrap: wrap; }
@@ -86,100 +90,181 @@
   .qty button { width: 30px; height: 30px; border-radius: 999px; border: none; background: transparent; cursor: pointer; font-size: 16px; color: #6B6B6B; line-height: 1; }
   .qty button:hover { background: #F0F0F0; }
   .qty span { font-size: 14px; min-width: 20px; text-align: center; font-weight: 500; }
-  .cta { flex: 1; background: #185FA5; color: white; border: none; border-radius: 999px; padding: 14px 20px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.15s ease; }
+  .cta { flex: 1; background: #185FA5; color: white; border: none; border-radius: 999px; padding: 14px 20px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.15s ease, transform 0.1s ease; }
   .cta:hover { background: #0C447C; }
+  .cta:active { transform: scale(0.98); }
   .cta:focus-visible { outline: 2px solid #1A1A1A; outline-offset: 2px; }
   .terms { font-size: 12px; color: #888888; line-height: 1.6; margin-top: 4px; }
 
-  /* === Cart drawer === */
+  /* === Mobile main-view sticky CTA + Plans sheet === */
+  .m-main-cta {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 12px 16px max(12px, env(safe-area-inset-bottom));
+    background: rgba(255, 255, 255, 0.96);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid #E8E8E8;
+    box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.05);
+    z-index: 60;
+  }
+  .m-main-cta__inner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .m-main-cta__hint {
+    font-size: 11px;
+    color: #888;
+    text-align: center;
+    margin-top: 6px;
+  }
+  .m-main-cta__hint strong { color: #173404; font-weight: 600; }
+  .m-main-cta__btn {
+    flex: 1;
+    background: #1A1A1A;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 999px;
+    padding: 15px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+    min-height: 50px;
+  }
+  .m-main-cta__btn:hover { background: #000; }
+  .m-main-cta__btn:active { transform: scale(0.98); }
+  .m-main-cta__btn-price { opacity: 0.7; font-weight: 500; }
+
+  .sheet-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 18, 22, 0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.28s ease;
+    z-index: 900;
+  }
+  .sheet-backdrop.open { opacity: 1; pointer-events: auto; }
+
+  .plans-sheet {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-height: 92vh;
+    background: #FFFFFF;
+    border-radius: 18px 18px 0 0;
+    box-shadow: 0 -14px 40px rgba(0, 0, 0, 0.22);
+    z-index: 901;
+    transform: translateY(100%);
+    transition: transform 0.36s cubic-bezier(0.32, 0.72, 0, 1);
+    display: flex;
+    flex-direction: column;
+    pointer-events: none;
+  }
+  .plans-sheet.open { transform: translateY(0); pointer-events: auto; }
+
+  .plans-sheet__handle {
+    width: 44px;
+    height: 4px;
+    background: #DDDDDD;
+    border-radius: 999px;
+    margin: 10px auto 0;
+    flex-shrink: 0;
+  }
+  .plans-sheet__close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 36px;
+    height: 36px;
+    background: rgba(0, 0, 0, 0.04);
+    color: #6B6B6B;
+    border: none;
+    border-radius: 999px;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    transition: background 0.15s ease;
+  }
+  .plans-sheet__close:hover { background: rgba(0, 0, 0, 0.08); color: #1A1A1A; }
+
+  .plans-sheet__body {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 18px 18px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .plans-sheet__body .toggle-wrap { margin: 0 auto 4px; }
+  .plans-sheet__body .badges { gap: 6px; }
+  .plans-sheet__body .badge { font-size: 11px; padding: 6px 10px; }
+  .plans-sheet__body .badge-icon { width: 12px; height: 12px; }
+  .plans-sheet__body .price-row { padding: 0; }
+  .plans-sheet__body .price-main { font-size: 30px; }
+  .plans-sheet__body .price-unit { font-size: 15px; }
+  .plans-sheet__body .price-sub { font-size: 12px; margin-top: 4px; }
+  .plans-sheet__body .billing button { min-height: 44px; padding: 10px 8px; }
+  .plans-sheet__body .included li { font-size: 13px; }
+  .plans-sheet__body .terms { font-size: 11px; line-height: 1.5; }
+
+  .plans-sheet__footer {
+    padding: 12px 16px max(12px, env(safe-area-inset-bottom));
+    border-top: 1px solid #E8E8E8;
+    background: rgba(255, 255, 255, 0.96);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    flex-shrink: 0;
+  }
+  .plans-sheet__footer .cta { width: 100%; min-height: 50px; font-size: 15px; padding: 14px 20px; }
+
+  /* === Cart drawer (unchecked One Time path) === */
   .cart-backdrop { position: fixed; inset: 0; background: rgba(15, 18, 22, 0.5); opacity: 0; pointer-events: none; transition: opacity 0.25s ease; z-index: 1000; }
   .cart-backdrop.open { opacity: 1; pointer-events: auto; }
   .cart-drawer { position: fixed; top: 0; right: 0; bottom: 0; width: 440px; max-width: 100vw; background: #FFFFFF; z-index: 1001; transform: translateX(100%); transition: transform 0.32s cubic-bezier(0.32, 0.72, 0, 1); display: flex; flex-direction: column; box-shadow: -12px 0 36px rgba(0, 0, 0, 0.18); pointer-events: none; }
   .cart-drawer.open { transform: translateX(0); pointer-events: auto; }
   .cart-drawer__handle { display: none; }
   .cart-drawer__body { flex: 1; overflow-y: auto; padding: 24px; -webkit-overflow-scrolling: touch; }
-
   .scp-header { font-size: 16px; font-weight: 600; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #EEEEEE; display: flex; justify-content: space-between; align-items: center; }
   .scp-close { color: #999999; cursor: pointer; font-size: 22px; line-height: 1; background: transparent; border: none; padding: 0; width: 36px; height: 36px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; transition: background 0.15s ease, color 0.15s ease; }
   .scp-close:hover { background: #F4F4F4; color: #1A1A1A; }
-
   .scp-line { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 14px; font-size: 14px; }
   .scp-line .left { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
   .scp-line .item-name { font-weight: 600; }
   .scp-line .item-detail { font-size: 12px; color: #888888; }
-
-  .scp-upsells-label {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    color: #6B6B6B;
-    text-transform: uppercase;
-    margin: 18px 0 8px;
-  }
-
-  .savings-bar {
-    background: linear-gradient(180deg, #F4FBF6 0%, #EEF8E3 100%);
-    border: 1px solid #C0DD97;
-    border-radius: 10px;
-    padding: 11px 13px;
-    margin: 14px 0 12px;
-  }
+  .scp-upsells-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: #6B6B6B; text-transform: uppercase; margin: 18px 0 8px; }
+  .savings-bar { background: linear-gradient(180deg, #F4FBF6 0%, #EEF8E3 100%); border: 1px solid #C0DD97; border-radius: 10px; padding: 11px 13px; margin: 14px 0 12px; }
   .savings-bar__head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 7px; }
   .savings-bar__label { font-size: 11px; font-weight: 700; color: #173404; letter-spacing: 0.04em; text-transform: uppercase; }
   .savings-bar__amount { font-size: 13px; font-weight: 700; color: #173404; font-variant-numeric: tabular-nums; }
   .savings-bar__track { height: 6px; background: #E5F0D3; border-radius: 999px; overflow: hidden; }
   .savings-bar__fill { height: 100%; background: linear-gradient(90deg, #1D9E75 0%, #74C44C 100%); border-radius: 999px; width: 0%; transition: width 0.32s cubic-bezier(0.2, 0.8, 0.2, 1); }
   .savings-bar__msg { font-size: 11.5px; color: #3F5E14; margin-top: 7px; line-height: 1.4; }
-
-  .cu-card {
-    background: #FFFFFF;
-    border: 1.5px solid #DDDDDD;
-    border-radius: 10px;
-    padding: 12px;
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-    margin-bottom: 10px;
-    transition: border-color 0.15s ease, background 0.15s ease;
-  }
+  .cu-card { background: #FFFFFF; border: 1.5px solid #DDDDDD; border-radius: 10px; padding: 12px; display: flex; gap: 12px; align-items: flex-start; margin-bottom: 10px; transition: border-color 0.15s ease, background 0.15s ease; }
   .cu-card--featured { background: linear-gradient(180deg, #F8FBFD 0%, #F4FBF6 100%); border-color: #1D9E75; }
   .cu-card--added { background: #F4FBF6; border-color: #1D9E75; }
-  .cu-card__thumb {
-    width: 44px; height: 44px;
-    background: #E8E8E8;
-    border-radius: 7px;
-    flex-shrink: 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    color: #888;
-    font-size: 10px;
-  }
+  .cu-card__thumb { width: 44px; height: 44px; background: #E8E8E8; border-radius: 7px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; color: #888; font-size: 10px; }
   .cu-card__content { flex: 1; min-width: 0; }
   .cu-card__title { font-size: 13px; font-weight: 600; color: #1A1A1A; display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
   .cu-card__save { background: #C0DD97; color: #173404; font-size: 10px; padding: 2px 6px; border-radius: 999px; font-weight: 700; letter-spacing: 0.02em; }
   .cu-card__sub { font-size: 12px; color: #6B6B6B; margin-top: 3px; line-height: 1.4; }
   .cu-card__price { font-size: 12px; color: #1A1A1A; font-weight: 500; margin-top: 5px; }
-  .cu-card__btn {
-    background: #1A1A1A;
-    color: white;
-    border: none;
-    border-radius: 999px;
-    padding: 8px 14px;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    flex-shrink: 0;
-    align-self: center;
-    white-space: nowrap;
-    min-height: 34px;
-    min-width: 60px;
-  }
+  .cu-card__btn { background: #1A1A1A; color: white; border: none; border-radius: 999px; padding: 8px 14px; font-size: 12px; font-weight: 600; cursor: pointer; flex-shrink: 0; align-self: center; white-space: nowrap; min-height: 34px; min-width: 60px; }
   .cu-card__btn:hover { background: #000; }
   .cu-card__btn:focus-visible { outline: 2px solid #185FA5; outline-offset: 2px; }
   .cu-card--added .cu-card__btn { background: #1D9E75; }
   .cu-card--added .cu-card__btn:hover { background: #157f5d; }
-
   .scp-totals { border-top: 1px solid #EEEEEE; padding-top: 14px; margin-top: 14px; }
   .scp-row { display: flex; justify-content: space-between; font-size: 13px; color: #6B6B6B; margin-bottom: 6px; }
   .scp-row--discount { color: #1D9E75; font-weight: 600; }
@@ -188,42 +273,33 @@
   .scp-checkout { background: #185FA5; color: white; border: none; border-radius: 999px; padding: 13px; font-size: 14px; font-weight: 600; cursor: pointer; width: 100%; margin-top: 16px; }
   .scp-checkout:hover { background: #0C447C; }
 
-  /* === Overlays === */
+  /* === Shopify-style checkout overlay === */
   .overlay { position: fixed; inset: 0; background: #FFFFFF; z-index: 1100; overflow-y: auto; -webkit-overflow-scrolling: touch; opacity: 0; pointer-events: none; transform: translateY(12px); transition: opacity 0.28s ease, transform 0.28s ease; }
   .overlay.open { opacity: 1; pointer-events: auto; transform: translateY(0); }
-
   .co-header { border-bottom: 1px solid #E8E8E8; padding: 20px 32px; display: flex; align-items: center; justify-content: space-between; background: #FFFFFF; position: sticky; top: 0; z-index: 2; }
   .co-brand { font-family: Georgia, 'Times New Roman', serif; font-size: 22px; font-weight: 400; letter-spacing: 0.02em; color: #1A1A1A; }
   .co-cart-icon { width: 26px; height: 26px; color: #6B6B6B; }
-
   .co-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); max-width: 1180px; margin: 0 auto; }
   .co-form, .co-summary { padding: 40px 48px; }
   .co-form { border-right: 1px solid #E8E8E8; }
-
   .co-section { margin-bottom: 32px; }
   .co-section__head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 16px; }
   .co-section__title { font-size: 18px; font-weight: 600; color: #1A1A1A; }
   .co-section__link { font-size: 13px; color: #185FA5; text-decoration: none; }
   .co-section__link:hover { text-decoration: underline; }
-
   .co-field { width: 100%; padding: 13px 14px; border: 1px solid #D5D5D5; border-radius: 6px; font-size: 14px; color: #1A1A1A; font-family: inherit; background: #FFFFFF; transition: border-color 0.15s ease, box-shadow 0.15s ease; }
   .co-field:focus { border-color: #185FA5; outline: none; box-shadow: 0 0 0 1px #185FA5; }
   .co-field::placeholder { color: #B0B0B0; }
-
   .co-row { display: flex; gap: 10px; margin-top: 10px; }
   .co-row .co-field { flex: 1; min-width: 0; }
   .co-field-stack > .co-field + .co-field { margin-top: 10px; }
-
   .co-checkbox { display: flex; align-items: center; gap: 10px; margin-top: 12px; font-size: 13px; color: #6B6B6B; cursor: pointer; }
   .co-checkbox input { width: 16px; height: 16px; accent-color: #185FA5; }
-
   .co-method { border: 1px solid #185FA5; border-radius: 6px; padding: 14px 16px; background: #F4F8FC; display: flex; justify-content: space-between; align-items: center; margin-top: 4px; }
   .co-method__radio { width: 18px; height: 18px; border-radius: 999px; border: 5px solid #185FA5; background: white; flex-shrink: 0; margin-right: 12px; }
   .co-method__left { display: flex; align-items: center; gap: 0; font-size: 14px; color: #1A1A1A; font-weight: 500; }
   .co-method__price { font-size: 14px; font-weight: 600; color: #1A1A1A; }
-
   .co-payment-card { background: #F4F4F4; border-radius: 6px 6px 0 0; padding: 14px 16px; font-size: 13px; color: #6B6B6B; border: 1px solid #D5D5D5; border-bottom: none; }
-
   .co-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 28px; flex-wrap: wrap; gap: 12px; }
   .co-back-link { font-size: 14px; color: #185FA5; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; cursor: pointer; background: transparent; border: none; padding: 0; }
   .co-back-link:hover { text-decoration: underline; }
@@ -231,9 +307,7 @@
   .co-place:hover { background: #0C447C; }
   .co-place:disabled { background: #6B6B6B; cursor: progress; opacity: 0.85; }
   .co-place:focus-visible { outline: 2px solid #1A1A1A; outline-offset: 2px; }
-
   .co-summary-mobile-toggle { display: none; background: #FAFAFA; border-bottom: 1px solid #E8E8E8; padding: 14px 20px; align-items: center; justify-content: space-between; font-size: 14px; color: #185FA5; cursor: pointer; width: 100%; border-top: none; border-left: none; border-right: none; text-align: left; }
-
   .co-summary { background: #FAFAFA; }
   .co-summary[hidden] { display: none; }
   .co-summary-item { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 18px; }
@@ -249,7 +323,6 @@
   .co-totals-row--discount { color: #1D9E75; font-weight: 600; }
   .co-totals-row--total { font-size: 18px; font-weight: 700; margin-top: 12px; padding-top: 14px; border-top: 1px solid #E1E1E1; }
   .co-totals-row--total small { font-size: 12px; font-weight: 500; color: #6B6B6B; margin-right: 4px; }
-
   .co-future { margin-top: 18px; padding-top: 14px; border-top: 1px solid #E1E1E1; }
   .co-future__title { font-size: 11px; font-weight: 700; color: #6B6B6B; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
   .co-future__row { display: flex; justify-content: space-between; font-size: 13px; color: #4A4A4A; margin-bottom: 5px; }
@@ -262,10 +335,8 @@
   .pp-title { font-family: Georgia, serif; font-size: 28px; font-weight: 400; margin-bottom: 8px; line-height: 1.25; }
   .pp-sub { font-size: 14px; color: #6B6B6B; }
   .pp-sub strong { color: #1A1A1A; }
-
   .pp-card { background: #FFFFFF; border: 1px solid #E1E1E1; border-radius: 12px; padding: 24px; margin-bottom: 16px; }
   .pp-card__title { font-size: 15px; font-weight: 600; margin-bottom: 14px; color: #1A1A1A; }
-
   .pp-upsell { background: linear-gradient(180deg, #F8FBFD 0%, #F4FBF6 100%); border: 1.5px solid #185FA5; box-shadow: 0 6px 24px rgba(24, 95, 165, 0.08); }
   .pp-upsell__eyebrow { font-size: 11px; font-weight: 700; color: #185FA5; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
   .pp-upsell__title { font-family: Georgia, serif; font-size: 22px; line-height: 1.25; margin-bottom: 8px; color: #1A1A1A; }
@@ -284,97 +355,63 @@
   .pp-upsell__decline:hover { color: #1A1A1A; }
   .pp-upsell__note { font-size: 11px; color: #888; margin-top: 10px; text-align: center; font-style: italic; }
   .pp-upsell--added { background: #F4FBF6; border-color: #1D9E75; }
-
   .pp-row { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 8px; color: #1A1A1A; }
   .pp-row--muted { color: #6B6B6B; }
   .pp-row--discount { color: #1D9E75; font-weight: 600; }
   .pp-row--total { font-size: 16px; font-weight: 700; margin-top: 10px; padding-top: 14px; border-top: 1px solid #E1E1E1; }
-
   .pp-next { font-size: 13px; color: #6B6B6B; line-height: 1.6; }
   .pp-next strong { color: #1A1A1A; }
-
   .pp-done { background: #1A1A1A; color: white; border: none; border-radius: 999px; padding: 14px 32px; font-size: 14px; font-weight: 600; cursor: pointer; display: block; margin: 24px auto 0; min-width: 220px; }
   .pp-done:hover { background: #000; }
 
   .hidden { display: none !important; }
+  .desktop-only { display: initial; }
+  .mobile-only { display: none; }
 
+  /* === Tablet === */
   @media (max-width: 1024px) and (min-width: 769px) {
     body { padding: 20px; }
-    .section { padding: 48px 32px; }
+    .section { padding: 32px; }
     .grid { gap: 20px; }
-    .media { min-height: 400px; }
+    .media { min-height: 340px; }
     .co-form, .co-summary { padding: 32px; }
   }
 
+  /* === Mobile: visual hero + pull-up sheet pattern === */
   @media (max-width: 768px) {
-    /* Body padded to clear the fixed top + bottom bars */
-    body { padding: 0; padding-top: 76px; padding-bottom: 84px; }
-    .section { padding: 16px 16px 24px; border-radius: 0; }
-    .eyebrow { display: none; }
-    .headline { font-size: 23px; line-height: 1.18; margin-bottom: 6px; }
-    .subhead { font-size: 13px; margin-bottom: 14px; padding: 0 4px; }
+    body { padding: 0; padding-bottom: 86px; }
+    .section { padding: 18px 16px 24px; border-radius: 0; }
+    .eyebrow { font-size: 11px; margin-bottom: 6px; letter-spacing: 0.08em; text-transform: uppercase; color: #888; }
+    .headline { font-size: 28px; line-height: 1.15; margin-bottom: 10px; }
+    .subhead { font-size: 14px; margin-bottom: 18px; padding: 0 4px; line-height: 1.5; }
 
-    /* Tab toggle becomes fixed top bar */
-    .toggle-wrap {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      margin: 0;
-      padding: 16px 16px 10px;
-      background: rgba(255, 255, 255, 0.95);
-      -webkit-backdrop-filter: blur(10px);
-      backdrop-filter: blur(10px);
-      z-index: 50;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-bottom: 1px solid #E8E8E8;
+    /* Toggle hidden on main view (lives inside the sheet) */
+    .toggle-wrap { display: none; }
+
+    /* Grid: just the hero on mobile (card hidden, sheet replaces it) */
+    .grid { grid-template-columns: 1fr; gap: 0; }
+    .card { display: none; }
+
+    /* Visual hero */
+    .media {
+      min-height: 360px;
+      padding: 24px;
+      background: linear-gradient(155deg, #FFFFFF 0%, #ECEEF1 100%);
     }
-    .recommended-tag {
-      top: 4px;
-      right: 50%;
-      transform: translateX(76px);
-    }
-    .primary-toggle { padding: 4px; }
-    .primary-toggle button { padding: 10px 22px; min-height: 44px; font-size: 14px; }
+    .media-shapes { margin-bottom: 18px; gap: 16px; }
+    .phone { width: 120px; height: 210px; }
+    .phone::before { width: 36px; height: 4px; top: 9px; }
+    .phone-lines { top: 28px; left: 12px; right: 12px; gap: 7px; }
+    .tube { width: 38px; height: 102px; }
+    .media-inner { font-size: 13px; }
+    .media-placeholder-note { font-size: 12px; }
 
-    .grid { grid-template-columns: 1fr; gap: 12px; }
-    .card { order: 1; gap: 10px; }
-    .media { display: none; }
-    .badges { gap: 6px; }
-    .badge { font-size: 11px; padding: 6px 10px; gap: 5px; }
-    .badge-icon { width: 12px; height: 12px; }
-    .incentive { font-size: 11.5px; padding: 5px 10px; }
-    .price-row { padding: 0; }
-    .price-main { font-size: 28px; }
-    .price-unit { font-size: 15px; }
-    .price-sub { font-size: 12px; margin-top: 4px; }
-    .billing button { padding: 10px 8px; min-height: 42px; font-size: 13px; }
-    .save-badge { font-size: 10px; }
-    .included { gap: 5px; }
-    .included li { font-size: 12.5px; gap: 8px; }
-    .check { font-size: 14px; }
-    .addon { padding: 10px; gap: 10px; }
-    .addon__title { font-size: 13px; gap: 6px; }
-    .addon__sub { font-size: 11.5px; }
+    /* Show mobile main CTA */
+    .m-main-cta { display: block; }
+    .mobile-only { display: initial; }
+    .desktop-only { display: none; }
 
-    /* CTA + qty becomes fixed bottom bar */
-    .qty-cta {
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      margin: 0;
-      padding: 12px 16px max(12px, env(safe-area-inset-bottom));
-      background: rgba(255, 255, 255, 0.96);
-      -webkit-backdrop-filter: blur(10px);
-      backdrop-filter: blur(10px);
-      border-top: 1px solid #E8E8E8;
-      box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.05);
-      z-index: 50;
-      gap: 10px;
-    }
-    .qty { display: none; }
-    .cta { width: 100%; flex: 1 1 auto; min-height: 50px; font-size: 15px; padding: 13px 20px; }
-    .terms { font-size: 11px; margin-top: 2px; line-height: 1.5; }
-
+    /* Cart drawer becomes bottom sheet */
     .cart-drawer { top: auto; right: 0; bottom: 0; left: 0; width: 100%; max-width: 100%; max-height: 92vh; border-radius: 16px 16px 0 0; transform: translateY(100%); box-shadow: 0 -10px 36px rgba(0, 0, 0, 0.18); }
     .cart-drawer.open { transform: translateY(0); }
     .cart-drawer__handle { display: block; width: 40px; height: 4px; background: #DDDDDD; border-radius: 999px; margin: 10px auto 0; flex-shrink: 0; }
@@ -395,6 +432,7 @@
     .scp-row, .scp-total { font-size: 13px; }
     .scp-checkout { padding: 14px; min-height: 48px; font-size: 14px; margin-top: 12px; }
 
+    /* Checkout overlay mobile */
     .co-header { padding: 14px 18px; }
     .co-brand { font-size: 19px; }
     .co-grid { grid-template-columns: 1fr; }
@@ -403,13 +441,13 @@
     .co-form { padding: 18px; border-right: none; }
     .co-section { margin-bottom: 24px; }
     .co-section__title { font-size: 16px; }
-    /* Stack city onto its own row, keep state+zip side-by-side on mobile */
     .co-row--city { flex-wrap: wrap; }
     .co-row--city > .co-field:first-child { flex: 1 1 100%; }
     .co-actions { flex-direction: column-reverse; gap: 14px; align-items: stretch; }
     .co-place { width: 100%; padding: 14px; font-size: 15px; min-height: 48px; }
     .co-back-link { align-self: center; padding: 8px; min-height: 44px; display: inline-flex; align-items: center; }
 
+    /* Post-purchase */
     .pp-wrap { padding: 24px 16px 60px; }
     .pp-title { font-size: 22px; }
     .pp-card { padding: 18px; }
@@ -421,10 +459,9 @@
   }
 
   @media (max-width: 360px) {
-    .section { padding: 20px 14px 24px; }
-    .headline { font-size: 22px; }
-    .primary-toggle button { padding: 11px 20px; font-size: 13px; }
-    .recommended-tag { right: 10px; }
+    .section { padding: 16px 14px 20px; }
+    .headline { font-size: 24px; }
+    .media { min-height: 320px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -442,8 +479,8 @@
   <div class="toggle-wrap">
     <span class="recommended-tag">Best value</span>
     <div class="primary-toggle" role="tablist">
-      <button id="tab-onetime" type="button" role="tab" aria-selected="false" onclick="setPrimary('onetime')">One Time</button>
-      <button class="active" id="tab-membership" type="button" role="tab" aria-selected="true" onclick="setPrimary('membership')">Membership</button>
+      <button id="tab-onetime" type="button" role="tab" data-tab="onetime" aria-selected="false" onclick="setPrimary('onetime')">One Time</button>
+      <button class="active" id="tab-membership" type="button" role="tab" data-tab="membership" aria-selected="true" onclick="setPrimary('membership')">Membership</button>
     </div>
   </div>
 
@@ -467,22 +504,22 @@
         <span class="badge"><svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M13 2L3 14h7v8l10-12h-7V2z"/></svg>Ships Fast</span>
       </div>
 
-      <span class="incentive" id="incentive"></span>
+      <span class="incentive" data-target="incentive"></span>
 
       <div class="price-row">
-        <p class="price-main"><span id="price-amount">$40</span><span class="price-unit" id="price-unit">/mo</span></p>
-        <p class="price-sub" id="price-sub"></p>
+        <p class="price-main"><span data-target="amount">$40</span><span class="price-unit" data-target="unit">/mo</span></p>
+        <p class="price-sub" data-target="sub"></p>
       </div>
 
-      <div class="billing" id="billing">
-        <button class="active" type="button" onclick="setBilling('monthly')" id="bill-monthly">Monthly</button>
-        <button type="button" onclick="setBilling('annual')" id="bill-annual">Annual <span class="save-badge">Save ~25%</span></button>
+      <div class="billing" data-target="billing">
+        <button class="active" type="button" data-bill="monthly" onclick="setBilling('monthly')">Monthly</button>
+        <button type="button" data-bill="annual" onclick="setBilling('annual')">Annual <span class="save-badge">Save ~25%</span></button>
       </div>
 
-      <ul class="included" id="included"></ul>
+      <ul class="included" data-target="included"></ul>
 
-      <label class="addon hidden" id="addon-toggle">
-        <input type="checkbox" id="addon-checkbox">
+      <label class="addon hidden" data-target="addon">
+        <input type="checkbox" data-target="addon-checkbox">
         <span class="addon__box" aria-hidden="true"></span>
         <span class="addon__content">
           <span class="addon__title">Add Quarterly Refills <span class="addon__save">Save $30 today</span></span>
@@ -494,15 +531,79 @@
         <div class="qty" aria-label="Quantity">
           <button type="button" aria-label="Decrease quantity">−</button><span>1</span><button type="button" aria-label="Increase quantity">+</button>
         </div>
-        <button class="cta" type="button" id="cta" onclick="handleCtaClick()">Get Started</button>
+        <button class="cta" type="button" data-target="cta" onclick="handleCtaClick()">Get Started</button>
       </div>
 
-      <p class="terms" id="terms"></p>
+      <p class="terms" data-target="terms"></p>
     </div>
   </div>
 </div>
 
-<!-- Cart drawer (One Time, unchecked path) -->
+<!-- Mobile main-view sticky CTA -->
+<div class="m-main-cta">
+  <div class="m-main-cta__inner">
+    <button type="button" class="m-main-cta__btn" id="open-sheet-btn" onclick="openSheet()">
+      <span>See plans</span> · <span class="m-main-cta__btn-price">from $40/mo</span>
+    </button>
+  </div>
+  <p class="m-main-cta__hint"><strong>Save $30</strong> with refills · 30-day money back</p>
+</div>
+
+<!-- Plans sheet (mobile) -->
+<div class="sheet-backdrop" id="sheet-backdrop" aria-hidden="true"></div>
+<aside class="plans-sheet" id="plans-sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title" aria-hidden="true" tabindex="-1">
+  <div class="plans-sheet__handle" aria-hidden="true"></div>
+  <button type="button" class="plans-sheet__close" id="sheet-close" aria-label="Close plans">×</button>
+
+  <div class="plans-sheet__body">
+    <h2 id="sheet-title" class="hidden">Choose your plan</h2>
+
+    <div class="toggle-wrap" style="display: block;">
+      <span class="recommended-tag">Best value</span>
+      <div class="primary-toggle" role="tablist">
+        <button type="button" role="tab" data-tab="onetime" aria-selected="false" onclick="setPrimary('onetime')">One Time</button>
+        <button class="active" type="button" role="tab" data-tab="membership" aria-selected="true" onclick="setPrimary('membership')">Membership</button>
+      </div>
+    </div>
+
+    <div class="badges">
+      <span class="badge"><svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2L4 6v6c0 5 4 9 8 10 4-1 8-5 8-10V6l-8-4z"/><path d="M9 12l2 2 4-4"/></svg>Money Back</span>
+      <span class="badge"><svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="1" y="6" width="15" height="11"/><path d="M16 11h4l3 3v3h-7"/><circle cx="6" cy="19" r="2"/><circle cx="19" cy="19" r="2"/></svg>Free Shipping</span>
+      <span class="badge"><svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M13 2L3 14h7v8l10-12h-7V2z"/></svg>Ships Fast</span>
+    </div>
+
+    <span class="incentive" data-target="incentive"></span>
+
+    <div class="price-row">
+      <p class="price-main"><span data-target="amount">$40</span><span class="price-unit" data-target="unit">/mo</span></p>
+      <p class="price-sub" data-target="sub"></p>
+    </div>
+
+    <div class="billing" data-target="billing">
+      <button class="active" type="button" data-bill="monthly" onclick="setBilling('monthly')">Monthly</button>
+      <button type="button" data-bill="annual" onclick="setBilling('annual')">Annual <span class="save-badge">Save ~25%</span></button>
+    </div>
+
+    <ul class="included" data-target="included"></ul>
+
+    <label class="addon hidden" data-target="addon">
+      <input type="checkbox" data-target="addon-checkbox">
+      <span class="addon__box" aria-hidden="true"></span>
+      <span class="addon__content">
+        <span class="addon__title">Add Quarterly Refills <span class="addon__save">Save $30 today</span></span>
+        <span class="addon__sub">3 Feno Foam + 1 TrueFit Mouthpiece every 90 days. $65/quarter, cancel anytime.</span>
+      </span>
+    </label>
+
+    <p class="terms" data-target="terms"></p>
+  </div>
+
+  <div class="plans-sheet__footer">
+    <button class="cta" type="button" data-target="cta" onclick="handleSheetCtaClick()">Get Started</button>
+  </div>
+</aside>
+
+<!-- Cart drawer -->
 <div class="cart-backdrop" id="cart-backdrop" aria-hidden="true"></div>
 <aside class="cart-drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title" aria-hidden="true" tabindex="-1">
   <div class="cart-drawer__handle" aria-hidden="true"></div>
@@ -693,7 +794,6 @@
       <p class="pp-sub">Confirmation email sent to <strong id="pp-email">jane@feno.co</strong>. Your Smartbrush ships in 2 business days.</p>
     </div>
 
-    <!-- Quarterly Refills upsell (shown only if not on order) -->
     <div class="pp-card pp-upsell hidden" id="pp-upsell-qr">
       <p class="pp-upsell__eyebrow">One last thing · one-click add</p>
       <h2 class="pp-upsell__title">Want refills handled for you?</h2>
@@ -713,11 +813,10 @@
       <p class="pp-upsell__note">Charged with your existing payment method. First charge in 90 days.</p>
     </div>
 
-    <!-- Feno Plus app upsell (shown only if not on order) -->
     <div class="pp-card pp-upsell hidden" id="pp-upsell-app">
       <p class="pp-upsell__eyebrow">One-click add · Feno Plus</p>
       <h2 class="pp-upsell__title">See your biomarkers, not just your brushing</h2>
-      <p class="pp-upsell__body">Your Smartbrush captures the scan. Feno Plus turns it into a tongue + teeth biomarker dashboard you can share with your dentist. AI coaching included.</p>
+      <p class="pp-upsell__body">Your Smartbrush captures the scan. Feno Plus turns it into a tongue + teeth biomarker dashboard you can share with your dentist.</p>
       <div class="pp-upsell__product">
         <div class="pp-upsell__thumb" aria-hidden="true">app</div>
         <div style="flex:1;min-width:0">
@@ -756,17 +855,15 @@
   // --- State
   let primary = 'membership';
   let billing = 'monthly';
-  let qrAdded = false;             // Quarterly Refills sub on the order
-  let appAdded = false;            // Feno Plus app sub on the order
-  let qrDiscountEarned = false;    // $30 off applies (QR added before Place Order)
-  let bundleSavingsEarned = false; // -$15 applies (both subs added before Place Order)
-  let qrCheckedUpfront = false;    // committed via product-page checkbox
+  let qrAdded = false;
+  let appAdded = false;
+  let qrDiscountEarned = false;
+  let bundleSavingsEarned = false;
+  let qrCheckedUpfront = false;
   let lastFocused = null;
+  let cameFromSheet = false;
 
-  const addonToggle = document.getElementById('addon-toggle');
-  const addonCheckbox = document.getElementById('addon-checkbox');
-  const incentive = document.getElementById('incentive');
-
+  // --- Refs
   const drawer = document.getElementById('cart-drawer');
   const backdrop = document.getElementById('cart-backdrop');
   const cartCloseBtn = document.getElementById('cart-close');
@@ -819,42 +916,101 @@
   const ppFutureCard = document.getElementById('pp-future-card');
   const ppFuture = document.getElementById('pp-future');
 
+  const sheet = document.getElementById('plans-sheet');
+  const sheetBackdrop = document.getElementById('sheet-backdrop');
+  const sheetCloseBtn = document.getElementById('sheet-close');
+
   // --- Helpers
-  function money(n) {
-    return '$' + Math.round(n).toLocaleString('en-US');
-  }
-  function moneyDecimal(n) {
-    return '$' + n.toFixed(2);
-  }
+  function money(n) { return '$' + Math.round(n).toLocaleString('en-US'); }
+  function moneyDecimal(n) { return '$' + n.toFixed(2); }
   function todayTotal() {
     const app = appAdded ? 10 : 0;
     const qr = qrDiscountEarned ? 30 : 0;
     const bundle = bundleSavingsEarned ? 15 : 0;
     return 299 + app - qr - bundle;
   }
-  function subtotalToday() {
-    const app = appAdded ? 10 : 0;
-    return 299 + app;
+  function subtotalToday() { return 299 + (appAdded ? 10 : 0); }
+
+  // Multi-target helpers (apply to all elements with data-target="X")
+  function targets(name) { return document.querySelectorAll('[data-target="' + name + '"]'); }
+  function setText(name, text) { targets(name).forEach(el => { el.textContent = text; }); }
+  function setHTML(name, html) { targets(name).forEach(el => { el.innerHTML = html; }); }
+  function toggleClass(name, cls, on) { targets(name).forEach(el => { el.classList.toggle(cls, on); }); }
+  function addonCheckedState() {
+    const cb = document.querySelector('[data-target="addon-checkbox"]:checked');
+    return !!cb;
   }
 
-  // --- Tabs / billing / addon
+  // --- Tabs
   function setPrimary(val) {
     primary = val;
-    document.getElementById('tab-onetime').classList.toggle('active', val === 'onetime');
-    document.getElementById('tab-membership').classList.toggle('active', val === 'membership');
-    document.getElementById('tab-onetime').setAttribute('aria-selected', val === 'onetime');
-    document.getElementById('tab-membership').setAttribute('aria-selected', val === 'membership');
+    document.querySelectorAll('[data-tab]').forEach(btn => {
+      const active = btn.dataset.tab === val;
+      btn.classList.toggle('active', active);
+      btn.setAttribute('aria-selected', active);
+    });
     render();
   }
   function setBilling(val) {
     billing = val;
-    document.getElementById('bill-monthly').classList.toggle('active', val === 'monthly');
-    document.getElementById('bill-annual').classList.toggle('active', val === 'annual');
+    document.querySelectorAll('[data-bill]').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.bill === val);
+    });
     render();
   }
-  addonCheckbox.addEventListener('change', render);
 
-  // --- Cart
+  // Sync addon checkboxes (desktop + sheet) so they reflect the same state
+  document.querySelectorAll('[data-target="addon-checkbox"]').forEach(cb => {
+    cb.addEventListener('change', () => {
+      const checked = cb.checked;
+      document.querySelectorAll('[data-target="addon-checkbox"]').forEach(other => {
+        if (other !== cb) other.checked = checked;
+      });
+      render();
+    });
+  });
+
+  // --- Plans sheet
+  function openSheet() {
+    lastFocused = document.activeElement;
+    sheet.classList.add('open');
+    sheetBackdrop.classList.add('open');
+    sheet.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('lock-scroll');
+    window.requestAnimationFrame(() => sheetCloseBtn.focus({ preventScroll: true }));
+  }
+  function closeSheet(restoreFocus = true) {
+    sheet.classList.remove('open');
+    sheetBackdrop.classList.remove('open');
+    sheet.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('lock-scroll');
+    if (restoreFocus && lastFocused && typeof lastFocused.focus === 'function') {
+      lastFocused.focus();
+    }
+  }
+  sheetCloseBtn.addEventListener('click', () => closeSheet(true));
+  sheetBackdrop.addEventListener('click', () => closeSheet(true));
+
+  // Handle CTA inside the sheet — close sheet, then run the standard flow
+  function handleSheetCtaClick() {
+    cameFromSheet = true;
+    closeSheet(false);
+    // Slight delay so the close animation isn't visually overlapped by the next overlay
+    window.setTimeout(() => {
+      if (primary === 'onetime') {
+        handleCtaClick();
+      } else {
+        // Membership: go straight to Shopify checkout (no cart needed)
+        qrCheckedUpfront = false;
+        qrAdded = false;
+        appAdded = false;
+        qrDiscountEarned = false;
+        openCheckout();
+      }
+    }, 180);
+  }
+
+  // --- Cart drawer
   function openCart() {
     lastFocused = document.activeElement;
     renderCart();
@@ -862,7 +1018,7 @@
     backdrop.classList.add('open');
     drawer.setAttribute('aria-hidden', 'false');
     document.body.classList.add('lock-scroll');
-    window.requestAnimationFrame(() => cartCloseBtn.focus());
+    window.requestAnimationFrame(() => cartCloseBtn.focus({ preventScroll: true }));
   }
   function closeCart(restoreFocus = true) {
     drawer.classList.remove('open');
@@ -888,26 +1044,20 @@
       savingsMsg.textContent = 'You\'re saving $45 on this order. ✨';
     }
   }
-
   function renderCart() {
-    // Quarterly Refills card
     cuQrCard.classList.toggle('cu-card--added', qrAdded);
     cuQrCard.classList.toggle('cu-card--featured', !qrAdded);
     cuQrBtn.textContent = qrAdded ? '✓ Added' : 'Add';
     cuQrSave.classList.toggle('hidden', qrAdded);
-    // Feno Plus card
     cuAppCard.classList.toggle('cu-card--added', appAdded);
     cuAppBtn.textContent = appAdded ? '✓ Added' : 'Add';
-    // Savings progress bar
     updateSavingsBar();
-    // Totals
     scpSubtotal.textContent = money(subtotalToday());
     scpRowDiscount.classList.toggle('hidden', !qrDiscountEarned);
     scpRowBundle.classList.toggle('hidden', !bundleSavingsEarned);
     const total = todayTotal();
     scpTotalToday.textContent = money(total);
     cartCheckoutAmt.textContent = money(total);
-    // Recurring note
     let recurring = [];
     if (qrAdded) recurring.push('$65 every 90 days, starting in 90 days');
     if (appAdded) recurring.push('$10/month after today');
@@ -918,14 +1068,9 @@
       scpRecurringNote.classList.add('hidden');
     }
   }
-
   cartCloseBtn.addEventListener('click', () => closeCart(true));
   backdrop.addEventListener('click', () => closeCart(true));
-  cartCheckoutBtn.addEventListener('click', () => {
-    closeCart(false);
-    openCheckout();
-  });
-
+  cartCheckoutBtn.addEventListener('click', () => { closeCart(false); openCheckout(); });
   cuQrBtn.addEventListener('click', () => {
     qrAdded = !qrAdded;
     qrDiscountEarned = qrAdded;
@@ -938,7 +1083,7 @@
     renderCart();
   });
 
-  // --- Shopify checkout
+  // --- Checkout
   function openCheckout() {
     renderCheckoutSummary();
     coOverlay.classList.add('open');
@@ -947,7 +1092,7 @@
     coOverlay.scrollTop = 0;
     window.requestAnimationFrame(() => {
       const firstField = coOverlay.querySelector('.co-field:not([readonly])');
-      if (firstField) firstField.focus();
+      if (firstField) firstField.focus({ preventScroll: true });
     });
   }
   function closeCheckout(restoreFocus = true) {
@@ -968,8 +1113,7 @@
     coFutureQr.classList.toggle('hidden', !qrAdded);
     coFutureApp.classList.toggle('hidden', !appAdded);
     coFuture.classList.toggle('hidden', !qrAdded && !appAdded);
-    const sub = subtotalToday();
-    coSubtotal.textContent = moneyDecimal(sub);
+    coSubtotal.textContent = moneyDecimal(subtotalToday());
     const tot = todayTotal();
     coTotal.textContent = moneyDecimal(tot);
     coSummaryTogglePrice.textContent = moneyDecimal(tot);
@@ -982,10 +1126,7 @@
   coPlaceBtn.addEventListener('click', () => {
     coPlaceBtn.disabled = true;
     coPlaceBtn.textContent = 'Processing…';
-    window.setTimeout(() => {
-      closeCheckout(false);
-      openPostPurchase();
-    }, 1100);
+    window.setTimeout(() => { closeCheckout(false); openPostPurchase(); }, 1100);
   });
   coSummaryToggle.addEventListener('click', () => {
     const expanded = coSummaryToggle.getAttribute('aria-expanded') === 'true';
@@ -1017,18 +1158,15 @@
     ppOverlay.classList.remove('open');
     ppOverlay.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('lock-scroll');
-    // Reset upsell visuals for next session
     [ppUpsellQr, ppUpsellApp].forEach(el => el.classList.remove('pp-upsell--added'));
     ppQrAccept.disabled = false; ppQrAccept.textContent = 'Add to my order';
     ppAppAccept.disabled = false; ppAppAccept.textContent = 'Add to my order';
     if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
   }
   function renderPostPurchase() {
-    // Upsell card visibility: show ONLY if not on order
     ppUpsellQr.classList.toggle('hidden', qrAdded);
     ppUpsellApp.classList.toggle('hidden', appAdded);
 
-    // Build order summary
     let html = '';
     html += '<div class="pp-row"><span>Smartbrush Bundle</span><span>$299.00</span></div>';
     if (qrAdded) html += '<div class="pp-row pp-row--muted"><span>Quarterly Refills · $65/qtr</span><span>$0.00 today</span></div>';
@@ -1039,54 +1177,57 @@
     html += '<div class="pp-row pp-row--total"><span>Charged today</span><span>' + moneyDecimal(todayTotal()) + '</span></div>';
     ppSummary.innerHTML = html;
 
-    // Future charges card
     let futureHtml = '';
     if (qrAdded) futureHtml += '<div class="pp-row pp-row--muted"><span>Quarterly Refills</span><span>$65 every 90 days</span></div>';
     if (appAdded) futureHtml += '<div class="pp-row pp-row--muted"><span>Feno Plus</span><span>$10 every month</span></div>';
     ppFuture.innerHTML = futureHtml;
     ppFutureCard.classList.toggle('hidden', !qrAdded && !appAdded);
 
-    // "What's next" copy
     let parts = ['Your <strong>Smartbrush</strong> ships in 2 business days.'];
     if (qrAdded) parts.push('Your first <strong>Quarterly Refill</strong> ships in 90 days.');
     if (appAdded) parts.push('Set up <strong>Feno Plus</strong> in the app to start tracking your tongue + teeth biomarkers.');
     parts.push('Connect your dentist in the app to share your biomarker history.');
     ppNext.innerHTML = parts.join(' ');
   }
-
   ppQrAccept.addEventListener('click', () => {
     qrAdded = true;
-    // No discount on post-purchase upsell (regret-recovery)
     renderPostPurchase();
-    ppQrAccept.disabled = true;
-    ppQrAccept.textContent = '✓ Added to your order';
+    ppQrAccept.disabled = true; ppQrAccept.textContent = '✓ Added to your order';
     ppUpsellQr.classList.add('pp-upsell--added');
   });
   ppQrDecline.addEventListener('click', () => ppUpsellQr.classList.add('hidden'));
   ppAppAccept.addEventListener('click', () => {
     appAdded = true;
     renderPostPurchase();
-    ppAppAccept.disabled = true;
-    ppAppAccept.textContent = '✓ Added to your order';
+    ppAppAccept.disabled = true; ppAppAccept.textContent = '✓ Added to your order';
     ppUpsellApp.classList.add('pp-upsell--added');
   });
   ppAppDecline.addEventListener('click', () => ppUpsellApp.classList.add('hidden'));
   ppDone.addEventListener('click', closePostPurchase);
 
-  // Esc to close overlays
+  // Esc close
   document.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape') return;
     if (ppOverlay.classList.contains('open')) closePostPurchase();
     else if (coOverlay.classList.contains('open')) closeCheckout(true);
     else if (drawer.classList.contains('open')) closeCart(true);
+    else if (sheet.classList.contains('open')) closeSheet(true);
   });
 
-  // --- CTA routing
+  // --- Desktop CTA routing (also used by sheet for One Time)
   function handleCtaClick() {
-    if (primary !== 'onetime') return;
-    lastFocused = document.activeElement;
-    qrCheckedUpfront = addonCheckbox.checked;
-    qrAdded = addonCheckbox.checked;
+    if (primary !== 'onetime') {
+      // Desktop membership click: go straight to Shopify checkout for parity
+      qrCheckedUpfront = false;
+      qrAdded = false;
+      appAdded = false;
+      qrDiscountEarned = false;
+      openCheckout();
+      return;
+    }
+    const checked = addonCheckedState();
+    qrCheckedUpfront = checked;
+    qrAdded = checked;
     qrDiscountEarned = qrAdded;
     appAdded = false;
     bundleSavingsEarned = false;
@@ -1094,54 +1235,47 @@
     else openCart();
   }
 
-  // --- Product card render
+  // --- Render
   function render() {
-    const billingEl = document.getElementById('billing');
-    const amount = document.getElementById('price-amount');
-    const unit = document.getElementById('price-unit');
-    const sub = document.getElementById('price-sub');
-    const cta = document.getElementById('cta');
-    const terms = document.getElementById('terms');
-    const list = document.getElementById('included');
+    const isMembership = primary === 'membership';
+    const isAddonChecked = addonCheckedState();
 
-    if (primary === 'membership') {
-      billingEl.classList.remove('hidden');
-      addonToggle.classList.add('hidden');
+    // Toggle visibility
+    targets('billing').forEach(el => el.classList.toggle('hidden', !isMembership));
+    targets('addon').forEach(el => el.classList.toggle('hidden', isMembership));
+
+    let priceAmount, priceUnit, priceSub, incentiveText, includedHtml, ctaText, termsHtml;
+    if (isMembership) {
       if (billing === 'monthly') {
-        amount.textContent = '$40';
-        unit.textContent = '/mo';
-        sub.textContent = 'Everything included. Cancel anytime after Smartbrush is paid off.';
-        incentive.textContent = 'Lowest cost to start';
+        priceAmount = '$40'; priceUnit = '/mo';
+        priceSub = 'Everything included. Cancel anytime after Smartbrush is paid off.';
+        incentiveText = 'Lowest cost to start';
       } else {
-        amount.textContent = '$360';
-        unit.textContent = '/yr';
-        sub.textContent = 'Save $120 vs monthly ($30/mo effective). Renews annually.';
-        incentive.textContent = 'Save 25% · best long-term value';
+        priceAmount = '$360'; priceUnit = '/yr';
+        priceSub = 'Save $120 vs monthly ($30/mo effective). Renews annually.';
+        incentiveText = 'Save 25% · best long-term value';
       }
-      cta.textContent = billing === 'monthly' ? 'Get Started · $40/mo' : 'Get Started · $360/yr';
-      terms.innerHTML = 'If you cancel before your Smartbrush is paid off, the remaining balance is due at cancellation. Once paid off, refills, mouthpieces, and Feno Plus continue until you cancel.';
-      list.innerHTML =
-        '<li><span class="check">✓</span>Smartbrush device <span style="color:#888;font-weight:400">(brush + scanner)</span></li>' +
-        '<li><span class="check">✓</span>3 Feno Foam tubes per quarter</li>' +
-        '<li><span class="check">✓</span>1 TrueFit Mouthpiece per quarter</li>' +
-        '<li><span class="check">✓</span>Feno Plus — AI coaching, tongue + teeth biomarker dashboards, dentist sync</li>';
+      ctaText = billing === 'monthly' ? 'Get Started · $40/mo' : 'Get Started · $360/yr';
+      termsHtml = 'If you cancel before your Smartbrush is paid off, the remaining balance is due at cancellation. Once paid off, refills, mouthpieces, and Feno Plus continue until you cancel.';
+      includedHtml = '<li><span class="check">✓</span>Smartbrush device <span style="color:#888;font-weight:400">(brush + scanner)</span></li><li><span class="check">✓</span>3 Feno Foam tubes per quarter</li><li><span class="check">✓</span>1 TrueFit Mouthpiece per quarter</li><li><span class="check">✓</span>Feno Plus — AI coaching, biomarker dashboards, dentist sync</li>';
     } else {
-      billingEl.classList.add('hidden');
-      addonToggle.classList.remove('hidden');
-      amount.textContent = '$299';
-      unit.textContent = '';
-      sub.textContent = 'Smartbrush bundle. Yours to keep, no recurring charges.';
-      incentive.textContent = 'Pay once · free shipping';
-      cta.textContent = addonCheckbox.checked ? 'Checkout · $269' : 'Add to Cart · $299';
-      terms.innerHTML = addonCheckbox.checked
+      priceAmount = '$299'; priceUnit = '';
+      priceSub = 'Smartbrush bundle. Yours to keep, no recurring charges.';
+      incentiveText = 'Pay once · free shipping';
+      ctaText = isAddonChecked ? 'Checkout · $269' : 'Add to Cart · $299';
+      termsHtml = isAddonChecked
         ? 'Quarterly Refills added · $30 first-order bonus applies at checkout.'
         : 'Includes Smartbrush, 3 Feno Foam tubes, and 1 TrueFit Mouthpiece. Add Quarterly Refills above to save $30 on this order.';
-      list.innerHTML =
-        '<li><span class="check">✓</span>Smartbrush device <span style="color:#888;font-weight:400">(brush + scanner)</span></li>' +
-        '<li><span class="check">✓</span>3 Feno Foam tubes</li>' +
-        '<li><span class="check">✓</span>1 TrueFit Mouthpiece</li>' +
-        '<li><span class="check">✓</span>Free Feno app — basic tracking (upgrade to Feno Plus for biomarkers + dentist sync)</li>';
+      includedHtml = '<li><span class="check">✓</span>Smartbrush device <span style="color:#888;font-weight:400">(brush + scanner)</span></li><li><span class="check">✓</span>3 Feno Foam tubes</li><li><span class="check">✓</span>1 TrueFit Mouthpiece</li><li><span class="check">✓</span>Free Feno app — basic tracking <span style="color:#888;font-weight:400">(upgrade to Feno Plus for biomarkers + sync)</span></li>';
     }
+
+    setText('amount', priceAmount);
+    setText('unit', priceUnit);
+    setText('sub', priceSub);
+    setText('incentive', incentiveText);
+    setText('cta', ctaText);
+    setHTML('terms', termsHtml);
+    setHTML('included', includedHtml);
   }
 
   syncMobileSummaryDefault();
