@@ -215,9 +215,13 @@
     flex-direction: column;
     gap: 14px;
   }
-  .sheet-title { font-family: Georgia, 'Times New Roman', serif; font-size: 22px; font-weight: 400; line-height: 1.2; margin: 0 0 -8px; }
+  .sheet-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: -8px; }
+  .sheet-title { font-family: Georgia, 'Times New Roman', serif; font-size: 22px; font-weight: 400; line-height: 1.2; margin: 0; flex: 1 1 auto; min-width: 0; }
+  .sheet-header .incentive { flex-shrink: 0; font-size: 11px; padding: 4px 10px; align-self: flex-start; margin-top: 4px; }
   .sheet-switch { background: transparent; border: none; padding: 0; font-size: 12px; color: #185FA5; cursor: pointer; align-self: flex-start; text-decoration: underline; text-underline-offset: 3px; margin-bottom: 2px; }
   .sheet-switch:hover { color: #0C447C; }
+  .sheet-software { font-size: 13px; color: #4A4A4A; line-height: 1.5; margin: 4px 0 0; }
+  .sheet-software strong { color: #1A1A1A; font-weight: 600; }
   .plans-sheet__body .badges { gap: 6px; }
   .plans-sheet__body .badge { font-size: 11px; padding: 6px 10px; }
   .plans-sheet__body .badge-icon { width: 12px; height: 12px; }
@@ -553,6 +557,15 @@
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: #6B6B6B;
+    white-space: nowrap;
+  }
+  .plan-card__headline {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 19px;
+    font-weight: 400;
+    line-height: 1.2;
+    color: #1A1A1A;
+    margin-top: 2px;
   }
   .plan-card__price {
     font-family: Georgia, 'Times New Roman', serif;
@@ -616,12 +629,14 @@
   }
   .plan-card--collapsed .plan-card__badge { display: none; }
   .plan-card--collapsed .plan-card__expand { max-height: 0; opacity: 0; pointer-events: none; margin: 0; }
+  .plan-card--collapsed .plan-card__headline { display: none; }
   .plan-card--collapsed .plan-card__chevron { display: inline; }
-  .plan-card--collapsed .plan-card__name { margin: 0; font-size: 11px; }
+  .plan-card--collapsed .plan-card__name { margin: 0; font-size: 11px; flex-shrink: 0; }
   .plan-card--collapsed .plan-card__price {
     margin: 0;
     font-size: 20px;
     margin-left: 2px;
+    white-space: nowrap;
   }
   .plan-card--collapsed .plan-card__unit { font-size: 12px; }
 
@@ -834,11 +849,12 @@
     <button class="plan-card plan-card--featured" type="button" data-plan="membership" onclick="onPlanCardClick('membership')">
       <span class="plan-card__badge">Best value</span>
       <span class="plan-card__name">Membership</span>
+      <h3 class="plan-card__headline">Get everything, pay monthly</h3>
       <p class="plan-card__price"><span>$40</span><span class="plan-card__unit">/mo</span></p>
       <span class="plan-card__chevron" aria-hidden="true">▾</span>
       <div class="plan-card__expand">
         <p class="plan-card__price-anchor">$30/mo billed annually · or $360/yr</p>
-        <p class="plan-card__tagline">Smartbrush + quarterly refills + Feno Premium, all in.</p>
+        <p class="plan-card__tagline">Track tongue + teeth biomarkers in the Feno Premium app, synced to your dentist.</p>
         <ul class="plan-card__bullets">
           <li>Smartbrush + scraper + charger</li>
           <li>Quarterly refills (Foam + Mouthpiece)</li>
@@ -852,10 +868,11 @@
 
     <button class="plan-card" type="button" data-plan="onetime" onclick="onPlanCardClick('onetime')">
       <span class="plan-card__name">One Time</span>
+      <h3 class="plan-card__headline">Pay upfront, own the bundle</h3>
       <p class="plan-card__price"><span>$299</span></p>
       <span class="plan-card__chevron" aria-hidden="true">▾</span>
       <div class="plan-card__expand">
-        <p class="plan-card__tagline">Smartbrush bundle, yours to keep.</p>
+        <p class="plan-card__tagline">Pair with the free Feno app to track tongue + teeth biomarkers.</p>
         <ul class="plan-card__bullets">
           <li>Smartbrush + scraper + charger</li>
           <li>3 Feno Foam + 1 TrueFit Mouthpiece</li>
@@ -907,10 +924,12 @@
   <button type="button" class="plans-sheet__close" id="sheet-close" aria-label="Close plans">×</button>
 
   <div class="plans-sheet__body">
-    <h2 id="sheet-title" class="sheet-title" data-target="sheet-title">Membership</h2>
+    <div class="sheet-header">
+      <h2 id="sheet-title" class="sheet-title" data-target="sheet-title">Get everything, pay monthly</h2>
+      <span class="incentive" data-target="incentive"></span>
+    </div>
     <button type="button" class="sheet-switch" data-target="sheet-switch" onclick="switchPlanFromSheet()"></button>
-
-    <span class="incentive" data-target="incentive"></span>
+    <p class="sheet-software" data-target="sheet-software"></p>
 
     <div class="price-row">
       <p class="price-main"><span data-target="amount">$40</span><span class="price-unit" data-target="unit">/mo</span></p>
@@ -1650,7 +1669,7 @@
     targets('billing').forEach(el => el.classList.toggle('hidden', !isMembership));
     targets('addon').forEach(el => el.classList.toggle('hidden', isMembership));
 
-    let priceAmount, priceUnit, priceSub, incentiveText, includedHtml, ctaText, termsHtml;
+    let priceAmount, priceUnit, priceSub, incentiveText, includedHtml, ctaText, termsHtml, softwareHtml, headlineText;
     if (isMembership) {
       if (billing === 'monthly') {
         priceAmount = '$40'; priceUnit = '/mo';
@@ -1663,12 +1682,14 @@
       }
       ctaText = billing === 'monthly' ? 'Get Started · $40/mo' : 'Get Started · $360/yr';
       termsHtml = 'Cancel anytime after Smartbrush is paid off · Early cancel = remaining balance due · Refills + Feno Premium continue until cancelled.';
+      headlineText = 'Get everything, pay monthly';
+      softwareHtml = 'Includes <strong>Feno Premium</strong>: AI coaching and tongue + teeth biomarker tracking, synced to your dentist.';
       includedHtml =
         '<li><span class="check">✓</span>Smartbrush</li>' +
         '<li><span class="check">✓</span>Tongue scraper</li>' +
         '<li><span class="check">✓</span>Charger</li>' +
         '<li><span class="check">✓</span>Personalized fit</li>' +
-        '<li><span class="check">✓</span>Quarterly refills</li>' +
+        '<li><span class="check">✓</span>Foam + Mouthpiece refills</li>' +
         '<li><span class="check">✓</span>Feno Premium app</li>';
     } else {
       priceAmount = '$299'; priceUnit = '';
@@ -1678,6 +1699,8 @@
       termsHtml = isAddonChecked
         ? 'Quarterly Refills added · $30 first-order bonus applies at checkout.'
         : 'Smartbrush + 3 Foam + 1 Mouthpiece · Add Refills to save $30 on this order.';
+      headlineText = 'Pay upfront, own the bundle';
+      softwareHtml = 'Pair with the <strong>free Feno app</strong> to track tongue + teeth biomarkers.';
       includedHtml =
         '<li><span class="check">✓</span>Smartbrush</li>' +
         '<li><span class="check">✓</span>Tongue scraper</li>' +
@@ -1695,9 +1718,10 @@
     setHTML('terms', termsHtml);
     setHTML('included', includedHtml);
 
-    // Sheet title + switch link
-    setText('sheet-title', isMembership ? 'Membership' : 'Smartbrush · One Time');
-    setText('sheet-switch', isMembership ? '← Switch to One Time' : '← Switch to Membership');
+    // Sheet title (now the descriptive headline), switch link, software sentence
+    setText('sheet-title', headlineText);
+    setText('sheet-switch', isMembership ? '← Switch to one-time' : '← Switch to monthly');
+    setHTML('sheet-software', softwareHtml);
   }
 
   syncMobileSummaryDefault();
