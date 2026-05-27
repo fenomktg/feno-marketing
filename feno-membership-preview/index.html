@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#E8E8E8">
 <title>Feno Demo · Monthly Pass vs One Time · UI/UX Preview</title>
-<meta name="description" content="UX preview of the Feno offer page: pull-up plans sheet, slide cart with refills + Feno Plus upsells, Shopify-style checkout, and post-purchase one-click upsells.">
+<meta name="description" content="UX preview of the Feno offer page: pull-up plans sheet, slide cart with refills + Feno Premium upsells, Shopify-style checkout, and post-purchase one-click upsells.">
 <meta property="og:title" content="Feno Demo · Monthly Pass vs One Time · UI/UX">
 <meta property="og:description" content="Walk the membership vs one-time flow, slide-cart upsells, checkout simulation, and post-purchase upsell screen.">
 <meta property="og:type" content="website">
@@ -438,57 +438,40 @@
     line-height: 1.5;
     margin-bottom: 14px;
   }
-  .disclaimer-steps {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 18px;
-    counter-reset: step;
+  .disclaimer-flows {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-  }
-  .disclaimer-steps li {
-    font-size: 13px;
-    color: #4A4A4A;
-    line-height: 1.5;
-    counter-increment: step;
-    position: relative;
-    padding-left: 32px;
-    min-height: 22px;
-  }
-  .disclaimer-steps li::before {
-    content: counter(step);
-    position: absolute;
-    left: 0;
-    top: 1px;
-    width: 22px;
-    height: 22px;
-    background: #1A1A1A;
-    color: white;
-    border-radius: 999px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    font-weight: 700;
-  }
-  .disclaimer-steps strong { color: #1A1A1A; }
-  .disclaimer-check {
-    display: flex;
-    align-items: flex-start;
     gap: 10px;
-    margin-bottom: 14px;
-    padding: 12px;
+    margin-bottom: 18px;
+  }
+  .disclaimer-flow {
     background: #FAFBFC;
     border: 1px solid #E1E1E1;
     border-radius: 10px;
-    font-size: 13px;
-    color: #1A1A1A;
-    cursor: pointer;
-    user-select: none;
-    line-height: 1.4;
+    padding: 14px;
   }
-  .disclaimer-check input { width: 18px; height: 18px; accent-color: #1A1A1A; flex-shrink: 0; margin-top: 1px; }
+  .disclaimer-flow__label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #888;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .disclaimer-flow__title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1A1A1A;
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+  .disclaimer-flow__desc {
+    font-size: 13px;
+    color: #4A4A4A;
+    line-height: 1.5;
+    margin: 0;
+  }
   .disclaimer-btn {
     width: 100%;
     background: #1A1A1A;
@@ -776,7 +759,7 @@
 <div class="section">
   <p class="eyebrow">Diagnostic-grade oral care</p>
   <h1 class="headline">The toothbrush your dentist actually wants you to use</h1>
-  <p class="subhead">A toothbrush that scans. The Feno app maps your oral health biomarkers — tongue, teeth — and syncs them to your dentist.</p>
+  <p class="subhead">A toothbrush that scans. The Feno app maps tongue and teeth biomarkers, then syncs them to your dentist.</p>
 
   <div class="toggle-wrap">
     <span class="recommended-tag">Best value</span>
@@ -852,11 +835,11 @@
       <span class="plan-card__chevron" aria-hidden="true">▾</span>
       <div class="plan-card__expand">
         <p class="plan-card__price-anchor">$30/mo billed annually · or $360/yr</p>
-        <p class="plan-card__tagline">Smartbrush + quarterly refills + Feno Plus, all in.</p>
+        <p class="plan-card__tagline">Smartbrush + quarterly refills + Feno Premium, all in.</p>
         <ul class="plan-card__bullets">
           <li>Smartbrush (brush + scanner)</li>
           <li>3 Foam + 1 Mouthpiece every 90 days</li>
-          <li>Feno Plus — biomarkers + dentist sync</li>
+          <li>Feno Premium: biomarkers + dentist sync</li>
         </ul>
         <span class="plan-card__cta">Choose Membership</span>
       </div>
@@ -885,19 +868,21 @@
 <div class="disclaimer-backdrop" id="disclaimer-backdrop" aria-hidden="true"></div>
 <div class="disclaimer-modal" id="disclaimer-modal" role="dialog" aria-modal="true" aria-labelledby="disclaimer-title" aria-hidden="true">
   <p class="disclaimer-eyebrow">Demo · UI/UX Preview</p>
-  <h2 class="disclaimer-title" id="disclaimer-title">Walk the offer flow</h2>
-  <p class="disclaimer-body">This is a wireframe demo, not a live store. Try it like a real shopper:</p>
-  <ol class="disclaimer-steps">
-    <li>Pick a plan. <strong>One Time</strong> shows the full upsell ladder.</li>
-    <li>In the slide cart, two upsells appear: <strong>Quarterly Refills</strong> + <strong>Feno Plus</strong>. Skip them to see what happens.</li>
-    <li>Hit <strong>Checkout</strong> — Shopify-style form, pre-filled. Just press <strong>Place Order</strong>.</li>
-    <li><strong>Post-purchase</strong> shows one-click upsells for anything you skipped — with their own incentives.</li>
-  </ol>
-  <label class="disclaimer-check">
-    <input type="checkbox" id="disclaimer-check-input">
-    <span>I understand this is a demo — flows simulate Shopify but no real charges happen.</span>
-  </label>
-  <button class="disclaimer-btn" type="button" id="disclaimer-btn" disabled>Got it — explore</button>
+  <h2 class="disclaimer-title" id="disclaimer-title">Two flows to try</h2>
+  <p class="disclaimer-body">Wireframe demo, not a live store. Shopify checkout is pre-filled and no real charges happen.</p>
+  <div class="disclaimer-flows">
+    <div class="disclaimer-flow">
+      <span class="disclaimer-flow__label">Flow 1</span>
+      <h3 class="disclaimer-flow__title">Membership</h3>
+      <p class="disclaimer-flow__desc">Tap the Membership card. Pick monthly or annual. Place the order.</p>
+    </div>
+    <div class="disclaimer-flow">
+      <span class="disclaimer-flow__label">Flow 2</span>
+      <h3 class="disclaimer-flow__title">One Time with upsells</h3>
+      <p class="disclaimer-flow__desc">Tap One Time. The cart shows two upsells (Quarterly Refills, Feno Premium). Skip them to see the post-purchase upsell. Otherwise add and check out.</p>
+    </div>
+  </div>
+  <button class="disclaimer-btn" type="button" id="disclaimer-btn">Test it out</button>
 </div>
 
 <button class="disclaimer-replay" type="button" id="disclaimer-replay" aria-label="Re-read demo intro" title="Re-read demo intro">?</button>
@@ -977,7 +962,7 @@
         <span class="savings-bar__amount" id="savings-amount">$0 of $45</span>
       </div>
       <div class="savings-bar__track"><div class="savings-bar__fill" id="savings-fill"></div></div>
-      <p class="savings-bar__msg" id="savings-msg">Add Refills + Feno Plus to save $45 on this order.</p>
+      <p class="savings-bar__msg" id="savings-msg">Add Refills + Feno Premium to save $45 on this order.</p>
     </div>
 
     <div class="scp-upsells-label">Recommended for you</div>
@@ -995,7 +980,7 @@
     <div class="cu-card" id="cu-app">
       <div class="cu-card__thumb" aria-hidden="true">app</div>
       <div class="cu-card__content">
-        <div class="cu-card__title">Feno Plus</div>
+        <div class="cu-card__title">Feno Premium</div>
         <div class="cu-card__sub">AI coaching · biomarker dashboards · dentist sync.</div>
         <div class="cu-card__price">$10 / month · Cancel anytime</div>
       </div>
@@ -1107,7 +1092,7 @@
       <div class="co-summary-item hidden" id="co-item-app">
         <div class="co-summary-img" aria-hidden="true">app</div>
         <div class="co-summary-item__qty">
-          <div class="co-summary-item__title">Feno Plus <span class="addon__save" style="margin-left:4px">Sub</span></div>
+          <div class="co-summary-item__title">Feno Premium <span class="addon__save" style="margin-left:4px">Sub</span></div>
           <div class="co-summary-item__sub">AI coaching · biomarker dashboards · dentist sync</div>
         </div>
         <div class="co-summary-item__price">$10.00<small>per month</small></div>
@@ -1124,7 +1109,7 @@
       <div class="co-future hidden" id="co-future">
         <p class="co-future__title">After today</p>
         <div class="co-future__row hidden" id="co-future-qr"><span>Quarterly Refills</span><span>$65 every 90 days</span></div>
-        <div class="co-future__row hidden" id="co-future-app"><span>Feno Plus</span><span>$10 every month</span></div>
+        <div class="co-future__row hidden" id="co-future-app"><span>Feno Premium</span><span>$10 every month</span></div>
       </div>
     </aside>
   </div>
@@ -1140,7 +1125,7 @@
     <div class="pp-head">
       <div class="pp-check-icon" aria-hidden="true">✓</div>
       <p class="pp-eyebrow">Order <span id="pp-order-no">#FEN-1042</span></p>
-      <h1 class="pp-title" id="pp-title">Thank you — your order is confirmed</h1>
+      <h1 class="pp-title" id="pp-title">Your order is confirmed</h1>
       <p class="pp-sub">Confirmation email sent to <strong id="pp-email">jane@feno.co</strong>. Your Smartbrush ships in 2 business days.</p>
     </div>
 
@@ -1166,11 +1151,11 @@
     <div class="pp-card pp-upsell hidden" id="pp-upsell-app">
       <p class="pp-upsell__eyebrow">One-click add · <span class="pp-upsell__savings">First month free</span></p>
       <h2 class="pp-upsell__title">See your biomarkers, not just your brushing</h2>
-      <p class="pp-upsell__body">Your Smartbrush captures the scan. Feno Plus turns it into a tongue + teeth biomarker dashboard you can share with your dentist.</p>
+      <p class="pp-upsell__body">Your Smartbrush captures the scan. Feno Premium turns it into a tongue + teeth biomarker dashboard you can share with your dentist.</p>
       <div class="pp-upsell__product">
         <div class="pp-upsell__thumb" aria-hidden="true">app</div>
         <div style="flex:1;min-width:0">
-          <div class="pp-upsell__name">Feno Plus <span class="pp-upsell__deal-badge">1st month free</span></div>
+          <div class="pp-upsell__name">Feno Premium <span class="pp-upsell__deal-badge">1st month free</span></div>
           <div class="pp-upsell__detail">AI coaching · biomarker dashboards<br>Dentist sync · cancel anytime</div>
         </div>
         <div class="pp-upsell__price"><s>$10</s> Free<small>first month, then $10/mo</small></div>
@@ -1396,9 +1381,9 @@
     if (saved === 0) {
       savingsMsg.textContent = appAdded
         ? 'Add Quarterly Refills to unlock $30 + $15 bundle savings.'
-        : 'Add Refills + Feno Plus to save $45 on this order.';
+        : 'Add Refills + Feno Premium to save $45 on this order.';
     } else if (saved === 30) {
-      savingsMsg.textContent = 'Add Feno Plus to unlock another $15 bundle savings.';
+      savingsMsg.textContent = 'Add Feno Premium to unlock another $15 bundle savings.';
     } else if (saved === 45) {
       savingsMsg.textContent = 'You\'re saving $45 on this order. ✨';
     }
@@ -1536,14 +1521,14 @@
       html += '<div class="pp-row pp-row--muted"><span>' + qrLabel + '</span><span>$0.00 today</span></div>';
     }
     if (appAdded) {
-      const appLabel = appFromPostPurchase ? 'Feno Plus · 1st month free, then $10/mo' : 'Feno Plus · $10/mo';
+      const appLabel = appFromPostPurchase ? 'Feno Premium · 1st month free, then $10/mo' : 'Feno Premium · $10/mo';
       const appToday = appFromPostPurchase ? '$0.00 today' : '$10.00 today';
       html += '<div class="pp-row pp-row--muted"><span>' + appLabel + '</span><span>' + appToday + '</span></div>';
     }
     if (qrDiscountEarned) html += '<div class="pp-row pp-row--discount"><span>First-order bonus</span><span>−$30.00</span></div>';
     if (bundleSavingsEarned) html += '<div class="pp-row pp-row--discount"><span>Bundle savings</span><span>−$15.00</span></div>';
     if (qrFromPostPurchase) html += '<div class="pp-row pp-row--discount"><span>Refills savings (first refill)</span><span>−$30.00 later</span></div>';
-    if (appFromPostPurchase) html += '<div class="pp-row pp-row--discount"><span>Feno Plus first month</span><span>Free</span></div>';
+    if (appFromPostPurchase) html += '<div class="pp-row pp-row--discount"><span>Feno Premium first month</span><span>Free</span></div>';
     html += '<div class="pp-row pp-row--muted"><span>Shipping</span><span>Free</span></div>';
     // Today total: if app was added at post-purchase (free first month), don't charge $10 today
     const todayAppDelta = (appAdded && appFromPostPurchase) ? -10 : 0;
@@ -1558,14 +1543,14 @@
     }
     if (appAdded) {
       const appFut = appFromPostPurchase ? 'Free for 30 days · then $10/month' : '$10 every month';
-      futureHtml += '<div class="pp-row pp-row--muted"><span>Feno Plus</span><span>' + appFut + '</span></div>';
+      futureHtml += '<div class="pp-row pp-row--muted"><span>Feno Premium</span><span>' + appFut + '</span></div>';
     }
     ppFuture.innerHTML = futureHtml;
     ppFutureCard.classList.toggle('hidden', !qrAdded && !appAdded);
 
     let parts = ['Your <strong>Smartbrush</strong> ships in 2 business days.'];
     if (qrAdded) parts.push('Your first <strong>Quarterly Refill</strong> ships in 90 days.');
-    if (appAdded) parts.push('Set up <strong>Feno Plus</strong> in the app to start tracking your tongue + teeth biomarkers.');
+    if (appAdded) parts.push('Set up <strong>Feno Premium</strong> in the app to start tracking your tongue + teeth biomarkers.');
     parts.push('Connect your dentist in the app to share your biomarker history.');
     ppNext.innerHTML = parts.join(' ');
   }
@@ -1573,7 +1558,7 @@
     qrAdded = true;
     qrFromPostPurchase = true;
     renderPostPurchase();
-    ppQrAccept.disabled = true; ppQrAccept.textContent = '✓ Added — $30 saved';
+    ppQrAccept.disabled = true; ppQrAccept.textContent = '✓ Added · $30 saved';
     ppUpsellQr.classList.add('pp-upsell--added');
   });
   ppQrDecline.addEventListener('click', () => ppUpsellQr.classList.add('hidden'));
@@ -1581,7 +1566,7 @@
     appAdded = true;
     appFromPostPurchase = true;
     renderPostPurchase();
-    ppAppAccept.disabled = true; ppAppAccept.textContent = '✓ Added — first month free';
+    ppAppAccept.disabled = true; ppAppAccept.textContent = '✓ Added · first month free';
     ppUpsellApp.classList.add('pp-upsell--added');
   });
   ppAppDecline.addEventListener('click', () => ppUpsellApp.classList.add('hidden'));
@@ -1636,19 +1621,16 @@
   // --- Disclaimer modal
   const disclaimerBackdrop = document.getElementById('disclaimer-backdrop');
   const disclaimerModal = document.getElementById('disclaimer-modal');
-  const disclaimerCheck = document.getElementById('disclaimer-check-input');
   const disclaimerBtn = document.getElementById('disclaimer-btn');
   const disclaimerReplay = document.getElementById('disclaimer-replay');
 
   function showDisclaimer() {
-    disclaimerCheck.checked = false;
-    disclaimerBtn.disabled = true;
     disclaimerBackdrop.classList.add('show');
     disclaimerModal.classList.add('show');
     disclaimerBackdrop.setAttribute('aria-hidden', 'false');
     disclaimerModal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('lock-scroll');
-    window.requestAnimationFrame(() => { try { disclaimerCheck.focus({ preventScroll: true }); } catch(e){} });
+    window.requestAnimationFrame(() => { try { disclaimerBtn.focus({ preventScroll: true }); } catch(e){} });
   }
   function hideDisclaimer() {
     disclaimerBackdrop.classList.remove('show');
@@ -1659,9 +1641,6 @@
     try { localStorage.setItem('feno-demo-seen', '1'); } catch(e){}
   }
 
-  disclaimerCheck.addEventListener('change', (e) => {
-    disclaimerBtn.disabled = !e.target.checked;
-  });
   disclaimerBtn.addEventListener('click', hideDisclaimer);
   disclaimerReplay.addEventListener('click', showDisclaimer);
 
@@ -1693,8 +1672,8 @@
         incentiveText = 'Save 25% · best long-term value';
       }
       ctaText = billing === 'monthly' ? 'Get Started · $40/mo' : 'Get Started · $360/yr';
-      termsHtml = 'Cancel anytime after Smartbrush is paid off · Early cancel = remaining balance due · Refills + Feno Plus continue until cancelled.';
-      includedHtml = '<li><span class="check">✓</span>Smartbrush device <span style="color:#888;font-weight:400">(brush + scanner)</span></li><li><span class="check">✓</span>3 Feno Foam tubes per quarter</li><li><span class="check">✓</span>1 TrueFit Mouthpiece per quarter</li><li><span class="check">✓</span>Feno Plus — AI coaching, biomarker dashboards, dentist sync</li>';
+      termsHtml = 'Cancel anytime after Smartbrush is paid off · Early cancel = remaining balance due · Refills + Feno Premium continue until cancelled.';
+      includedHtml = '<li><span class="check">✓</span>Smartbrush device <span style="color:#888;font-weight:400">(brush + scanner)</span></li><li><span class="check">✓</span>3 Feno Foam tubes per quarter</li><li><span class="check">✓</span>1 TrueFit Mouthpiece per quarter</li><li><span class="check">✓</span>Feno Premium: AI coaching, biomarker dashboards, dentist sync</li>';
     } else {
       priceAmount = '$299'; priceUnit = '';
       priceSub = 'Smartbrush bundle. Yours to keep, no recurring charges.';
@@ -1703,7 +1682,7 @@
       termsHtml = isAddonChecked
         ? 'Quarterly Refills added · $30 first-order bonus applies at checkout.'
         : 'Smartbrush + 3 Foam + 1 Mouthpiece · Add Refills to save $30 on this order.';
-      includedHtml = '<li><span class="check">✓</span>Smartbrush device <span style="color:#888;font-weight:400">(brush + scanner)</span></li><li><span class="check">✓</span>3 Feno Foam tubes</li><li><span class="check">✓</span>1 TrueFit Mouthpiece</li><li><span class="check">✓</span>Free Feno app — basic tracking <span style="color:#888;font-weight:400">(upgrade to Feno Plus for biomarkers + sync)</span></li>';
+      includedHtml = '<li><span class="check">✓</span>Smartbrush device <span style="color:#888;font-weight:400">(brush + scanner)</span></li><li><span class="check">✓</span>3 Feno Foam tubes</li><li><span class="check">✓</span>1 TrueFit Mouthpiece</li><li><span class="check">✓</span>Free Feno app, basic tracking <span style="color:#888;font-weight:400">(upgrade to Feno Premium for biomarkers and sync)</span></li>';
     }
 
     setText('amount', priceAmount);
