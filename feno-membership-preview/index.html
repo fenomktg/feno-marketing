@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#E8E8E8">
-<title>Feno Demo · Monthly Pass vs One Time · UI/UX Preview</title>
+<title>Feno Demo · Subscribe & Save vs One Time · UI/UX Preview</title>
 <meta name="description" content="UX preview of the Feno offer page: pull-up plans sheet, slide cart with refills + Feno Premium upsells, Shopify-style checkout, and post-purchase one-click upsells.">
-<meta property="og:title" content="Feno Demo · Monthly Pass vs One Time · UI/UX">
-<meta property="og:description" content="Walk the membership vs one-time flow, slide-cart upsells, checkout simulation, and post-purchase upsell screen.">
+<meta property="og:title" content="Feno Demo · Subscribe & Save vs One Time · UI/UX">
+<meta property="og:description" content="Walk the subscribe-and-save vs one-time flow, slide-cart upsells, checkout simulation, and post-purchase upsell screen.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://feno-membership-preview.vercel.app">
 <meta name="twitter:card" content="summary">
@@ -792,7 +792,7 @@
     <span class="recommended-tag">Best value</span>
     <div class="primary-toggle" role="tablist">
       <button id="tab-onetime" type="button" role="tab" data-tab="onetime" aria-selected="false" onclick="setPrimary('onetime')">One Time</button>
-      <button class="active" id="tab-membership" type="button" role="tab" data-tab="membership" aria-selected="true" onclick="setPrimary('membership')">Membership</button>
+      <button class="active" id="tab-membership" type="button" role="tab" data-tab="membership" aria-selected="true" onclick="setPrimary('membership')">Subscribe &amp; Save</button>
     </div>
   </div>
 
@@ -857,7 +857,7 @@
   <div class="plan-cards" aria-label="Choose your plan">
     <button class="plan-card plan-card--featured" type="button" data-plan="membership" onclick="onPlanCardClick('membership')">
       <span class="plan-card__badge">Best value</span>
-      <span class="plan-card__name">Membership</span>
+      <span class="plan-card__name">Subscribe &amp; Save</span>
       <h3 class="plan-card__headline">Get everything, pay monthly</h3>
       <p class="plan-card__price"><span>$40</span><span class="plan-card__unit">/mo</span></p>
       <span class="plan-card__chevron" aria-hidden="true">▾</span>
@@ -869,7 +869,7 @@
           <li>Quarterly refills (Foam + Mouthpiece)</li>
           <li>Feno Premium app</li>
         </ul>
-        <span class="plan-card__cta">Choose Membership</span>
+        <span class="plan-card__cta">Subscribe &amp; Save</span>
       </div>
     </button>
 
@@ -902,8 +902,8 @@
   <div class="disclaimer-flows">
     <div class="disclaimer-flow">
       <span class="disclaimer-flow__label">Flow 1</span>
-      <h3 class="disclaimer-flow__title">Membership</h3>
-      <p class="disclaimer-flow__desc">Tap the Membership card. Pick monthly or annual. Place the order.</p>
+      <h3 class="disclaimer-flow__title">Subscribe &amp; Save</h3>
+      <p class="disclaimer-flow__desc">Tap Subscribe &amp; Save. Pick monthly or annual. Place the order.</p>
     </div>
     <div class="disclaimer-flow">
       <span class="disclaimer-flow__label">Flow 2</span>
@@ -1735,7 +1735,7 @@
 
     // Sheet title (now the descriptive headline), switch link, software sentence
     setText('sheet-title', headlineText);
-    setText('sheet-switch', isMembership ? '← Switch to one-time' : '← Switch to monthly');
+    setText('sheet-switch', isMembership ? '← Switch to one-time' : '← Switch to Subscribe & Save');
     setHTML('sheet-software', softwareHtml);
   }
 
