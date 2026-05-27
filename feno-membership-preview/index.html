@@ -202,12 +202,14 @@
     flex: 1;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    padding: 18px 18px 8px;
+    padding: 22px 18px 8px;
     display: flex;
     flex-direction: column;
     gap: 14px;
   }
-  .plans-sheet__body .toggle-wrap { margin: 0 auto 4px; }
+  .sheet-title { font-family: Georgia, 'Times New Roman', serif; font-size: 22px; font-weight: 400; line-height: 1.2; margin: 0 0 -8px; }
+  .sheet-switch { background: transparent; border: none; padding: 0; font-size: 12px; color: #185FA5; cursor: pointer; align-self: flex-start; text-decoration: underline; text-underline-offset: 3px; margin-bottom: 2px; }
+  .sheet-switch:hover { color: #0C447C; }
   .plans-sheet__body .badges { gap: 6px; }
   .plans-sheet__body .badge { font-size: 11px; padding: 6px 10px; }
   .plans-sheet__body .badge-icon { width: 12px; height: 12px; }
@@ -368,6 +370,88 @@
   .desktop-only { display: initial; }
   .mobile-only { display: none; }
 
+  /* === Mobile plan cards (between hero and sticky/footer) === */
+  .plan-cards { display: none; }
+  .plan-card {
+    background: #FFFFFF;
+    border: 1.5px solid #E1E1E1;
+    border-radius: 14px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    cursor: pointer;
+    position: relative;
+    text-align: left;
+    transition: border-color 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+    font-family: inherit;
+    width: 100%;
+  }
+  .plan-card:hover { border-color: #185FA5; }
+  .plan-card:active { transform: scale(0.99); }
+  .plan-card:focus-visible { outline: 2px solid #185FA5; outline-offset: 2px; }
+  .plan-card--featured {
+    border-color: #1A1A1A;
+    background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+  }
+  .plan-card__badge {
+    position: absolute;
+    top: -9px;
+    right: 14px;
+    background: #C0DD97;
+    color: #173404;
+    font-size: 10px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+  .plan-card__head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  .plan-card__name {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #6B6B6B;
+  }
+  .plan-card__price {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: #1A1A1A;
+    line-height: 1;
+    margin-top: 4px;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 3px;
+  }
+  .plan-card__unit { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 13px; color: #6B6B6B; font-weight: 500; }
+  .plan-card__tagline { font-size: 13px; color: #4A4A4A; line-height: 1.4; }
+  .plan-card__bullets { list-style: none; padding: 0; margin: 4px 0 0; display: flex; flex-direction: column; gap: 5px; }
+  .plan-card__bullets li { font-size: 12px; color: #555; display: flex; align-items: flex-start; gap: 8px; line-height: 1.45; }
+  .plan-card__bullets li::before { content: '✓'; color: #1D9E75; font-weight: 700; flex-shrink: 0; font-size: 13px; line-height: 1.3; }
+  .plan-card__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #185FA5;
+  }
+  .plan-card__cta::after { content: '→'; font-size: 14px; }
+  .plan-card--featured .plan-card__cta { color: #1A1A1A; }
+
+  .main-badges {
+    display: none;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 16px;
+  }
+  .main-badges .badge { font-size: 11px; padding: 6px 10px; }
+
   /* === Tablet === */
   @media (max-width: 1024px) and (min-width: 769px) {
     body { padding: 20px; }
@@ -377,10 +461,12 @@
     .co-form, .co-summary { padding: 32px; }
   }
 
-  /* === Mobile: visual hero + pull-up sheet pattern === */
+  /* === Mobile: visual hero + plan cards + pull-up sheet === */
   @media (max-width: 768px) {
-    body { padding: 0; padding-bottom: 86px; }
+    body { padding: 0; }
     .section { padding: 18px 16px 24px; border-radius: 0; }
+    .plan-cards { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+    .main-badges { display: flex; }
     .eyebrow { font-size: 11px; margin-bottom: 6px; letter-spacing: 0.08em; text-transform: uppercase; color: #888; }
     .headline { font-size: 28px; line-height: 1.15; margin-bottom: 10px; }
     .subhead { font-size: 14px; margin-bottom: 18px; padding: 0 4px; line-height: 1.5; }
@@ -394,20 +480,20 @@
 
     /* Visual hero */
     .media {
-      min-height: 360px;
-      padding: 24px;
+      min-height: 280px;
+      padding: 22px;
       background: linear-gradient(155deg, #FFFFFF 0%, #ECEEF1 100%);
     }
-    .media-shapes { margin-bottom: 18px; gap: 16px; }
-    .phone { width: 120px; height: 210px; }
-    .phone::before { width: 36px; height: 4px; top: 9px; }
-    .phone-lines { top: 28px; left: 12px; right: 12px; gap: 7px; }
-    .tube { width: 38px; height: 102px; }
-    .media-inner { font-size: 13px; }
-    .media-placeholder-note { font-size: 12px; }
+    .media-shapes { margin-bottom: 14px; gap: 14px; }
+    .phone { width: 100px; height: 180px; }
+    .phone::before { width: 30px; height: 4px; top: 8px; }
+    .phone-lines { top: 24px; left: 10px; right: 10px; gap: 6px; }
+    .tube { width: 32px; height: 88px; }
+    .media-inner { font-size: 12px; }
+    .media-placeholder-note { font-size: 11px; }
 
-    /* Show mobile main CTA */
-    .m-main-cta { display: block; }
+    /* Sticky main CTA disabled — plan cards take over */
+    .m-main-cta { display: none; }
     .mobile-only { display: initial; }
     .desktop-only { display: none; }
 
@@ -537,9 +623,44 @@
       <p class="terms" data-target="terms"></p>
     </div>
   </div>
+
+  <!-- Mobile-only plan cards (between hero and trust badges) -->
+  <div class="plan-cards" aria-label="Choose your plan">
+    <button class="plan-card plan-card--featured" type="button" onclick="openSheetWith('membership')">
+      <span class="plan-card__badge">Best value</span>
+      <span class="plan-card__name">Membership</span>
+      <p class="plan-card__price"><span>$40</span><span class="plan-card__unit">/mo</span></p>
+      <p class="plan-card__tagline">Smartbrush + quarterly refills + Feno Plus, all in.</p>
+      <ul class="plan-card__bullets">
+        <li>Smartbrush (brush + scanner)</li>
+        <li>3 Foam + 1 Mouthpiece every 90 days</li>
+        <li>Feno Plus — biomarkers + dentist sync</li>
+      </ul>
+      <span class="plan-card__cta">Choose Membership</span>
+    </button>
+
+    <button class="plan-card" type="button" onclick="openSheetWith('onetime')">
+      <span class="plan-card__name">One Time</span>
+      <p class="plan-card__price"><span>$299</span></p>
+      <p class="plan-card__tagline">Smartbrush bundle, yours to keep.</p>
+      <ul class="plan-card__bullets">
+        <li>Smartbrush (brush + scanner)</li>
+        <li>3 Feno Foam + 1 TrueFit Mouthpiece</li>
+        <li>Free Feno app · upgrade for biomarkers</li>
+      </ul>
+      <span class="plan-card__cta">Choose One Time</span>
+    </button>
+  </div>
+
+  <!-- Trust badges on the main mobile view -->
+  <div class="main-badges">
+    <span class="badge"><svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2L4 6v6c0 5 4 9 8 10 4-1 8-5 8-10V6l-8-4z"/><path d="M9 12l2 2 4-4"/></svg>30-day money back</span>
+    <span class="badge"><svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="1" y="6" width="15" height="11"/><path d="M16 11h4l3 3v3h-7"/><circle cx="6" cy="19" r="2"/><circle cx="19" cy="19" r="2"/></svg>Free shipping</span>
+    <span class="badge"><svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M13 2L3 14h7v8l10-12h-7V2z"/></svg>Ships in 2 days</span>
+  </div>
 </div>
 
-<!-- Mobile main-view sticky CTA -->
+<!-- Mobile main-view sticky CTA (unused now that plan cards exist; kept for desktop fallback) -->
 <div class="m-main-cta">
   <div class="m-main-cta__inner">
     <button type="button" class="m-main-cta__btn" id="open-sheet-btn" onclick="openSheet()">
@@ -556,21 +677,8 @@
   <button type="button" class="plans-sheet__close" id="sheet-close" aria-label="Close plans">×</button>
 
   <div class="plans-sheet__body">
-    <h2 id="sheet-title" class="hidden">Choose your plan</h2>
-
-    <div class="toggle-wrap" style="display: block;">
-      <span class="recommended-tag">Best value</span>
-      <div class="primary-toggle" role="tablist">
-        <button type="button" role="tab" data-tab="onetime" aria-selected="false" onclick="setPrimary('onetime')">One Time</button>
-        <button class="active" type="button" role="tab" data-tab="membership" aria-selected="true" onclick="setPrimary('membership')">Membership</button>
-      </div>
-    </div>
-
-    <div class="badges">
-      <span class="badge"><svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2L4 6v6c0 5 4 9 8 10 4-1 8-5 8-10V6l-8-4z"/><path d="M9 12l2 2 4-4"/></svg>Money Back</span>
-      <span class="badge"><svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="1" y="6" width="15" height="11"/><path d="M16 11h4l3 3v3h-7"/><circle cx="6" cy="19" r="2"/><circle cx="19" cy="19" r="2"/></svg>Free Shipping</span>
-      <span class="badge"><svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M13 2L3 14h7v8l10-12h-7V2z"/></svg>Ships Fast</span>
-    </div>
+    <h2 id="sheet-title" class="sheet-title" data-target="sheet-title">Membership</h2>
+    <button type="button" class="sheet-switch" data-target="sheet-switch" onclick="switchPlanFromSheet()"></button>
 
     <span class="incentive" data-target="incentive"></span>
 
@@ -971,6 +1079,13 @@
   });
 
   // --- Plans sheet
+  function openSheetWith(plan) {
+    setPrimary(plan);
+    openSheet();
+  }
+  function switchPlanFromSheet() {
+    setPrimary(primary === 'membership' ? 'onetime' : 'membership');
+  }
   function openSheet() {
     lastFocused = document.activeElement;
     sheet.classList.add('open');
@@ -1276,6 +1391,10 @@
     setText('cta', ctaText);
     setHTML('terms', termsHtml);
     setHTML('included', includedHtml);
+
+    // Sheet title + switch link
+    setText('sheet-title', isMembership ? 'Membership' : 'Smartbrush · One Time');
+    setText('sheet-switch', isMembership ? '← Switch to One Time' : '← Switch to Membership');
   }
 
   syncMobileSummaryDefault();
