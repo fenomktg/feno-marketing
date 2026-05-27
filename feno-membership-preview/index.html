@@ -550,7 +550,6 @@
     font-weight: 700;
     letter-spacing: 0.04em;
   }
-  .plan-card__head { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1 1 auto; }
   .plan-card__name {
     font-size: 11px;
     font-weight: 700;
@@ -622,31 +621,31 @@
   }
   .plan-card--collapsed {
     padding: 12px 16px;
-    flex-direction: row;
-    align-items: center;
-    gap: 12px;
     cursor: pointer;
+    /* Grid layout: row 1 = name + price + chevron; row 2 = full-width headline */
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    grid-template-rows: auto auto;
+    column-gap: 10px;
+    row-gap: 3px;
+    align-items: baseline;
   }
   .plan-card--collapsed .plan-card__badge { display: none; }
-  .plan-card--collapsed .plan-card__expand { max-height: 0; opacity: 0; pointer-events: none; margin: 0; }
-  .plan-card--collapsed .plan-card__chevron { display: inline; flex-shrink: 0; }
-  .plan-card--collapsed .plan-card__name { margin: 0; font-size: 10px; flex-shrink: 0; }
+  .plan-card--collapsed .plan-card__expand { display: none; }
+  .plan-card--collapsed .plan-card__name { grid-column: 1; grid-row: 1; margin: 0; font-size: 10px; }
+  .plan-card--collapsed .plan-card__price { grid-column: 2; grid-row: 1; margin: 0; font-size: 17px; white-space: nowrap; }
+  .plan-card--collapsed .plan-card__unit { font-size: 11px; }
+  .plan-card--collapsed .plan-card__chevron { grid-column: 3; grid-row: 1; display: inline; align-self: center; }
   .plan-card--collapsed .plan-card__headline {
+    grid-column: 1 / -1;
+    grid-row: 2;
     font-family: inherit;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
     color: #1A1A1A;
     line-height: 1.3;
-    margin: 1px 0 0;
-  }
-  .plan-card--collapsed .plan-card__price {
     margin: 0;
-    font-size: 16px;
-    white-space: nowrap;
-    flex-shrink: 0;
-    align-self: center;
   }
-  .plan-card--collapsed .plan-card__unit { font-size: 11px; }
 
   .plan-or {
     display: flex;
@@ -856,12 +855,10 @@
   <div class="plan-cards" aria-label="Choose your plan">
     <button class="plan-card plan-card--featured" type="button" data-plan="membership" onclick="onPlanCardClick('membership')">
       <span class="plan-card__badge">Best value</span>
-      <div class="plan-card__head">
-        <span class="plan-card__name">Membership</span>
-        <h3 class="plan-card__headline">Get everything, pay monthly</h3>
-      </div>
+      <span class="plan-card__name">Membership</span>
       <p class="plan-card__price"><span>$40</span><span class="plan-card__unit">/mo</span></p>
       <span class="plan-card__chevron" aria-hidden="true">▾</span>
+      <h3 class="plan-card__headline">Get everything, pay monthly</h3>
       <div class="plan-card__expand">
         <p class="plan-card__price-anchor">$30/mo billed annually · or $360/yr</p>
         <p class="plan-card__tagline">Track tongue + teeth biomarkers in the Feno Premium app, synced to your dentist.</p>
@@ -877,12 +874,10 @@
     <div class="plan-or" aria-hidden="true"><span>or</span></div>
 
     <button class="plan-card" type="button" data-plan="onetime" onclick="onPlanCardClick('onetime')">
-      <div class="plan-card__head">
-        <span class="plan-card__name">One Time</span>
-        <h3 class="plan-card__headline">Pay upfront, own the bundle</h3>
-      </div>
+      <span class="plan-card__name">One Time</span>
       <p class="plan-card__price"><span>$299</span></p>
       <span class="plan-card__chevron" aria-hidden="true">▾</span>
+      <h3 class="plan-card__headline">Pay upfront, own the bundle</h3>
       <div class="plan-card__expand">
         <p class="plan-card__tagline">Pair with the free Feno app to track tongue + teeth biomarkers.</p>
         <ul class="plan-card__bullets">
