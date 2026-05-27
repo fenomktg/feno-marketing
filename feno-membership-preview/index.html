@@ -73,9 +73,9 @@
   .billing button.active { background: #E6F1FB; color: #0C447C; }
   .save-badge { background: #C0DD97; color: #173404; font-size: 10px; padding: 2px 7px; border-radius: 999px; font-weight: 600; }
 
-  .included { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
-  .included li { font-size: 14px; color: #1A1A1A; display: flex; align-items: flex-start; gap: 10px; }
-  .check { color: #1D9E75; font-weight: 700; font-size: 16px; flex-shrink: 0; line-height: 1.3; }
+  .included { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 14px; }
+  .included li { font-size: 13px; color: #1A1A1A; display: flex; align-items: flex-start; gap: 8px; min-height: 18px; }
+  .check { color: #1D9E75; font-weight: 700; font-size: 14px; flex-shrink: 0; line-height: 1.35; }
 
   .addon { display: flex; gap: 12px; align-items: flex-start; background: #FFFFFF; border: 1.5px solid #DDDDDD; border-radius: 12px; padding: 14px; cursor: pointer; transition: border-color 0.15s ease, background 0.15s ease; user-select: none; position: relative; }
   .addon:hover { border-color: #C5C5C5; }
@@ -747,6 +747,9 @@
     .section { padding: 16px 14px 20px; }
     .headline { font-size: 24px; }
     .media { min-height: 320px; }
+    /* Tighten the 2-col included grid so labels stay on one line on Galaxy-class widths */
+    .included { gap: 6px 10px; }
+    .included li { font-size: 12px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -837,9 +840,9 @@
         <p class="plan-card__price-anchor">$30/mo billed annually · or $360/yr</p>
         <p class="plan-card__tagline">Smartbrush + quarterly refills + Feno Premium, all in.</p>
         <ul class="plan-card__bullets">
-          <li>Smartbrush (brush + scanner)</li>
-          <li>3 Foam + 1 Mouthpiece every 90 days</li>
-          <li>Feno Premium: biomarkers + dentist sync</li>
+          <li>Smartbrush + scraper + charger</li>
+          <li>Quarterly refills (Foam + Mouthpiece)</li>
+          <li>Feno Premium app</li>
         </ul>
         <span class="plan-card__cta">Choose Membership</span>
       </div>
@@ -854,9 +857,9 @@
       <div class="plan-card__expand">
         <p class="plan-card__tagline">Smartbrush bundle, yours to keep.</p>
         <ul class="plan-card__bullets">
-          <li>Smartbrush (brush + scanner)</li>
+          <li>Smartbrush + scraper + charger</li>
           <li>3 Feno Foam + 1 TrueFit Mouthpiece</li>
-          <li>Free Feno app · upgrade for biomarkers</li>
+          <li>Personalized TrueFit fit</li>
         </ul>
         <span class="plan-card__cta">Choose One Time</span>
       </div>
@@ -1673,7 +1676,13 @@
       }
       ctaText = billing === 'monthly' ? 'Get Started · $40/mo' : 'Get Started · $360/yr';
       termsHtml = 'Cancel anytime after Smartbrush is paid off · Early cancel = remaining balance due · Refills + Feno Premium continue until cancelled.';
-      includedHtml = '<li><span class="check">✓</span>Smartbrush device <span style="color:#888;font-weight:400">(brush + scanner)</span></li><li><span class="check">✓</span>3 Feno Foam tubes per quarter</li><li><span class="check">✓</span>1 TrueFit Mouthpiece per quarter</li><li><span class="check">✓</span>Feno Premium: AI coaching, biomarker dashboards, dentist sync</li>';
+      includedHtml =
+        '<li><span class="check">✓</span>Smartbrush</li>' +
+        '<li><span class="check">✓</span>Tongue scraper</li>' +
+        '<li><span class="check">✓</span>Charger</li>' +
+        '<li><span class="check">✓</span>Personalized fit</li>' +
+        '<li><span class="check">✓</span>Quarterly refills</li>' +
+        '<li><span class="check">✓</span>Feno Premium app</li>';
     } else {
       priceAmount = '$299'; priceUnit = '';
       priceSub = 'Smartbrush bundle. Yours to keep, no recurring charges.';
@@ -1682,7 +1691,13 @@
       termsHtml = isAddonChecked
         ? 'Quarterly Refills added · $30 first-order bonus applies at checkout.'
         : 'Smartbrush + 3 Foam + 1 Mouthpiece · Add Refills to save $30 on this order.';
-      includedHtml = '<li><span class="check">✓</span>Smartbrush device <span style="color:#888;font-weight:400">(brush + scanner)</span></li><li><span class="check">✓</span>3 Feno Foam tubes</li><li><span class="check">✓</span>1 TrueFit Mouthpiece</li><li><span class="check">✓</span>Free Feno app, basic tracking <span style="color:#888;font-weight:400">(upgrade to Feno Premium for biomarkers and sync)</span></li>';
+      includedHtml =
+        '<li><span class="check">✓</span>Smartbrush</li>' +
+        '<li><span class="check">✓</span>Tongue scraper</li>' +
+        '<li><span class="check">✓</span>Charger</li>' +
+        '<li><span class="check">✓</span>Personalized fit</li>' +
+        '<li><span class="check">✓</span>3 Feno Foam tubes</li>' +
+        '<li><span class="check">✓</span>TrueFit Mouthpiece</li>';
     }
 
     setText('amount', priceAmount);
