@@ -98,9 +98,15 @@
   .pdp__grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 32px;
+    grid-template-rows: auto auto;
+    column-gap: 32px;
+    row-gap: 16px;
     align-items: start;
   }
+  /* Desktop: gallery spans both rows on the left; lead + purchase stack on the right */
+  .gallery { grid-column: 1; grid-row: 1 / span 2; }
+  .buybox-lead { grid-column: 2; grid-row: 1; display: flex; flex-direction: column; gap: 8px; }
+  .buybox-purchase { grid-column: 2; grid-row: 2; display: flex; flex-direction: column; gap: 16px; }
 
   /* === Gallery === */
   .gallery {
@@ -666,17 +672,30 @@
     .topnav__brand { font-size: 22px; }
     .promo { font-size: 12px; padding: 8px 12px; }
     .pdp { padding: 14px; }
-    .pdp__grid { grid-template-columns: 1fr; gap: 18px; }
-    .gallery { grid-template-columns: 56px 1fr; gap: 8px; }
-    .gallery__thumb { width: 56px; height: 56px; }
-    .gallery__main { padding: 20px; }
+    /* Mobile order: title/price (1) -> compact gallery (2) -> toggle/plan/CTA (3) -> long-form (4) */
+    .pdp__grid { display: flex; flex-direction: column; gap: 14px; }
+    .buybox-lead { order: 1; display: flex; flex-direction: column; gap: 6px; }
+    .gallery { order: 2; }
+    .buybox-purchase { order: 3; display: flex; flex-direction: column; gap: 14px; }
+    .pdp__long { order: 4; }
+
+    /* Compact gallery: capped main image, horizontal thumb strip below */
+    .gallery { display: flex; flex-direction: column; gap: 8px; }
+    .gallery__main { order: 1; aspect-ratio: auto; height: 38vh; max-height: 300px; min-height: 220px; padding: 16px; }
+    .gallery__thumbs { order: 2; flex-direction: row; gap: 8px; overflow-x: auto; padding-bottom: 2px; -webkit-overflow-scrolling: touch; }
+    .gallery__thumb { width: 52px; height: 52px; flex-shrink: 0; }
     .gallery__tag { font-size: 10px; padding: 6px 10px; max-width: 90px; top: 12px; left: 12px; }
-    .gallery__placeholder .foam { width: 40px; height: 90px; }
-    .gallery__placeholder .phone { width: 60px; height: 120px; padding: 12px 5px 5px; gap: 4px; }
-    .gallery__placeholder .mouthpiece { width: 56px; height: 64px; }
-    .product-title { font-size: 28px; }
-    .product-subtitle { font-size: 17px; }
+    .gallery__note { display: none; }
+    .gallery__placeholder { gap: 10px; }
+    .gallery__placeholder .foam { width: 30px; height: 78px; }
+    .gallery__placeholder .phone { width: 54px; height: 108px; padding: 11px 5px 5px; gap: 4px; }
+    .gallery__placeholder .mouthpiece { width: 52px; height: 58px; }
+
+    .product-title { font-size: 26px; margin-top: 0; }
+    .product-subtitle { font-size: 16px; }
     .price-blurb { font-size: 12px; }
+    .badges { gap: 6px; }
+    .badge { font-size: 11px; padding: 6px 10px; }
     .plan-card-box { padding: 14px; gap: 12px; }
     .plan-card-box__price { font-size: 22px; }
     .qty-cta { flex-wrap: wrap; gap: 10px; }
@@ -776,8 +795,8 @@
       </div>
     </div>
 
-    <!-- Buy box -->
-    <div class="buybox">
+    <!-- Buy box lead: badges + title + price (mobile order 1, above the gallery) -->
+    <div class="buybox-lead">
       <div class="badges">
         <span class="badge"><svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2L4 6v6c0 5 4 9 8 10 4-1 8-5 8-10V6l-8-4z"/><path d="M9 12l2 2 4-4"/></svg>30-day Money Back</span>
         <span class="badge"><svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="1" y="6" width="15" height="11"/><path d="M16 11h4l3 3v3h-7"/><circle cx="6" cy="19" r="2"/><circle cx="19" cy="19" r="2"/></svg>Free Shipping</span>
@@ -787,7 +806,10 @@
       <h1 class="product-title">Founders Edition Plus</h1>
       <p class="product-subtitle" data-target="title-sub">From $35/mo</p>
       <p class="price-blurb" data-target="price-blurb">Subscribe & Save at $35/mo, or pay $299 once for the whole bundle.</p>
+    </div>
 
+    <!-- Buy box purchase: toggle + plan + CTA (mobile order 3, below the gallery) -->
+    <div class="buybox-purchase">
       <div class="toggle-wrap">
         <span class="recommended-tag">Best value</span>
         <div class="primary-toggle" role="tablist">
