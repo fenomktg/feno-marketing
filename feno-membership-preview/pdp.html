@@ -698,13 +698,20 @@
     .buybox-lead .badge-icon { width: 11px; height: 11px; }
     /* Lead blurb is redundant with the plan-card copy below; hide on mobile to lift the fold */
     .buybox-lead .price-blurb { display: none; }
-    .plan-card-box { padding: 14px; gap: 12px; }
+    .plan-card-box { padding: 12px; gap: 9px; }
     .plan-card-box__price { font-size: 22px; }
-    .qty-cta { flex-wrap: wrap; gap: 10px; }
+    /* Plan-card copy is already conveyed by the eyebrow blurb + included list; trim on mobile */
+    .plan-card-box__copy { display: none; }
+    .plan-card-box .incentive { font-size: 11px; padding: 4px 10px; }
+    .plan-card-box .included { gap: 5px 12px; }
+    .plan-card-box .included li { font-size: 12.5px; min-height: 16px; }
+    .qty-cta { flex-wrap: wrap; gap: 10px; margin-top: 2px; }
     .qty { padding: 4px 6px; }
     .qty button { width: 44px; height: 44px; font-size: 18px; }
     .qty span { font-size: 15px; min-width: 26px; }
     .cta { flex: 1 1 170px; min-height: 48px; padding: 14px 20px; font-size: 15px; }
+    /* Terms line is informational, not gating - allow it to fall just past the fold */
+    .buybox-purchase .price-blurb { font-size: 11px; margin-top: 0; line-height: 1.45; }
     .pdp__long { margin-top: 28px; gap: 18px; padding: 0; }
     .value-callout { font-size: 14px; padding: 14px 16px; }
     .accordion summary { padding: 14px 16px; font-size: 13px; }
