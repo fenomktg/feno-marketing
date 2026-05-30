@@ -673,6 +673,21 @@
   }
   .main-trust strong { color: #1A1A1A; font-weight: 600; }
 
+  .learn-more-row { text-align: center; margin: 16px 0 4px; }
+  .learn-more-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: #185FA5;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-weight: 500;
+  }
+  .learn-more-link:hover { color: #0C447C; }
+  .learn-more-link span { transition: transform 0.15s ease; }
+  .learn-more-link:hover span { transform: translateX(2px); }
+
   /* === Tablet === */
   @media (max-width: 1024px) and (min-width: 769px) {
     body { padding: 20px; }
@@ -819,13 +834,13 @@
       <span class="incentive" data-target="incentive"></span>
 
       <div class="price-row">
-        <p class="price-main"><span data-target="amount">$40</span><span class="price-unit" data-target="unit">/mo</span></p>
+        <p class="price-main"><span data-target="amount">$35</span><span class="price-unit" data-target="unit">/mo</span></p>
         <p class="price-sub" data-target="sub"></p>
       </div>
 
       <div class="billing" data-target="billing">
         <button class="active" type="button" data-bill="monthly" onclick="setBilling('monthly')">Monthly</button>
-        <button type="button" data-bill="annual" onclick="setBilling('annual')">Annual <span class="save-badge">Save ~25%</span></button>
+        <button type="button" data-bill="annual" onclick="setBilling('annual')">Annual <span class="save-badge">Save $60</span></button>
       </div>
 
       <ul class="included" data-target="included"></ul>
@@ -859,7 +874,7 @@
       <span class="plan-card__badge">Best value</span>
       <span class="plan-card__name">Subscribe &amp; Save</span>
       <h3 class="plan-card__headline">Get everything, pay monthly</h3>
-      <p class="plan-card__price"><span>$40</span><span class="plan-card__unit">/mo</span></p>
+      <p class="plan-card__price"><span>$35</span><span class="plan-card__unit">/mo</span></p>
       <span class="plan-card__chevron" aria-hidden="true">▾</span>
       <div class="plan-card__expand">
         <p class="plan-card__price-anchor">$30/mo billed annually · or $360/yr</p>
@@ -891,6 +906,8 @@
       </div>
     </button>
   </div>
+
+  <p class="learn-more-row"><a href="/pdp" class="learn-more-link">Learn more about Feno <span aria-hidden="true">→</span></a></p>
 </div>
 
 <!-- Demo disclaimer modal -->
@@ -920,7 +937,7 @@
 <div class="m-main-cta">
   <div class="m-main-cta__inner">
     <button type="button" class="m-main-cta__btn" id="open-sheet-btn" onclick="openSheet()">
-      <span>See plans</span> · <span class="m-main-cta__btn-price">from $40/mo</span>
+      <span>See plans</span> · <span class="m-main-cta__btn-price">from $35/mo</span>
     </button>
   </div>
   <p class="m-main-cta__hint"><strong>Save $30</strong> with refills · 30-day money back</p>
@@ -1117,7 +1134,7 @@
           <div class="co-summary-item__title">Subscribe &amp; Save <span class="addon__save" style="margin-left:4px">Plan</span></div>
           <div class="co-summary-item__sub" id="co-item-membership-sub">Monthly billing · cancel anytime</div>
         </div>
-        <div class="co-summary-item__price" id="co-item-membership-price">$40.00<small>per month</small></div>
+        <div class="co-summary-item__price" id="co-item-membership-price">$35.00<small>per month</small></div>
       </div>
 
       <div class="co-summary-item hidden" id="co-item-qr">
@@ -1519,13 +1536,13 @@
       coItemMembership.classList.remove('hidden');
 
       const isAnnual = billing === 'annual';
-      const planTotal = isAnnual ? 360 : 40;
+      const planTotal = isAnnual ? 360 : 35;
       coItemMembershipSub.textContent = isAnnual
-        ? 'Annual billing · saves $120 vs monthly'
+        ? 'Annual billing · saves $60 vs monthly'
         : 'Monthly billing · cancel anytime after Smartbrush is paid off';
       coItemMembershipPrice.innerHTML = isAnnual
         ? '$360.00<small>per year</small>'
-        : '$40.00<small>per month</small>';
+        : '$35.00<small>per month</small>';
 
       coSubtotal.textContent = moneyDecimal(planTotal);
       coTotal.textContent = moneyDecimal(planTotal);
@@ -1600,7 +1617,7 @@
       ppUpsellApp.classList.add('hidden');
       ppTitle.textContent = 'Thanks for your order';
       const isAnnual = billing === 'annual';
-      const planTotal = isAnnual ? '$360.00' : '$40.00';
+      const planTotal = isAnnual ? '$360.00' : '$35.00';
       const planLabel = isAnnual ? 'Annual' : 'Monthly';
       const nextWhen = isAnnual ? '1 year' : '30 days';
       ppSub.innerHTML = 'Confirmation email sent to <strong id="pp-email">jane@feno.co</strong>. Your Smartbrush ships in 2 business days.';
@@ -1759,15 +1776,15 @@
     let priceAmount, priceUnit, priceSub, incentiveText, includedHtml, ctaText, termsHtml, softwareHtml, headlineText;
     if (isMembership) {
       if (billing === 'monthly') {
-        priceAmount = '$40'; priceUnit = '/mo';
+        priceAmount = '$35'; priceUnit = '/mo';
         priceSub = 'Everything included. Cancel anytime after Smartbrush is paid off.';
         incentiveText = 'Lowest cost to start';
       } else {
         priceAmount = '$360'; priceUnit = '/yr';
-        priceSub = 'Save $120 vs monthly ($30/mo effective). Renews annually.';
-        incentiveText = 'Save 25% · best long-term value';
+        priceSub = 'Save $60 vs monthly ($30/mo effective). Renews annually.';
+        incentiveText = 'Best long-term value · $30/mo effective';
       }
-      ctaText = billing === 'monthly' ? 'Get Started · $40/mo' : 'Get Started · $360/yr';
+      ctaText = billing === 'monthly' ? 'Get Started · $35/mo' : 'Get Started · $360/yr';
       termsHtml = 'Cancel anytime after Smartbrush is paid off · Early cancel = remaining balance due · Refills + Feno Premium continue until cancelled.';
       headlineText = 'Get everything, pay monthly';
       softwareHtml = 'Includes <strong>Feno Premium</strong>: AI coaching and tongue + teeth biomarker tracking, synced to your dentist.';
