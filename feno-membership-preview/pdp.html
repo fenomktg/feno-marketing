@@ -658,6 +658,182 @@
 
   .hidden { display: none !important; }
 
+  /* === Full-bleed feature spotlights === */
+  .spotlight {
+    /* Escape parent max-width constraints to reach the viewport edges */
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    min-height: 520px;
+    padding: 80px 64px;
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    align-items: center;
+    gap: 64px;
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+  .spotlight + .spotlight { margin-top: 0; }
+  .spotlight--analytics { background: linear-gradient(135deg, #E8F1FA 0%, #FFFFFF 55%, #DCE8F4 100%); }
+  .spotlight--truefit { background: linear-gradient(135deg, #FAF6EE 0%, #FFFFFF 55%, #F1E8D4 100%); }
+  .spotlight--foam { background: linear-gradient(135deg, #ECF7EF 0%, #FFFFFF 55%, #DCEFE0 100%); }
+
+  /* Subtle ambient orbs for atmosphere */
+  .spotlight::before {
+    content: '';
+    position: absolute;
+    width: 540px; height: 540px;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  .spotlight--analytics::before { background: rgba(24, 95, 165, 0.18); top: -120px; right: -160px; }
+  .spotlight--truefit::before { background: rgba(184, 153, 104, 0.22); bottom: -160px; left: -160px; }
+  .spotlight--foam::before { background: rgba(29, 158, 117, 0.18); top: -120px; right: -160px; }
+
+  .spotlight__content { position: relative; z-index: 1; max-width: 480px; }
+  .spotlight__visual { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; min-height: 380px; }
+  .spotlight--reverse .spotlight__content { order: 2; justify-self: end; }
+  .spotlight--reverse .spotlight__visual { order: 1; }
+
+  .spotlight__eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .spotlight--analytics .spotlight__eyebrow { color: var(--feno-blue); }
+  .spotlight--truefit .spotlight__eyebrow { color: #8C6F3D; }
+  .spotlight--foam .spotlight__eyebrow { color: var(--feno-green); }
+
+  .spotlight__title {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 48px;
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 18px;
+  }
+  .spotlight__lede {
+    font-size: 17px;
+    color: #2A2A2A;
+    line-height: 1.55;
+    margin-bottom: 24px;
+  }
+  .spotlight__bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .spotlight__bullets li {
+    font-size: 14.5px;
+    color: #4A4A4A;
+    line-height: 1.55;
+    padding-left: 24px;
+    position: relative;
+  }
+  .spotlight__bullets li::before {
+    content: '';
+    position: absolute;
+    left: 6px; top: 10px;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+  }
+  .spotlight--analytics .spotlight__bullets li::before { background: var(--feno-blue); }
+  .spotlight--truefit .spotlight__bullets li::before { background: #8C6F3D; }
+  .spotlight--foam .spotlight__bullets li::before { background: var(--feno-green); }
+
+  /* Spotlight visuals (CSS-only placeholders) */
+  .sp-phone {
+    width: 240px;
+    height: 480px;
+    background: white;
+    border: 1.5px solid #C5CCD4;
+    border-radius: 34px;
+    padding: 28px 18px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 30px 60px rgba(24, 38, 60, 0.18), 0 8px 20px rgba(24, 38, 60, 0.08);
+    position: relative;
+  }
+  .sp-phone__notch { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); width: 90px; height: 18px; background: #1A1A1A; border-radius: 999px; }
+  .sp-phone__screen { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+  .sp-phone__row { display: flex; gap: 8px; margin-bottom: 2px; }
+  .sp-phone__chip { font-size: 10px; font-weight: 600; padding: 5px 9px; border-radius: 999px; letter-spacing: 0.02em; }
+  .sp-phone__chip--green { background: var(--feno-soft-green-bg); color: #173404; }
+  .sp-phone__chip--blue { background: #E6F1FB; color: #0C447C; }
+  .sp-phone__bar { height: 16px; border-radius: 999px; background: #F0F2F4; position: relative; overflow: hidden; }
+  .sp-phone__bar::after { content: ''; position: absolute; left: 0; top: 0; bottom: 0; border-radius: 999px; }
+  .sp-phone__bar--full::after { width: 88%; background: linear-gradient(90deg, var(--feno-green), #74C44C); }
+  .sp-phone__bar--mid::after { width: 62%; background: linear-gradient(90deg, var(--feno-blue), #4F8EC9); }
+  .sp-phone__bar--small::after { width: 38%; background: linear-gradient(90deg, #B89968, #D4B585); }
+  .sp-phone__chart { height: 70px; margin-top: 6px; background: #FAFBFC; border-radius: 8px; padding: 8px; }
+  .sp-phone__chart svg { width: 100%; height: 100%; display: block; }
+
+  .sp-mouthpiece {
+    width: 360px;
+    height: 280px;
+    background: linear-gradient(155deg, #F8F4EC 0%, #E0D5BD 100%);
+    border-radius: 50% 50% 28% 28% / 60% 60% 40% 40%;
+    border: 2px solid #C5B89C;
+    position: relative;
+    box-shadow: 0 30px 60px rgba(120, 95, 50, 0.18);
+  }
+  .sp-mouthpiece::before {
+    content: '';
+    position: absolute;
+    inset: 14px;
+    border-radius: 50% 50% 28% 28% / 60% 60% 40% 40%;
+    background: linear-gradient(155deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 50%);
+  }
+  .sp-mouthpiece::after {
+    content: '';
+    position: absolute;
+    top: 30%; left: 20%; right: 20%; bottom: 14%;
+    background: linear-gradient(180deg, transparent 0%, rgba(140, 111, 61, 0.16) 100%);
+    border-radius: 50% 50% 32% 32% / 35% 35% 65% 65%;
+  }
+
+  .sp-foam { display: flex; gap: 18px; align-items: flex-end; }
+  .sp-foam__tube {
+    width: 78px;
+    height: 230px;
+    background: linear-gradient(180deg, #FAFBFB 0%, #E4E6E5 100%);
+    border-radius: 12px 12px 38px 38px;
+    border: 1.5px solid #C5CCC8;
+    position: relative;
+    box-shadow: 0 24px 40px rgba(38, 70, 50, 0.14);
+  }
+  .sp-foam__tube::before {
+    content: '';
+    position: absolute;
+    top: 24px; left: 22%; right: 22%;
+    height: 30px;
+    background: var(--feno-green);
+    border-radius: 4px;
+    opacity: 0.85;
+  }
+  .sp-foam__tube::after {
+    content: 'Feno';
+    position: absolute;
+    top: 70px;
+    left: 0; right: 0;
+    text-align: center;
+    font-family: Georgia, serif;
+    color: #4A5550;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+  }
+  .sp-foam__tube:nth-child(2) { height: 250px; }
+  .sp-foam__tube:nth-child(3) { height: 220px; }
+
   /* === Long-form sections (shared) === */
   .pdp-section { display: flex; flex-direction: column; gap: 14px; padding-top: 8px; }
   .pdp-section__title { font-family: Georgia, 'Times New Roman', serif; font-size: 24px; font-weight: 400; color: var(--text); line-height: 1.2; }
@@ -846,6 +1022,30 @@
     .accordion summary { padding: 14px 16px; font-size: 13px; }
     .accordion__body { padding: 0 16px 14px; }
 
+    /* Full-bleed spotlights on mobile: stack content under visual */
+    .spotlight {
+      grid-template-columns: 1fr;
+      padding: 40px 22px;
+      min-height: auto;
+      gap: 28px;
+    }
+    .spotlight__content { max-width: 100%; }
+    .spotlight__visual { min-height: 220px; }
+    .spotlight--reverse .spotlight__content { order: 2; justify-self: stretch; }
+    .spotlight--reverse .spotlight__visual { order: 1; }
+    .spotlight__title { font-size: 28px; }
+    .spotlight__lede { font-size: 14px; margin-bottom: 18px; }
+    .spotlight__bullets li { font-size: 13px; }
+    .sp-phone { width: 180px; height: 360px; padding: 22px 14px 14px; border-radius: 26px; }
+    .sp-phone__notch { width: 72px; height: 14px; top: 8px; }
+    .sp-phone__bar { height: 12px; }
+    .sp-phone__chart { height: 50px; }
+    .sp-mouthpiece { width: 260px; height: 200px; }
+    .sp-foam__tube { width: 56px; height: 170px; }
+    .sp-foam__tube:nth-child(2) { height: 185px; }
+    .sp-foam__tube:nth-child(3) { height: 162px; }
+    .sp-foam__tube::after { top: 50px; font-size: 11px; }
+
     /* Long-form sections on mobile */
     .pdp-section__title { font-size: 22px; }
     .pdp-section__lede { font-size: 13px; }
@@ -1021,17 +1221,72 @@
         This premium bundle delivers <strong>$530+ worth of advanced oral-health tools and smart software</strong> — all for $299 one-time, or $35/month on Subscribe &amp; Save.
       </div>
 
-      <div class="pdp-description">
-        <p>The Founders Edition Plus is a complete oral-care system: a Smartbrush with a built-in scanner, a custom-molded TrueFit Mouthpiece, three Feno Foam tubes, a tongue scraper, and a wireless charger. Pair it with the Feno app to track tongue and teeth biomarkers, get AI coaching on technique, and sync results to your dentist between visits.</p>
-        <p>Pick One Time to own the bundle outright. Pick Subscribe &amp; Save to spread the cost monthly, get quarterly refills shipped automatically, and unlock the full Feno Premium app.</p>
-      </div>
+      <!-- Feature spotlights: full-bleed banners for the three differentiators -->
+      <section class="spotlight spotlight--analytics">
+        <div class="spotlight__content">
+          <p class="spotlight__eyebrow">Feno Premium · The app</p>
+          <h2 class="spotlight__title">Your mouth, mapped.</h2>
+          <p class="spotlight__lede">The scanner reads. The app understands. You see your oral health like a chart, not a guess.</p>
+          <ul class="spotlight__bullets">
+            <li>Daily biomarkers — tongue health, teeth health, plaque load, gum signals.</li>
+            <li>Weekly trend reports with AI coaching when something shifts.</li>
+            <li>One-tap dentist sync between visits.</li>
+          </ul>
+        </div>
+        <div class="spotlight__visual" aria-hidden="true">
+          <div class="sp-phone">
+            <div class="sp-phone__notch"></div>
+            <div class="sp-phone__screen">
+              <div class="sp-phone__row">
+                <span class="sp-phone__chip sp-phone__chip--green">Tongue · 87</span>
+                <span class="sp-phone__chip sp-phone__chip--blue">Teeth · 92</span>
+              </div>
+              <div class="sp-phone__bar sp-phone__bar--full"></div>
+              <div class="sp-phone__bar sp-phone__bar--mid"></div>
+              <div class="sp-phone__bar sp-phone__bar--small"></div>
+              <div class="sp-phone__chart" aria-hidden="true">
+                <svg viewBox="0 0 200 60" preserveAspectRatio="none"><polyline points="0,40 30,32 60,38 90,25 120,20 150,28 180,15 200,18" fill="none" stroke="#1D9E75" stroke-width="2.5"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-      <ul class="pdp-bullets">
-        <li><strong>20-second full-mouth clean</strong> with a personalized TrueFit mouthpiece that eliminates technique errors and reaches every surface.</li>
-        <li><strong>Health monitoring</strong> for early signs of inflammation and decay between dental visits — when treatment is easier, faster, and less costly.</li>
-        <li><strong>Biomarker tracking</strong> in Feno Premium: tongue health, teeth health, and weekly trend reports you can show your dentist.</li>
-        <li><strong>Instant access to dental experts</strong> through the app — real-time professional support, no waiting room or appointment needed.</li>
-      </ul>
+      <section class="spotlight spotlight--truefit spotlight--reverse">
+        <div class="spotlight__content">
+          <p class="spotlight__eyebrow">TrueFit Mouthpiece</p>
+          <h2 class="spotlight__title">Built for your bite.</h2>
+          <p class="spotlight__lede">An in-app scan turns your bite into a one-of-one mouthpiece. Twenty seconds, every surface, no spots missed.</p>
+          <ul class="spotlight__bullets">
+            <li>Custom-molded after a 90-second in-app scan of your bite.</li>
+            <li>Food-grade silicone. Dishwasher-safe. Replaceable every 90 days.</li>
+            <li>Reaches every tooth surface at once — no technique errors to make.</li>
+          </ul>
+        </div>
+        <div class="spotlight__visual" aria-hidden="true">
+          <div class="sp-mouthpiece"></div>
+        </div>
+      </section>
+
+      <section class="spotlight spotlight--foam">
+        <div class="spotlight__content">
+          <p class="spotlight__eyebrow">Feno Foam</p>
+          <h2 class="spotlight__title">Not toothpaste. Foam.</h2>
+          <p class="spotlight__lede">Nano-hydroxyapatite that remineralizes enamel without fluoride. Engineered to work with the brush, not against it.</p>
+          <ul class="spotlight__bullets">
+            <li>Nano-hydroxyapatite remineralization, the same mineral your enamel is made of.</li>
+            <li>Fluoride-free, no SLS, no artificial colors or sweeteners.</li>
+            <li>3-month supply per shipment. Foam disperses where paste can't.</li>
+          </ul>
+        </div>
+        <div class="spotlight__visual" aria-hidden="true">
+          <div class="sp-foam">
+            <div class="sp-foam__tube"></div>
+            <div class="sp-foam__tube"></div>
+            <div class="sp-foam__tube"></div>
+          </div>
+        </div>
+      </section>
 
       <!-- What's in the box -->
       <section class="pdp-section">
