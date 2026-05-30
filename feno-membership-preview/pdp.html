@@ -658,6 +658,135 @@
 
   .hidden { display: none !important; }
 
+  /* === Long-form sections (shared) === */
+  .pdp-section { display: flex; flex-direction: column; gap: 14px; padding-top: 8px; }
+  .pdp-section__title { font-family: Georgia, 'Times New Roman', serif; font-size: 24px; font-weight: 400; color: var(--text); line-height: 1.2; }
+  .pdp-section__lede { font-size: 14px; color: var(--muted); line-height: 1.55; margin: -6px 0 4px; }
+
+  /* What's in the box */
+  .box-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .box-item {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .box-item__img {
+    aspect-ratio: 4 / 3;
+    background: linear-gradient(155deg, #FAFBFC 0%, #EEF0F2 100%);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .box-item__name { font-size: 14px; font-weight: 600; color: var(--text); }
+  .box-item__desc { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+
+  /* Placeholder shapes for the box items */
+  .box-shape { background: linear-gradient(180deg, #F4F4F4 0%, #DCDCDC 100%); border: 1px solid #DDD; }
+  .box-shape--brush { width: 22px; height: 90px; border-radius: 5px 5px 12px 12px; }
+  .box-shape--mouthpiece { width: 70px; height: 50px; border-radius: 50% 50% 32% 32% / 60% 60% 40% 40%; }
+  .box-shape--foam { width: 16px; height: 50px; border-radius: 4px 4px 12px 12px; }
+  .box-shape--scraper { width: 48px; height: 18px; border-radius: 18px 18px 6px 6px; }
+  .box-shape--charger { width: 50px; height: 50px; border-radius: 50%; }
+  .box-shape--app { width: 38px; height: 70px; border: 1.5px solid #BFC4CB; border-radius: 7px; background: white; display: flex; flex-direction: column; gap: 3px; padding: 10px 4px 4px; }
+  .box-shape--app span { height: 3px; background: #DDE2E6; border-radius: 2px; border: none; }
+  .box-shape--app span:nth-child(1) { width: 60%; background: var(--feno-soft-green); }
+  .box-shape--app span:nth-child(2) { width: 90%; }
+  .box-shape--app span:nth-child(3) { width: 70%; background: #E6F1FB; }
+
+  /* How it works */
+  .how-steps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .how-step {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .how-step__num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: var(--text);
+    color: white;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .how-step__title { font-size: 15px; font-weight: 600; color: var(--text); margin-top: 4px; }
+  .how-step__desc { font-size: 13px; color: var(--muted); line-height: 1.55; }
+
+  /* Reviews */
+  .reviews-header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 12px; }
+  .reviews-summary { display: flex; align-items: center; gap: 8px; }
+  .reviews-stars { color: #F5A623; letter-spacing: 1px; font-size: 16px; }
+  .reviews-summary__num { font-weight: 600; color: var(--text); font-size: 14px; }
+  .reviews-summary__count { color: var(--muted); font-size: 13px; }
+  .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .review-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 10px; }
+  .review-card__quote { font-size: 13px; color: #2A2A2A; line-height: 1.55; flex: 1; }
+  .review-card__author { display: flex; align-items: center; gap: 10px; }
+  .review-card__avatar {
+    width: 36px; height: 36px;
+    border-radius: 999px;
+    background: linear-gradient(155deg, #DCE3EA 0%, #B7C2CD 100%);
+    color: #fff; font-size: 11px; font-weight: 700;
+    display: inline-flex; align-items: center; justify-content: center;
+    letter-spacing: 0.04em;
+  }
+  .review-card__name { font-size: 13px; font-weight: 600; color: var(--text); margin: 0; }
+  .review-card__role { font-size: 11.5px; color: var(--muted); margin: 0; }
+  .reviews-footnote { font-size: 11px; color: var(--muted); font-style: italic; margin-top: -4px; }
+
+  /* Sticky mobile Buy Now bar */
+  .sticky-cta {
+    display: none;
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    background: rgba(255, 255, 255, 0.96);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--border);
+    box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.06);
+    padding: 10px 14px max(10px, env(safe-area-inset-bottom)) 14px;
+    z-index: 90;
+    transform: translateY(100%);
+    transition: transform 0.28s cubic-bezier(0.32, 0.72, 0, 1);
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .sticky-cta.visible { transform: translateY(0); }
+  .sticky-cta__info { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+  .sticky-cta__name { font-size: 12px; color: var(--muted); margin: 0; }
+  .sticky-cta__price { font-size: 16px; font-weight: 700; color: var(--text); margin: 0; }
+  .sticky-cta__btn {
+    flex-shrink: 0;
+    background: var(--feno-blue);
+    color: white;
+    border: none;
+    border-radius: 999px;
+    padding: 12px 22px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    min-height: 44px;
+  }
+  .sticky-cta__btn:hover { background: var(--feno-blue-dark); }
+
   /* === Tablet === */
   @media (max-width: 1024px) {
     .pdp__grid { gap: 24px; }
@@ -716,6 +845,28 @@
     .value-callout { font-size: 14px; padding: 14px 16px; }
     .accordion summary { padding: 14px 16px; font-size: 13px; }
     .accordion__body { padding: 0 16px 14px; }
+
+    /* Long-form sections on mobile */
+    .pdp-section__title { font-size: 22px; }
+    .pdp-section__lede { font-size: 13px; }
+    .box-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .box-item { padding: 12px; gap: 6px; }
+    .box-item__name { font-size: 13px; }
+    .box-item__desc { font-size: 12px; }
+    .how-steps { grid-template-columns: 1fr; gap: 10px; }
+    .how-step { padding: 14px; }
+    .how-step__title { font-size: 14px; }
+    .how-step__desc { font-size: 12.5px; }
+    .reviews-grid { grid-template-columns: 1fr; gap: 12px; }
+    .review-card { padding: 14px; }
+    .review-card__quote { font-size: 12.5px; }
+    .reviews-header { gap: 6px; }
+    .reviews-summary { gap: 6px; }
+
+    /* Sticky CTA only on mobile */
+    .sticky-cta { display: flex; }
+    /* Body needs bottom padding so content isn't covered by the sticky bar */
+    body { padding-bottom: 80px; }
 
     /* Cart drawer becomes bottom sheet */
     .cart-drawer { top: auto; right: 0; bottom: 0; left: 0; width: 100%; max-width: 100%; max-height: 92vh; border-radius: 16px 16px 0 0; transform: translateY(100%); box-shadow: 0 -10px 36px rgba(0, 0, 0, 0.18); }
@@ -882,6 +1033,158 @@
         <li><strong>Instant access to dental experts</strong> through the app — real-time professional support, no waiting room or appointment needed.</li>
       </ul>
 
+      <!-- What's in the box -->
+      <section class="pdp-section">
+        <h2 class="pdp-section__title">What's in the box</h2>
+        <p class="pdp-section__lede">Six pieces, one ritual. Everything you need to start tracking your oral health from day one.</p>
+        <div class="box-grid">
+          <div class="box-item">
+            <div class="box-item__img" aria-hidden="true"><div class="box-shape box-shape--brush"></div></div>
+            <h3 class="box-item__name">Smartbrush</h3>
+            <p class="box-item__desc">Brush + scanner, 21-day battery, USB-C charging.</p>
+          </div>
+          <div class="box-item">
+            <div class="box-item__img" aria-hidden="true"><div class="box-shape box-shape--mouthpiece"></div></div>
+            <h3 class="box-item__name">TrueFit Mouthpiece</h3>
+            <p class="box-item__desc">Custom-molded to your bite via an in-app scan.</p>
+          </div>
+          <div class="box-item">
+            <div class="box-item__img" aria-hidden="true">
+              <div class="box-shape box-shape--foam"></div>
+              <div class="box-shape box-shape--foam"></div>
+              <div class="box-shape box-shape--foam"></div>
+            </div>
+            <h3 class="box-item__name">3 Feno Foam tubes</h3>
+            <p class="box-item__desc">90-day supply. Nano-hydroxyapatite, fluoride-free.</p>
+          </div>
+          <div class="box-item">
+            <div class="box-item__img" aria-hidden="true"><div class="box-shape box-shape--scraper"></div></div>
+            <h3 class="box-item__name">Tongue scraper</h3>
+            <p class="box-item__desc">Medical-grade stainless steel, dishwasher-safe.</p>
+          </div>
+          <div class="box-item">
+            <div class="box-item__img" aria-hidden="true"><div class="box-shape box-shape--charger"></div></div>
+            <h3 class="box-item__name">Wireless charger</h3>
+            <p class="box-item__desc">Qi pad. Drop the Smartbrush on; charges overnight.</p>
+          </div>
+          <div class="box-item">
+            <div class="box-item__img" aria-hidden="true"><div class="box-shape box-shape--app"><span></span><span></span><span></span></div></div>
+            <h3 class="box-item__name">Feno app</h3>
+            <p class="box-item__desc">Biomarker dashboards + AI coaching. iOS 16+ / Android 12+.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- How it works -->
+      <section class="pdp-section">
+        <h2 class="pdp-section__title">How it works</h2>
+        <p class="pdp-section__lede">Twenty seconds a day. The Smartbrush does the work, the app does the math, your dentist gets the results.</p>
+        <ol class="how-steps">
+          <li class="how-step">
+            <span class="how-step__num">1</span>
+            <div>
+              <h3 class="how-step__title">Brush + scan</h3>
+              <p class="how-step__desc">Pop in the TrueFit mouthpiece, brush for 20 seconds. The built-in scanner reads your tongue and teeth while you do.</p>
+            </div>
+          </li>
+          <li class="how-step">
+            <span class="how-step__num">2</span>
+            <div>
+              <h3 class="how-step__title">App maps biomarkers</h3>
+              <p class="how-step__desc">Feno Premium turns the scan into trends: tongue health, teeth health, plaque load, gum signals. Weekly summaries, AI coaching when something changes.</p>
+            </div>
+          </li>
+          <li class="how-step">
+            <span class="how-step__num">3</span>
+            <div>
+              <h3 class="how-step__title">Sync with your dentist</h3>
+              <p class="how-step__desc">Share your biomarker history with one tap. Your dentist sees what's changed between visits — easier checkups, earlier interventions.</p>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <!-- Reviews / social proof -->
+      <section class="pdp-section">
+        <div class="reviews-header">
+          <h2 class="pdp-section__title">What people are saying</h2>
+          <div class="reviews-summary">
+            <div class="reviews-stars" aria-hidden="true">★★★★★</div>
+            <span class="reviews-summary__num">4.8 / 5</span>
+            <span class="reviews-summary__count">(1,247 reviews)</span>
+          </div>
+        </div>
+        <div class="reviews-grid">
+          <article class="review-card">
+            <div class="reviews-stars" aria-hidden="true">★★★★★</div>
+            <p class="review-card__quote">"My patients who use Feno bring me actual data, not vibes. The biomarker reports caught early gum inflammation on two cases this year that I'd have flagged six months later."</p>
+            <div class="review-card__author">
+              <div class="review-card__avatar" aria-hidden="true">SL</div>
+              <div>
+                <p class="review-card__name">Dr. Sarah Lee, DDS</p>
+                <p class="review-card__role">Verified partner · Bay Area Dental</p>
+              </div>
+            </div>
+          </article>
+          <article class="review-card">
+            <div class="reviews-stars" aria-hidden="true">★★★★★</div>
+            <p class="review-card__quote">"I switched from a Sonicare and didn't expect to feel a difference. The TrueFit is the killer thing — twenty seconds and my whole mouth feels professionally cleaned."</p>
+            <div class="review-card__author">
+              <div class="review-card__avatar" aria-hidden="true">MR</div>
+              <div>
+                <p class="review-card__name">Maya R.</p>
+                <p class="review-card__role">Verified buyer · Subscribe &amp; Save</p>
+              </div>
+            </div>
+          </article>
+          <article class="review-card">
+            <div class="reviews-stars" aria-hidden="true">★★★★<span style="opacity:0.3">★</span></div>
+            <p class="review-card__quote">"The app is what sold me. Watching my tongue-health score actually go up after I started scraping daily was wild. Wish the onboarding scan was a bit faster."</p>
+            <div class="review-card__author">
+              <div class="review-card__avatar" aria-hidden="true">DK</div>
+              <div>
+                <p class="review-card__name">Devin K.</p>
+                <p class="review-card__role">Verified buyer · One Time</p>
+              </div>
+            </div>
+          </article>
+        </div>
+        <p class="reviews-footnote">Placeholder reviews shown — real reviews populate from Yotpo once live.</p>
+      </section>
+
+      <!-- FAQ -->
+      <section class="pdp-section">
+        <h2 class="pdp-section__title">Frequently asked</h2>
+        <details class="accordion">
+          <summary>How long does the Smartbrush battery last?</summary>
+          <div class="accordion__body"><p>Up to 21 days on a single charge with normal twice-daily use. The wireless charger in the box tops it up overnight.</p></div>
+        </details>
+        <details class="accordion">
+          <summary>Can I cancel my Subscribe &amp; Save plan anytime?</summary>
+          <div class="accordion__body"><p>Yes, after your Smartbrush is paid off (12 months of monthly billing, or immediately on the annual plan). If you cancel earlier, the remaining device balance is due at cancellation. After payoff, refills and Feno Premium continue until you cancel — no lock-in.</p></div>
+        </details>
+        <details class="accordion">
+          <summary>How does the dentist sync work?</summary>
+          <div class="accordion__body"><p>In the Feno app, you generate a share link or invite your dentist by email. They see your biomarker history, scan trends, and brushing patterns in a clinician-friendly view. Available with Feno Premium (included in Subscribe &amp; Save, $10/month add-on on One Time).</p></div>
+        </details>
+        <details class="accordion">
+          <summary>What if the TrueFit Mouthpiece doesn't fit right?</summary>
+          <div class="accordion__body"><p>The first one is molded from an in-app scan after your bundle arrives. If the fit isn't right, we'll re-mold and ship a replacement free of charge. Covered under the 30-day money-back guarantee.</p></div>
+        </details>
+        <details class="accordion">
+          <summary>Is the app compatible with my phone?</summary>
+          <div class="accordion__body"><p>iOS 16 or later, Android 12 or later. The scanner uses Bluetooth Low Energy — no special accessories needed.</p></div>
+        </details>
+        <details class="accordion">
+          <summary>How accurate are the biomarker readings?</summary>
+          <div class="accordion__body"><p>The Smartbrush scanner is calibrated for tongue and teeth optical biomarkers — coating, hue shift, gingival signal, plaque indicators. Trend data is more reliable than single readings; we surface weekly summaries rather than alarming day-to-day spikes. Not a diagnostic device; share results with your dentist for clinical interpretation.</p></div>
+        </details>
+        <details class="accordion">
+          <summary>When do refills ship?</summary>
+          <div class="accordion__body"><p>Your initial bundle includes a 90-day supply of Foam + Mouthpiece. After that, Quarterly Refills (on Subscribe &amp; Save or added as a $65/quarter subscription on One Time) ship automatically every 90 days. First refill arrives 90 days after your original order.</p></div>
+        </details>
+      </section>
+
       <details class="accordion" open>
         <summary>Specifications</summary>
         <div class="accordion__body">
@@ -910,6 +1213,15 @@
     <a href="/">← Back to the homepage offer</a> · Wireframe demo, not a live store.
   </p>
 </main>
+
+<!-- Sticky mobile Buy Now bar — appears after user scrolls past the main buy box -->
+<div class="sticky-cta" id="sticky-cta" aria-hidden="true">
+  <div class="sticky-cta__info">
+    <p class="sticky-cta__name">Founders Edition Plus</p>
+    <p class="sticky-cta__price" data-target="sticky-price">$35/mo</p>
+  </div>
+  <button type="button" class="sticky-cta__btn" data-target="sticky-cta-text" onclick="handleCtaClick()">Buy Now</button>
+</div>
 
 <!-- Cart drawer (One Time path) -->
 <div class="cart-backdrop" id="cart-backdrop" aria-hidden="true"></div>
@@ -1613,6 +1925,8 @@
     setText('unit', priceUnit);
     setText('incentive', incentiveText);
     setText('cta', ctaText);
+    setText('sticky-cta-text', ctaText);
+    setText('sticky-price', isMembership ? (billing === 'monthly' ? '$35/mo' : '$360/yr') : (isAddonChecked ? '$269 one-time' : '$299 one-time'));
     setHTML('terms', termsHtml);
     setHTML('included', includedHtml);
     setHTML('plan-name', planName);
@@ -1621,7 +1935,21 @@
     setText('price-blurb', priceBlurb);
   }
 
+  // Sticky mobile Buy Now bar — show when the main buy box scrolls out of view
+  function setupStickyCta() {
+    const purchase = document.querySelector('.buybox-purchase');
+    const stickyBar = document.getElementById('sticky-cta');
+    if (!purchase || !stickyBar || typeof IntersectionObserver === 'undefined') return;
+    const obs = new IntersectionObserver(([entry]) => {
+      const shouldShow = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+      stickyBar.classList.toggle('visible', shouldShow);
+      stickyBar.setAttribute('aria-hidden', shouldShow ? 'false' : 'true');
+    }, { threshold: 0, rootMargin: '0px 0px -60px 0px' });
+    obs.observe(purchase);
+  }
+
   syncMobileSummaryDefault();
+  setupStickyCta();
   render();
 </script>
 
