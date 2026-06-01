@@ -31,6 +31,7 @@
   .eyebrow { font-size: 13px; color: #6B6B6B; text-align: center; margin-bottom: 10px; letter-spacing: 0.05em; }
   .headline { font-family: Georgia, 'Times New Roman', serif; font-size: 36px; font-weight: 400; text-align: center; margin-bottom: 10px; line-height: 1.18; color: #1A1A1A; }
   .subhead { font-size: 14px; color: #6B6B6B; text-align: center; margin: 0 auto 20px; max-width: 640px; }
+  .page-title { font-family: Georgia, 'Times New Roman', serif; font-size: 24px; font-weight: 400; text-align: center; color: #1A1A1A; margin-bottom: 16px; }
 
   .toggle-wrap { position: relative; width: fit-content; margin: 0 auto 22px; padding-top: 14px; }
   .recommended-tag { position: absolute; top: 0; right: 18px; background: #C0DD97; color: #173404; font-size: 10px; padding: 3px 9px; border-radius: 999px; font-weight: 600; letter-spacing: 0.02em; white-space: nowrap; }
@@ -605,6 +606,19 @@
   .plan-card--featured .plan-card__cta { background: #1A1A1A; color: #FFFFFF; }
   .plan-card--featured .plan-card__cta:hover { background: #000; }
   .plan-card:not(.plan-card--featured) .plan-card__cta:hover { background: #1A1A1A; color: #FFFFFF; }
+  .plan-card__learn {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #185FA5;
+    text-decoration: none;
+  }
+  .plan-card__learn span { transition: transform 0.15s ease; }
+  .plan-card__learn:hover { color: #0C447C; }
+  .plan-card__learn:hover span { transform: translateX(2px); }
 
   .plan-card__expand {
     display: flex;
@@ -673,6 +687,134 @@
   }
   .main-trust strong { color: #1A1A1A; font-weight: 600; }
 
+  /* === Mobile plan toggle (replaces the two-card accordion) === */
+  .plan-toggle { display: none; }
+  .seg { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; background: #ECECEC; border-radius: 999px; padding: 4px; }
+  .seg__btn { border: none; background: transparent; border-radius: 999px; padding: 6px 6px; font-family: inherit; font-size: 12.5px; font-weight: 600; color: #5A5A5A; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: 36px; transition: background .15s ease, color .15s ease, box-shadow .15s ease; }
+  .seg__btn--active { background: #FFFFFF; color: #1A1A1A; box-shadow: 0 1px 4px rgba(0,0,0,0.14); }
+  .seg__flag { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; color: #173404; background: #C0DD97; padding: 1px 6px; border-radius: 999px; line-height: 1.5; }
+  .plan-toggle__body { display: flex; align-items: flex-start; justify-content: flex-start; gap: 12px; margin-top: 14px; text-align: left; }
+  .plan-toggle__price { font-family: Georgia, 'Times New Roman', serif; font-size: 28px; font-weight: 400; color: #1A1A1A; line-height: 1; display: inline-flex; align-items: baseline; gap: 4px; }
+  .plan-toggle__unit { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 15px; color: #6B6B6B; font-weight: 500; }
+  .plan-toggle__sub { font-size: 13px; color: #4A4A4A; line-height: 1.45; margin: 10px auto 0; max-width: 32ch; }
+  .plan-toggle__cta { display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; margin-top: 18px; background: #1A1A1A; color: #FFFFFF; border: none; border-radius: 999px; padding: 16px; font-family: inherit; font-size: 16px; font-weight: 600; cursor: pointer; transition: background .15s ease; }
+  .plan-toggle__cta:hover { background: #000000; }
+  .plan-toggle__tag { flex: 1; font-size: 12.5px; color: #5A5A5A; line-height: 1.4; }
+  .lead-desc { font-size: 13px; color: #4A4A4A; line-height: 1.55; margin: 14px 0 0; }
+  .terms-link { display: inline-block; margin: 10px 0 0; background: none; border: none; padding: 0; font-family: inherit; font-size: 12px; color: #185FA5; text-decoration: underline; cursor: pointer; }
+  .terms-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 300; opacity: 0; pointer-events: none; transition: opacity .2s ease; }
+  .terms-backdrop.open { opacity: 1; pointer-events: auto; }
+  .terms-modal { position: fixed; left: 50%; top: 50%; transform: translate(-50%,-48%); width: min(92vw, 380px); background: #FFFFFF; border-radius: 16px; padding: 22px 22px 24px; z-index: 301; box-shadow: 0 16px 48px rgba(0,0,0,0.22); opacity: 0; pointer-events: none; transition: opacity .2s ease, transform .2s ease; }
+  .terms-modal.open { opacity: 1; pointer-events: auto; transform: translate(-50%,-50%); }
+  .terms-modal__close { position: absolute; top: 8px; right: 12px; border: none; background: none; font-size: 24px; line-height: 1; color: #999; cursor: pointer; }
+  .terms-modal__title { font-family: Georgia, 'Times New Roman', serif; font-size: 19px; font-weight: 400; color: #1A1A1A; margin-bottom: 10px; }
+  .terms-modal__body { font-size: 13px; color: #4A4A4A; line-height: 1.55; }
+  .plan-toggle__learn { display: flex; align-items: center; gap: 6px; width: fit-content; margin: 14px auto 0; padding: 9px 18px; border: 1.5px solid #D4D4D4; border-radius: 999px; background: #FFFFFF; color: #185FA5; font-family: inherit; font-size: 13px; font-weight: 600; text-decoration: none; transition: border-color .15s ease, color .15s ease; }
+  .plan-toggle__learn:hover { border-color: #185FA5; color: #0C447C; }
+  .sticky-cta { display: none; }
+  .sticky-cta__info { display: flex; flex-direction: column; line-height: 1.2; }
+  .sticky-cta__price { font-family: Georgia, 'Times New Roman', serif; font-size: 20px; color: #1A1A1A; }
+  .sticky-cta__unit { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 12px; color: #6B6B6B; font-weight: 500; }
+  .sticky-cta__plan { font-size: 11px; color: #6B6B6B; }
+  .sticky-cta__btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; flex: 1; background: #1A1A1A; color: #FFFFFF; border: none; border-radius: 999px; padding: 14px 22px; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer; white-space: nowrap; transition: background .15s ease; }
+  .sticky-cta__btn:hover { background: #000000; }
+  .sticky-cta__learn { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; padding: 13px 16px; border: 1.5px solid #D4D4D4; border-radius: 999px; background: #FFFFFF; color: #185FA5; font-family: inherit; font-size: 14px; font-weight: 600; text-decoration: none; }
+  .sticky-cta__learn:hover { border-color: #185FA5; }
+  /* App card — top billing */
+  .app-card { display: flex; gap: 10px; align-items: center; background: #EEF4FB; border: 1px solid #D7E5F3; border-radius: 12px; padding: 10px 12px; margin-top: 16px; }
+  .app-card__thumb { flex-shrink: 0; width: 36px; height: 36px; border-radius: 9px; background: linear-gradient(135deg,#185FA5,#2E7FCB); color: #fff; font-size: 8px; font-weight: 700; letter-spacing: .05em; display: flex; align-items: center; justify-content: center; }
+  .app-card__body { flex: 1; min-width: 0; }
+  .app-card__head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .app-card__name { font-size: 13.5px; font-weight: 700; color: #12334F; }
+  .app-card__badge { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: #173404; background: #C0DD97; padding: 2px 7px; border-radius: 999px; }
+  .app-card__desc { font-size: 12px; color: #2C3B47; line-height: 1.4; margin-top: 2px; }
+  /* In the box — thumbnails + quantities */
+  .box-list { list-style: none; padding: 0; margin: 11px 0 0; display: flex; flex-direction: column; gap: 7px; }
+  .box-item { display: flex; align-items: flex-start; gap: 12px; }
+  .box-item__thumb { flex-shrink: 0; width: 44px; height: 44px; border-radius: 9px; background: #ECEFF2; border: 1px solid #E0E4E8; }
+  .box-item__main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+  .box-item__name { font-size: 13px; font-weight: 600; color: #1A1A1A; }
+  .box-item__desc { font-size: 12px; color: #6B6B6B; line-height: 1.35; }
+  .box-item__qty { font-size: 12px; font-weight: 600; color: #6B6B6B; white-space: nowrap; }
+  .buybox {
+    background: #FFFFFF;
+    border: 1px solid #E6E6E6;
+    border-radius: 16px;
+    padding: 14px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+  }
+  .plan-options { display: flex; flex-direction: column; gap: 8px; }
+  .opt {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    text-align: left;
+    background: #FFFFFF;
+    border: 1.5px solid #E1E1E1;
+    border-radius: 12px;
+    padding: 13px 14px;
+    cursor: pointer;
+    position: relative;
+    font-family: inherit;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .opt:hover { border-color: #B9C7D6; }
+  .opt__radio {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    border: 2px solid #C4C4C4;
+    flex-shrink: 0;
+    position: relative;
+    transition: border-color 0.15s ease;
+  }
+  .opt--active { border-color: #1A1A1A; box-shadow: inset 0 0 0 1px #1A1A1A; }
+  .opt--active .opt__radio { border-color: #1A1A1A; }
+  .opt--active .opt__radio::after {
+    content: ''; position: absolute; inset: 3px;
+    border-radius: 50%; background: #1A1A1A;
+  }
+  .opt__main { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .opt__name { font-size: 15px; font-weight: 600; color: #1A1A1A; }
+  .opt__badge {
+    display: inline-block; margin-left: 6px; vertical-align: middle;
+    background: #C0DD97; color: #173404;
+    font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+    padding: 2px 6px; border-radius: 999px;
+  }
+  .opt__note { font-size: 12px; color: #6B6B6B; line-height: 1.35; }
+  .opt__price { text-align: right; white-space: nowrap; display: flex; align-items: baseline; gap: 2px; }
+  .opt__amt { font-size: 17px; font-weight: 700; color: #1A1A1A; }
+  .opt__unit { font-size: 12px; color: #6B6B6B; font-weight: 500; }
+  .buybox__cta {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    width: 100%; margin-top: 12px;
+    background: #1A1A1A; color: #FFFFFF;
+    border: none; border-radius: 999px;
+    padding: 16px;
+    font-family: inherit; font-size: 16px; font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  .buybox__cta:hover { background: #000000; }
+
+  /* What's-in-the-bundle block (clinical: hardware + software co-equal) */
+  .bundle { margin-top: 20px; text-align: left; }
+  .bundle__eyebrow { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #6B6B6B; text-align: center; margin-bottom: 12px; }
+  .bundle__group { padding: 14px 2px; border-top: 1px solid #ECECEC; }
+  .bundle__label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #1A1A1A; margin-bottom: 9px; }
+  .bundle__list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+  .bundle__list li { font-size: 13px; color: #4A4A4A; line-height: 1.4; padding-left: 20px; position: relative; }
+  .bundle__list li::before { content: '✓'; position: absolute; left: 0; top: 0; color: #1D9E75; font-weight: 700; }
+  .bundle__group--software {
+    background: #F2F7FB; border: 1px solid #DCE8F2; border-radius: 12px;
+    padding: 14px; margin-top: 14px;
+  }
+  .bundle__group--software .bundle__label { color: #185FA5; }
+  .bundle__software { font-size: 13px; color: #2C3B47; line-height: 1.5; }
+  .bundle__line { font-size: 13px; color: #4A4A4A; line-height: 1.45; }
+  .bundle__tag { display: inline-block; margin-left: 8px; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: #6B6B6B; background: #ECECEC; padding: 2px 7px; border-radius: 999px; vertical-align: middle; }
+
   .learn-more-row { text-align: center; margin: 16px 0 4px; }
   .learn-more-link {
     display: inline-flex;
@@ -702,11 +844,13 @@
     body { padding: 0; }
     .section { padding: 14px 16px 20px; border-radius: 0; }
     .plan-cards { display: flex; flex-direction: column; gap: 6px; margin-top: 2px; }
+    .plan-toggle { display: block; }
     .plan-or { margin: 0; }
     .main-trust { display: block; margin: 8px 0 8px; }
     .eyebrow { font-size: 10.5px; margin-bottom: 4px; letter-spacing: 0.08em; text-transform: uppercase; color: #888; }
     .headline { font-size: 22px; line-height: 1.18; margin-bottom: 6px; }
     .subhead { font-size: 13px; margin-bottom: 8px; padding: 0 4px; line-height: 1.45; }
+    .page-title { font-size: 20px; margin-bottom: 10px; }
 
     /* Toggle hidden on main view (lives inside the sheet) */
     .toggle-wrap { display: none; }
@@ -717,18 +861,21 @@
 
     /* Visual hero — compact on mobile so both plan cards fit */
     .media {
-      min-height: 200px;
-      padding: 16px;
+      min-height: 230px;
+      padding: 14px;
       background: linear-gradient(155deg, #FFFFFF 0%, #ECEEF1 100%);
     }
-    .media-shapes { margin-bottom: 8px; gap: 12px; }
-    .phone { width: 78px; height: 140px; }
-    .phone::before { width: 24px; height: 3px; top: 6px; }
-    .phone-lines { top: 18px; left: 8px; right: 8px; gap: 5px; }
-    .phone-lines span { height: 4px; }
-    .tube { width: 26px; height: 68px; }
+    .media-shapes { margin-bottom: 6px; gap: 10px; }
+    .phone { width: 98px; height: 150px; }
+    .phone::before { width: 20px; height: 3px; top: 5px; }
+    .phone-lines { top: 13px; left: 7px; right: 7px; gap: 4px; }
+    .phone-lines span { height: 3px; }
+    .tube { width: 32px; height: 92px; }
     .media-inner { font-size: 11px; }
     .media-placeholder-note { font-size: 10px; opacity: 0.65; }
+    .sticky-cta { display: flex; align-items: center; justify-content: space-between; gap: 12px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 200; background: #FFFFFF; border-top: 1px solid #E6E6E6; padding: 11px 16px calc(11px + env(safe-area-inset-bottom)); box-shadow: 0 -2px 12px rgba(0,0,0,0.06); }
+    body { padding-bottom: 96px; }
+    .disclaimer-replay { bottom: 92px; }
 
     /* Sticky main CTA disabled — plan cards take over */
     .m-main-cta { display: none; }
@@ -799,9 +946,7 @@
 <body>
 
 <div class="section">
-  <p class="eyebrow">Diagnostic-grade oral care</p>
-  <h1 class="headline">The toothbrush your dentist actually wants you to use</h1>
-  <p class="subhead">A toothbrush that scans. The Feno app maps tongue and teeth biomarkers, then syncs them to your dentist.</p>
+  <h1 class="page-title">Feno Smartbrush</h1>
 
   <div class="toggle-wrap">
     <span class="recommended-tag">Best value</span>
@@ -820,7 +965,7 @@
             <div class="phone-lines"><span></span><span></span><span></span><span></span><span></span></div>
           </div>
         </div>
-        <span class="media-placeholder-note">Bloom-designed graphic goes here<br>showcasing the offer + app</span>
+        <span class="media-placeholder-note" data-target="hero-note">Monthly membership<br>device + app + auto-shipped refills</span>
       </div>
     </div>
 
@@ -865,49 +1010,52 @@
     </div>
   </div>
 
-  <!-- Trust line — moved above plan cards as a CRO primer -->
-  <p class="main-trust"><strong>30-day money back</strong> · Free shipping · Ships in 2 days</p>
+  <!-- Mobile-only plan toggle -->
+  <div class="plan-toggle">
+    <div class="seg" role="tablist" aria-label="Choose how to pay">
+      <button class="seg__btn" type="button" role="tab" data-seg="upfront" onclick="selectMobilePlan('upfront')">Upfront</button>
+      <button class="seg__btn seg__btn--active" type="button" role="tab" data-seg="monthly" onclick="selectMobilePlan('monthly')">Monthly</button>
+      <button class="seg__btn" type="button" role="tab" data-seg="annual" onclick="selectMobilePlan('annual')"><span>Annual</span><span class="seg__flag">Best value</span></button>
+    </div>
+    <div class="plan-toggle__body">
+      <p class="plan-toggle__price"><span data-target="amount">$35</span><span class="plan-toggle__unit" data-target="unit">/mo</span></p>
+      <p class="plan-toggle__tag" data-target="sub-short">Cancel anytime</p>
+    </div>
 
-  <!-- Mobile-only plan cards -->
-  <div class="plan-cards" aria-label="Choose your plan">
-    <button class="plan-card plan-card--featured" type="button" data-plan="membership" onclick="onPlanCardClick('membership')">
-      <span class="plan-card__badge">Best value</span>
-      <span class="plan-card__name">Subscribe &amp; Save</span>
-      <h3 class="plan-card__headline">Get everything, pay monthly</h3>
-      <p class="plan-card__price"><span>$35</span><span class="plan-card__unit">/mo</span></p>
-      <span class="plan-card__chevron" aria-hidden="true">▾</span>
-      <div class="plan-card__expand">
-        <p class="plan-card__price-anchor">$30/mo billed annually · or $360/yr</p>
-        <p class="plan-card__tagline">Track tongue + teeth biomarkers in the Feno Premium app, synced to your dentist.</p>
-        <ul class="plan-card__bullets">
-          <li>Smartbrush + scraper + charger</li>
-          <li>Quarterly refills (Foam + Mouthpiece)</li>
-          <li>Feno Premium app</li>
-        </ul>
-        <span class="plan-card__cta">Subscribe &amp; Save</span>
+    <button class="terms-link" type="button" data-target="terms-link" onclick="openTerms()">Cancellation terms</button>
+
+    <div class="bundle">
+      <!-- App: top billing -->
+      <div class="app-card">
+        <div class="app-card__thumb" aria-hidden="true">APP</div>
+        <div class="app-card__body">
+          <p class="app-card__head"><span class="app-card__name" data-target="app-name">Feno Premium</span><span class="app-card__badge" data-target="app-badge">included</span></p>
+          <p class="app-card__desc" data-target="app-desc">Tracks your oral biomarkers + oral-health stats, synced to your dentist.</p>
+        </div>
       </div>
-    </button>
 
-    <div class="plan-or" aria-hidden="true"><span>or</span></div>
-
-    <button class="plan-card" type="button" data-plan="onetime" onclick="onPlanCardClick('onetime')">
-      <span class="plan-card__name">One Time</span>
-      <h3 class="plan-card__headline">Pay upfront, own the bundle</h3>
-      <p class="plan-card__price"><span>$299</span></p>
-      <span class="plan-card__chevron" aria-hidden="true">▾</span>
-      <div class="plan-card__expand">
-        <p class="plan-card__tagline">Pair with the free Feno app to track tongue + teeth biomarkers.</p>
-        <ul class="plan-card__bullets">
-          <li>Smartbrush + scraper + charger</li>
-          <li>3 Feno Foam + 1 TrueFit Mouthpiece</li>
-          <li>Personalized TrueFit fit</li>
-        </ul>
-        <span class="plan-card__cta">Choose One Time</span>
-      </div>
-    </button>
+      <ul class="box-list">
+        <li class="box-item"><span class="box-item__thumb" aria-hidden="true"></span><span class="box-item__main"><span class="box-item__name">Feno Smartbrush</span><span class="box-item__desc">Scans teeth and tongue as you brush.</span></span><span class="box-item__qty">×1</span></li>
+        <li class="box-item"><span class="box-item__thumb" aria-hidden="true"></span><span class="box-item__main"><span class="box-item__name">TrueFit Mouthpiece</span><span class="box-item__desc" data-target="mp-desc">Molded to your bite.</span></span><span class="box-item__qty" data-target="mp-qty">×1</span></li>
+        <li class="box-item"><span class="box-item__thumb" aria-hidden="true"></span><span class="box-item__main"><span class="box-item__name">Tongue scraper</span><span class="box-item__desc">Clears flagged bacteria.</span></span><span class="box-item__qty">×1</span></li>
+        <li class="box-item"><span class="box-item__thumb" aria-hidden="true"></span><span class="box-item__main"><span class="box-item__name">Charging base</span><span class="box-item__desc">Wireless charging dock.</span></span><span class="box-item__qty">×1</span></li>
+        <li class="box-item"><span class="box-item__thumb" aria-hidden="true"></span><span class="box-item__main"><span class="box-item__name">Feno Foam</span><span class="box-item__desc" data-target="foam-desc">Foaming toothpaste.</span></span><span class="box-item__qty" data-target="foam-qty">×3</span></li>
+      </ul>
+    </div>
   </div>
+</div>
 
-  <p class="learn-more-row"><a href="/pdp" class="learn-more-link">Learn more about Feno <span aria-hidden="true">→</span></a></p>
+<div class="sticky-cta" role="region" aria-label="Checkout">
+  <a class="sticky-cta__learn" href="/pdp">Learn more</a>
+  <button class="sticky-cta__btn" type="button" onclick="openSheet()">Get Started · <span data-target="amount">$35</span><span class="sticky-cta__unit" data-target="unit">/mo</span></button>
+</div>
+
+<!-- Cancellation terms modal -->
+<div class="terms-backdrop" id="terms-backdrop" aria-hidden="true"></div>
+<div class="terms-modal" id="terms-modal" role="dialog" aria-modal="true" aria-labelledby="terms-modal-title" aria-hidden="true">
+  <button class="terms-modal__close" id="terms-close" type="button" aria-label="Close">&times;</button>
+  <h2 class="terms-modal__title" id="terms-modal-title">Cancellation terms</h2>
+  <p class="terms-modal__body" data-target="plan-terms"></p>
 </div>
 
 <!-- Demo disclaimer modal -->
@@ -1365,6 +1513,23 @@
     });
     render();
   }
+  // Mobile 3-way plan toggle → maps a single segment onto (primary, billing)
+  function selectMobilePlan(seg) {
+    if (seg === 'upfront') {
+      setPrimary('onetime');
+    } else if (seg === 'annual') {
+      setPrimary('membership');
+      setBilling('annual');
+    } else {
+      setPrimary('membership');
+      setBilling('monthly');
+    }
+    document.querySelectorAll('.seg__btn').forEach(b => {
+      const active = b.dataset.seg === seg;
+      b.classList.toggle('seg__btn--active', active);
+      b.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+  }
 
   // Sync addon checkboxes (desktop + sheet) so they reflect the same state
   document.querySelectorAll('[data-target="addon-checkbox"]').forEach(cb => {
@@ -1724,6 +1889,12 @@
       setExpandedPlan(plan);
     }
   }
+  function onPlanCardKey(e, plan) {
+    if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+      e.preventDefault();
+      onPlanCardClick(plan);
+    }
+  }
   function setExpandedPlan(plan) {
     expandedPlan = plan;
     document.querySelectorAll('.plan-card').forEach(card => {
@@ -1756,6 +1927,14 @@
 
   disclaimerBtn.addEventListener('click', hideDisclaimer);
   disclaimerReplay.addEventListener('click', showDisclaimer);
+
+  // Cancellation terms modal
+  const termsBackdrop = document.getElementById('terms-backdrop');
+  const termsModal = document.getElementById('terms-modal');
+  function openTerms() { termsBackdrop.classList.add('open'); termsModal.classList.add('open'); termsModal.setAttribute('aria-hidden', 'false'); document.body.classList.add('lock-scroll'); }
+  function closeTerms() { termsBackdrop.classList.remove('open'); termsModal.classList.remove('open'); termsModal.setAttribute('aria-hidden', 'true'); document.body.classList.remove('lock-scroll'); }
+  document.getElementById('terms-close').addEventListener('click', closeTerms);
+  termsBackdrop.addEventListener('click', closeTerms);
 
   // Show on first load (or if localStorage not available)
   let seen = false;
@@ -1826,6 +2005,28 @@
     setText('sheet-title', headlineText);
     setText('sheet-switch', isMembership ? '← Switch to one-time' : '← Switch to Subscribe & Save');
     setHTML('sheet-software', softwareHtml);
+
+    // Homepage bundle block: hardware is constant; consumables + software vary by plan
+    setText('mp-desc', isMembership ? (billing === 'annual' ? 'All 4 shipped with your order.' : 'A fresh one every quarter.') : 'Molded to your bite.');
+    setText('mp-qty', isMembership ? (billing === 'annual' ? '×4' : '1/qtr') : '×1');
+    setText('foam-desc', isMembership ? (billing === 'annual' ? 'A full year, shipped upfront.' : 'Ships every quarter.') : '3 tubes to get started.');
+    setText('foam-qty', isMembership ? (billing === 'annual' ? '×12' : '3/qtr') : '×3');
+    setText('app-name', isMembership ? 'Feno Premium' : 'Feno Plus');
+    setText('app-badge', isMembership ? 'included' : '1 month free');
+    setHTML('app-desc', isMembership
+      ? 'Tracks your oral biomarkers + oral-health stats, synced to your dentist.'
+      : 'Basic brushing insights. Upgrade to Premium anytime.');
+
+    // Mobile inline tag (next to price) + dynamic hero caption per plan
+    setText('sub-short', isMembership ? (billing === 'annual' ? 'Everything included at the best price, and you save $60 a year.' : 'Everything included. Cancel anytime once your brush is paid off.') : 'The full kit, yours to keep. No subscription.');
+    targets('terms-link').forEach(el => el.classList.toggle('hidden', !isMembership));
+    setText('plan-terms', isMembership ? (billing === 'annual'
+      ? 'Your annual plan is prepaid for the year and renews each year unless you cancel before the renewal date. The brush is yours to keep, with no balance owed.'
+      : 'Your Smartbrush is paid off over your first 12 months. You can cancel anytime after that. If you cancel sooner, the remaining brush balance is charged at cancellation. Refills and Feno Premium continue until you cancel.')
+      : '');
+    setHTML('hero-note', isMembership
+      ? (billing === 'annual' ? 'Annual membership<br>device + app + a year of refills' : 'Monthly membership<br>device + app + auto-shipped refills')
+      : 'One-time bundle<br>the device + starter supplies, yours to keep');
   }
 
   syncMobileSummaryDefault();
