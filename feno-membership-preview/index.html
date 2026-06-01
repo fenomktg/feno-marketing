@@ -842,7 +842,7 @@
   /* === Mobile: visual hero + plan cards + pull-up sheet === */
   @media (max-width: 768px) {
     body { padding: 0; }
-    .section { padding: 14px 16px 20px; border-radius: 0; }
+    .section { padding: 14px 16px 2px; border-radius: 0; }
     .plan-cards { display: flex; flex-direction: column; gap: 6px; margin-top: 2px; }
     .plan-toggle { display: block; }
     .plan-or { margin: 0; }
@@ -874,7 +874,7 @@
     .media-inner { font-size: 11px; }
     .media-placeholder-note { font-size: 10px; opacity: 0.65; }
     .sticky-cta { display: flex; align-items: center; justify-content: space-between; gap: 12px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 200; background: #FFFFFF; border-top: 1px solid #E6E6E6; padding: 11px 16px calc(11px + env(safe-area-inset-bottom)); box-shadow: 0 -2px 12px rgba(0,0,0,0.06); }
-    body { padding-bottom: 96px; }
+    body { padding-bottom: 70px; background: #E8E8E8; }
     .disclaimer-replay { bottom: 92px; }
 
     /* Sticky main CTA disabled — plan cards take over */
@@ -1035,19 +1035,19 @@
       </div>
 
       <ul class="box-list">
-        <li class="box-item"><span class="box-item__thumb" aria-hidden="true"></span><span class="box-item__main"><span class="box-item__name">Feno Smartbrush</span><span class="box-item__desc">Scans teeth and tongue as you brush.</span></span><span class="box-item__qty">×1</span></li>
-        <li class="box-item"><span class="box-item__thumb" aria-hidden="true"></span><span class="box-item__main"><span class="box-item__name">TrueFit Mouthpiece</span><span class="box-item__desc" data-target="mp-desc">Molded to your bite.</span></span><span class="box-item__qty" data-target="mp-qty">×1</span></li>
+        <li class="box-item"><span class="box-item__thumb" aria-hidden="true"></span><span class="box-item__main"><span class="box-item__name">Feno Smartbrush</span><span class="box-item__desc">18,000 bristles, 250 strokes/20 sec.</span></span><span class="box-item__qty">×1</span></li>
+        <li class="box-item"><span class="box-item__thumb" aria-hidden="true"></span><span class="box-item__main"><span class="box-item__name">TrueFit Mouthpiece</span><span class="box-item__desc">Personalized to your mouth size.</span></span><span class="box-item__qty" data-target="mp-qty">×1</span></li>
         <li class="box-item"><span class="box-item__thumb" aria-hidden="true"></span><span class="box-item__main"><span class="box-item__name">Tongue scraper</span><span class="box-item__desc">Clears flagged bacteria.</span></span><span class="box-item__qty">×1</span></li>
         <li class="box-item"><span class="box-item__thumb" aria-hidden="true"></span><span class="box-item__main"><span class="box-item__name">Charging base</span><span class="box-item__desc">Wireless charging dock.</span></span><span class="box-item__qty">×1</span></li>
-        <li class="box-item"><span class="box-item__thumb" aria-hidden="true"></span><span class="box-item__main"><span class="box-item__name">Feno Foam</span><span class="box-item__desc" data-target="foam-desc">Foaming toothpaste.</span></span><span class="box-item__qty" data-target="foam-qty">×3</span></li>
+        <li class="box-item"><span class="box-item__thumb" aria-hidden="true"></span><span class="box-item__main"><span class="box-item__name">Feno Foam</span><span class="box-item__desc">Foaming toothpaste with xylitol.</span></span><span class="box-item__qty" data-target="foam-qty">×3</span></li>
       </ul>
     </div>
   </div>
 </div>
 
 <div class="sticky-cta" role="region" aria-label="Checkout">
-  <a class="sticky-cta__learn" href="/pdp">Learn more</a>
-  <button class="sticky-cta__btn" type="button" onclick="openSheet()">Get Started · <span data-target="amount">$35</span><span class="sticky-cta__unit" data-target="unit">/mo</span></button>
+  <a class="sticky-cta__learn" href="/pdp?plan=monthly">Learn more</a>
+  <button class="sticky-cta__btn" type="button" onclick="startPurchase()"><span data-target="cta-label">Checkout</span> · <span data-target="amount">$35</span><span class="sticky-cta__unit" data-target="unit">/mo</span></button>
 </div>
 
 <!-- Cancellation terms modal -->
@@ -1078,8 +1078,6 @@
   </div>
   <button class="disclaimer-btn" type="button" id="disclaimer-btn">Test it out</button>
 </div>
-
-<button class="disclaimer-replay" type="button" id="disclaimer-replay" aria-label="Re-read demo intro" title="Re-read demo intro">?</button>
 
 <!-- Mobile main-view sticky CTA (unused now that plan cards exist; kept for desktop fallback) -->
 <div class="m-main-cta">
@@ -1529,6 +1527,8 @@
       b.classList.toggle('seg__btn--active', active);
       b.setAttribute('aria-selected', active ? 'true' : 'false');
     });
+    const lm = document.querySelector('.sticky-cta__learn');
+    if (lm) lm.href = '/pdp?plan=' + seg;
   }
 
   // Sync addon checkboxes (desktop + sheet) so they reflect the same state
@@ -1571,6 +1571,17 @@
   sheetBackdrop.addEventListener('click', () => closeSheet(true));
 
   // Handle CTA inside the sheet — close sheet, then run the standard flow
+  function startPurchase() {
+    if (primary === 'onetime') {
+      handleCtaClick();
+    } else {
+      qrCheckedUpfront = false;
+      qrAdded = false;
+      appAdded = false;
+      qrDiscountEarned = false;
+      openCheckout();
+    }
+  }
   function handleSheetCtaClick() {
     cameFromSheet = true;
     closeSheet(false);
@@ -1732,7 +1743,7 @@
   }
   coBackBtn.addEventListener('click', () => {
     closeCheckout(false);
-    if (!qrCheckedUpfront) openCart();
+    if (purchasedAs === 'onetime' && !qrCheckedUpfront) openCart();
     else if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
   });
   coPlaceBtn.addEventListener('click', () => {
@@ -1926,7 +1937,7 @@
   }
 
   disclaimerBtn.addEventListener('click', hideDisclaimer);
-  disclaimerReplay.addEventListener('click', showDisclaimer);
+  if (disclaimerReplay) disclaimerReplay.addEventListener('click', showDisclaimer);
 
   // Cancellation terms modal
   const termsBackdrop = document.getElementById('terms-backdrop');
@@ -2007,9 +2018,7 @@
     setHTML('sheet-software', softwareHtml);
 
     // Homepage bundle block: hardware is constant; consumables + software vary by plan
-    setText('mp-desc', isMembership ? (billing === 'annual' ? 'All 4 shipped with your order.' : 'A fresh one every quarter.') : 'Molded to your bite.');
     setText('mp-qty', isMembership ? (billing === 'annual' ? '×4' : '1/qtr') : '×1');
-    setText('foam-desc', isMembership ? (billing === 'annual' ? 'A full year, shipped upfront.' : 'Ships every quarter.') : '3 tubes to get started.');
     setText('foam-qty', isMembership ? (billing === 'annual' ? '×12' : '3/qtr') : '×3');
     setText('app-name', isMembership ? 'Feno Premium' : 'Feno Plus');
     setText('app-badge', isMembership ? 'included' : '1 month free');
@@ -2019,6 +2028,7 @@
 
     // Mobile inline tag (next to price) + dynamic hero caption per plan
     setText('sub-short', isMembership ? (billing === 'annual' ? 'Everything included at the best price, and you save $60 a year.' : 'Everything included. Cancel anytime once your brush is paid off.') : 'The full kit, yours to keep. No subscription.');
+    setText('cta-label', isMembership ? 'Checkout' : 'Add to cart');
     targets('terms-link').forEach(el => el.classList.toggle('hidden', !isMembership));
     setText('plan-terms', isMembership ? (billing === 'annual'
       ? 'Your annual plan is prepaid for the year and renews each year unless you cancel before the renewal date. The brush is yours to keep, with no balance owed.'
