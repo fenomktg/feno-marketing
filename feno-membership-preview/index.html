@@ -1,0 +1,2048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#E8E8E8">
+<title>Feno Demo · Subscribe & Save vs One Time · UI/UX Preview</title>
+<meta name="description" content="UX preview of the Feno offer page: pull-up plans sheet, slide cart with refills + Feno Premium upsells, Shopify-style checkout, and post-purchase one-click upsells.">
+<meta property="og:title" content="Feno Demo · Subscribe & Save vs One Time · UI/UX">
+<meta property="og:description" content="Walk the subscribe-and-save vs one-time flow, slide-cart upsells, checkout simulation, and post-purchase upsell screen.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://feno-membership-preview.vercel.app">
+<meta name="twitter:card" content="summary">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: #FFFFFF;
+    color: #1A1A1A;
+    padding: 24px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+    overflow-x: hidden;
+  }
+  body.lock-scroll { overflow: hidden; }
+
+  .section { max-width: 1100px; margin: 0 auto; background: #E8E8E8; border-radius: 16px; padding: 32px 40px 36px; }
+
+  .eyebrow { font-size: 13px; color: #6B6B6B; text-align: center; margin-bottom: 10px; letter-spacing: 0.05em; }
+  .headline { font-family: Georgia, 'Times New Roman', serif; font-size: 36px; font-weight: 400; text-align: center; margin-bottom: 10px; line-height: 1.18; color: #1A1A1A; }
+  .subhead { font-size: 14px; color: #6B6B6B; text-align: center; margin: 0 auto 20px; max-width: 640px; }
+  .page-title { font-family: Georgia, 'Times New Roman', serif; font-size: 24px; font-weight: 400; text-align: center; color: #1A1A1A; margin-bottom: 16px; }
+
+  .toggle-wrap { position: relative; width: fit-content; margin: 0 auto 22px; padding-top: 14px; }
+  .recommended-tag { position: absolute; top: 0; right: 18px; background: #C0DD97; color: #173404; font-size: 10px; padding: 3px 9px; border-radius: 999px; font-weight: 600; letter-spacing: 0.02em; white-space: nowrap; }
+  .primary-toggle { display: flex; background: #FFFFFF; padding: 5px; border-radius: 999px; border: 1px solid #DDDDDD; }
+  .primary-toggle button { border: none; background: transparent; padding: 10px 32px; border-radius: 999px; font-size: 14px; cursor: pointer; color: #6B6B6B; font-weight: 500; transition: all 0.15s ease; }
+  .primary-toggle button.active { background: #1A1A1A; color: #FFFFFF; }
+
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: center; }
+
+  .media { background: linear-gradient(155deg, #FFFFFF 0%, #F2F4F6 100%); border: 2px dashed #C5C5C5; border-radius: 12px; min-height: 340px; display: flex; align-items: center; justify-content: center; padding: 20px; position: relative; overflow: hidden; }
+  .media-inner { text-align: center; color: #999999; font-size: 13px; line-height: 1.6; position: relative; z-index: 2; }
+  .media-shapes { display: flex; align-items: flex-end; justify-content: center; gap: 14px; margin: 0 auto 16px; }
+  .phone { width: 110px; height: 196px; border: 2px solid #C5C5C5; border-radius: 16px; position: relative; background: #FFFFFF; }
+  .phone::before { content: ''; position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 32px; height: 4px; background: #C5C5C5; border-radius: 2px; }
+  .phone-lines { position: absolute; top: 26px; left: 12px; right: 12px; display: flex; flex-direction: column; gap: 7px; }
+  .phone-lines span { height: 5px; background: #E8E8E8; border-radius: 2px; }
+  .phone-lines span:nth-child(1) { width: 55%; background: #C0DD97; }
+  .phone-lines span:nth-child(2) { width: 90%; }
+  .phone-lines span:nth-child(3) { width: 75%; background: #E6F1FB; }
+  .phone-lines span:nth-child(4) { width: 50%; }
+  .phone-lines span:nth-child(5) { width: 80%; background: #C0DD97; }
+  .tube { width: 36px; height: 96px; border: 2px solid #C5C5C5; border-radius: 6px 6px 18px 18px; background: linear-gradient(180deg, #FFFFFF 0%, #F4F4F4 100%); }
+  .media-placeholder-note { font-style: italic; color: #888888; font-size: 12px; }
+
+  .card { display: flex; flex-direction: column; gap: 16px; }
+  .badges { display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; padding: 6px 12px; background: #FFFFFF; border: 1px solid #DDDDDD; border-radius: 999px; color: #6B6B6B; font-weight: 500; }
+  .badge-icon { width: 14px; height: 14px; }
+
+  .incentive { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: #173404; background: #DDEFC7; padding: 6px 12px; border-radius: 999px; width: fit-content; }
+  .incentive::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 999px; background: #1D9E75; }
+
+  .price-row { padding: 4px 0 8px; }
+  .price-main { font-family: Georgia, 'Times New Roman', serif; font-size: 36px; font-weight: 400; margin: 0; line-height: 1.1; }
+  .price-unit { font-size: 18px; color: #6B6B6B; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+  .price-sub { font-size: 13px; color: #6B6B6B; margin-top: 8px; font-style: italic; }
+
+  .billing { display: flex; gap: 4px; background: #FFFFFF; padding: 4px; border-radius: 10px; border: 1px solid #DDDDDD; }
+  .billing button { flex: 1; border: none; background: transparent; padding: 10px 8px; border-radius: 7px; font-size: 13px; cursor: pointer; color: #6B6B6B; display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 500; transition: all 0.15s ease; }
+  .billing button.active { background: #E6F1FB; color: #0C447C; }
+  .save-badge { background: #C0DD97; color: #173404; font-size: 10px; padding: 2px 7px; border-radius: 999px; font-weight: 600; }
+
+  .included { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 14px; }
+  .included li { font-size: 13px; color: #1A1A1A; display: flex; align-items: flex-start; gap: 8px; min-height: 18px; }
+  .check { color: #1D9E75; font-weight: 700; font-size: 14px; flex-shrink: 0; line-height: 1.35; }
+
+  .addon { display: flex; gap: 12px; align-items: flex-start; background: #FFFFFF; border: 1.5px solid #DDDDDD; border-radius: 12px; padding: 14px; cursor: pointer; transition: border-color 0.15s ease, background 0.15s ease; user-select: none; position: relative; }
+  .addon:hover { border-color: #C5C5C5; }
+  .addon input[type="checkbox"] { position: absolute; opacity: 0; pointer-events: none; }
+  .addon__box { flex-shrink: 0; width: 22px; height: 22px; border: 2px solid #C5C5C5; border-radius: 6px; background: #FFFFFF; display: inline-flex; align-items: center; justify-content: center; margin-top: 1px; transition: all 0.15s ease; }
+  .addon__box::after { content: ''; width: 10px; height: 6px; border-left: 2px solid #FFFFFF; border-bottom: 2px solid #FFFFFF; transform: rotate(-45deg) translate(1px, -1px); opacity: 0; transition: opacity 0.15s ease; }
+  .addon input:checked ~ .addon__box { background: #1D9E75; border-color: #1D9E75; }
+  .addon input:checked ~ .addon__box::after { opacity: 1; }
+  .addon:has(input:checked) { background: #F4FBF6; border-color: #1D9E75; }
+  .addon input:focus-visible ~ .addon__box { outline: 2px solid #185FA5; outline-offset: 2px; }
+  .addon__content { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  .addon__title { font-size: 14px; font-weight: 600; color: #1A1A1A; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .addon__save { background: #C0DD97; color: #173404; font-size: 10px; padding: 2px 7px; border-radius: 999px; font-weight: 700; letter-spacing: 0.02em; }
+  .addon__sub { font-size: 12px; color: #6B6B6B; line-height: 1.45; }
+
+  .qty-cta { display: flex; gap: 14px; align-items: center; margin-top: 4px; }
+  .qty { display: flex; align-items: center; gap: 8px; background: #FFFFFF; border: 1px solid #DDDDDD; border-radius: 999px; padding: 4px 6px; }
+  .qty button { width: 30px; height: 30px; border-radius: 999px; border: none; background: transparent; cursor: pointer; font-size: 16px; color: #6B6B6B; line-height: 1; }
+  .qty button:hover { background: #F0F0F0; }
+  .qty span { font-size: 14px; min-width: 20px; text-align: center; font-weight: 500; }
+  .cta { flex: 1; background: #185FA5; color: white; border: none; border-radius: 999px; padding: 14px 20px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.15s ease, transform 0.1s ease; }
+  .cta:hover { background: #0C447C; }
+  .cta:active { transform: scale(0.98); }
+  .cta:focus-visible { outline: 2px solid #1A1A1A; outline-offset: 2px; }
+  .terms { font-size: 12px; color: #888888; line-height: 1.6; margin-top: 4px; }
+
+  /* === Mobile main-view sticky CTA + Plans sheet === */
+  .m-main-cta {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 12px 16px max(12px, env(safe-area-inset-bottom));
+    background: rgba(255, 255, 255, 0.96);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid #E8E8E8;
+    box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.05);
+    z-index: 60;
+  }
+  .m-main-cta__inner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .m-main-cta__hint {
+    font-size: 11px;
+    color: #888;
+    text-align: center;
+    margin-top: 6px;
+  }
+  .m-main-cta__hint strong { color: #173404; font-weight: 600; }
+  .m-main-cta__btn {
+    flex: 1;
+    background: #1A1A1A;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 999px;
+    padding: 15px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+    min-height: 50px;
+  }
+  .m-main-cta__btn:hover { background: #000; }
+  .m-main-cta__btn:active { transform: scale(0.98); }
+  .m-main-cta__btn-price { opacity: 0.7; font-weight: 500; }
+
+  .sheet-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 18, 22, 0.45);
+    opacity: 0;
+    pointer-events: none;
+    -webkit-backdrop-filter: blur(0px);
+    backdrop-filter: blur(0px);
+    transition: opacity 0.28s ease, backdrop-filter 0.28s ease, -webkit-backdrop-filter 0.28s ease;
+    z-index: 900;
+  }
+  .sheet-backdrop.open { opacity: 1; pointer-events: auto; -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
+
+  .plans-sheet {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-height: 92vh;
+    background: #FFFFFF;
+    border-radius: 18px 18px 0 0;
+    box-shadow: 0 -14px 40px rgba(0, 0, 0, 0.22);
+    z-index: 901;
+    transform: translateY(100%);
+    transition: transform 0.36s cubic-bezier(0.32, 0.72, 0, 1);
+    display: flex;
+    flex-direction: column;
+    pointer-events: none;
+  }
+  .plans-sheet.open { transform: translateY(0); pointer-events: auto; }
+
+  .plans-sheet__handle {
+    width: 44px;
+    height: 4px;
+    background: #DDDDDD;
+    border-radius: 999px;
+    margin: 10px auto 0;
+    flex-shrink: 0;
+  }
+  .plans-sheet__close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 44px;
+    height: 44px;
+    background: rgba(0, 0, 0, 0.04);
+    color: #6B6B6B;
+    border: none;
+    border-radius: 999px;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    transition: background 0.15s ease;
+  }
+  .plans-sheet__close:hover { background: rgba(0, 0, 0, 0.08); color: #1A1A1A; }
+
+  .plans-sheet__body {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 22px 18px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .sheet-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: -8px; }
+  .sheet-title { font-family: Georgia, 'Times New Roman', serif; font-size: 22px; font-weight: 400; line-height: 1.2; margin: 0; flex: 1 1 auto; min-width: 0; }
+  .sheet-header .incentive { flex-shrink: 0; font-size: 11px; padding: 4px 10px; align-self: flex-start; margin-top: 4px; }
+  .sheet-switch { background: transparent; border: none; padding: 0; font-size: 12px; color: #185FA5; cursor: pointer; align-self: flex-start; text-decoration: underline; text-underline-offset: 3px; margin-bottom: 2px; }
+  .sheet-switch:hover { color: #0C447C; }
+  .sheet-software { font-size: 13px; color: #4A4A4A; line-height: 1.5; margin: 4px 0 0; }
+  .sheet-software strong { color: #1A1A1A; font-weight: 600; }
+  .plans-sheet__body .badges { gap: 6px; }
+  .plans-sheet__body .badge { font-size: 11px; padding: 6px 10px; }
+  .plans-sheet__body .badge-icon { width: 12px; height: 12px; }
+  .plans-sheet__body .price-row { padding: 0; }
+  .plans-sheet__body .price-main { font-size: 30px; }
+  .plans-sheet__body .price-unit { font-size: 15px; }
+  .plans-sheet__body .price-sub { font-size: 12px; margin-top: 4px; }
+  .plans-sheet__body .billing button { min-height: 44px; padding: 10px 8px; }
+  .plans-sheet__body .included li { font-size: 13px; }
+  .plans-sheet__body .terms { font-size: 11px; line-height: 1.5; }
+
+  .plans-sheet__footer {
+    padding: 12px 16px max(12px, env(safe-area-inset-bottom));
+    border-top: 1px solid #E8E8E8;
+    background: rgba(255, 255, 255, 0.96);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    flex-shrink: 0;
+  }
+  .plans-sheet__footer .cta { width: 100%; min-height: 50px; font-size: 15px; padding: 14px 20px; }
+
+  /* === Cart drawer (unchecked One Time path) === */
+  .cart-backdrop { position: fixed; inset: 0; background: rgba(15, 18, 22, 0.5); opacity: 0; pointer-events: none; transition: opacity 0.25s ease; z-index: 1000; }
+  .cart-backdrop.open { opacity: 1; pointer-events: auto; }
+  .cart-drawer { position: fixed; top: 0; right: 0; bottom: 0; width: 440px; max-width: 100vw; background: #FFFFFF; z-index: 1001; transform: translateX(100%); transition: transform 0.32s cubic-bezier(0.32, 0.72, 0, 1); display: flex; flex-direction: column; box-shadow: -12px 0 36px rgba(0, 0, 0, 0.18); pointer-events: none; }
+  .cart-drawer.open { transform: translateX(0); pointer-events: auto; }
+  .cart-drawer__handle { display: none; }
+  .cart-drawer__body { flex: 1; overflow-y: auto; padding: 24px; -webkit-overflow-scrolling: touch; }
+  .scp-header { font-size: 16px; font-weight: 600; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #EEEEEE; display: flex; justify-content: space-between; align-items: center; }
+  .scp-close { color: #999999; cursor: pointer; font-size: 22px; line-height: 1; background: transparent; border: none; padding: 0; width: 36px; height: 36px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; transition: background 0.15s ease, color 0.15s ease; }
+  .scp-close:hover { background: #F4F4F4; color: #1A1A1A; }
+  .scp-line { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 14px; font-size: 14px; }
+  .scp-line .left { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  .scp-line .item-name { font-weight: 600; }
+  .scp-line .item-detail { font-size: 12px; color: #888888; }
+  .scp-upsells-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: #6B6B6B; text-transform: uppercase; margin: 18px 0 8px; }
+  .savings-bar { background: linear-gradient(180deg, #F4FBF6 0%, #EEF8E3 100%); border: 1px solid #C0DD97; border-radius: 10px; padding: 11px 13px; margin: 14px 0 12px; }
+  .savings-bar__head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 7px; }
+  .savings-bar__label { font-size: 11px; font-weight: 700; color: #173404; letter-spacing: 0.04em; text-transform: uppercase; }
+  .savings-bar__amount { font-size: 13px; font-weight: 700; color: #173404; font-variant-numeric: tabular-nums; }
+  .savings-bar__track { height: 6px; background: #E5F0D3; border-radius: 999px; overflow: hidden; }
+  .savings-bar__fill { height: 100%; background: linear-gradient(90deg, #1D9E75 0%, #74C44C 100%); border-radius: 999px; width: 0%; transition: width 0.32s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  .savings-bar__msg { font-size: 11.5px; color: #3F5E14; margin-top: 7px; line-height: 1.4; }
+  .cu-card { background: #FFFFFF; border: 1.5px solid #DDDDDD; border-radius: 10px; padding: 12px; display: flex; gap: 12px; align-items: flex-start; margin-bottom: 10px; transition: border-color 0.15s ease, background 0.15s ease; }
+  .cu-card--featured { background: linear-gradient(180deg, #F8FBFD 0%, #F4FBF6 100%); border-color: #1D9E75; }
+  .cu-card--added { background: #F4FBF6; border-color: #1D9E75; }
+  .cu-card__thumb { width: 44px; height: 44px; background: #E8E8E8; border-radius: 7px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; color: #888; font-size: 10px; }
+  .cu-card__content { flex: 1; min-width: 0; }
+  .cu-card__title { font-size: 13px; font-weight: 600; color: #1A1A1A; display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+  .cu-card__save { background: #C0DD97; color: #173404; font-size: 10px; padding: 2px 6px; border-radius: 999px; font-weight: 700; letter-spacing: 0.02em; }
+  .cu-card__sub { font-size: 12px; color: #6B6B6B; margin-top: 3px; line-height: 1.4; }
+  .cu-card__price { font-size: 12px; color: #1A1A1A; font-weight: 500; margin-top: 5px; }
+  .cu-card__btn { background: #1A1A1A; color: white; border: none; border-radius: 999px; padding: 8px 14px; font-size: 12px; font-weight: 600; cursor: pointer; flex-shrink: 0; align-self: center; white-space: nowrap; min-height: 34px; min-width: 60px; }
+  .cu-card__btn:hover { background: #000; }
+  .cu-card__btn:focus-visible { outline: 2px solid #185FA5; outline-offset: 2px; }
+  .cu-card--added .cu-card__btn { background: #1D9E75; }
+  .cu-card--added .cu-card__btn:hover { background: #157f5d; }
+  .scp-totals { border-top: 1px solid #EEEEEE; padding-top: 14px; margin-top: 14px; }
+  .scp-row { display: flex; justify-content: space-between; font-size: 13px; color: #6B6B6B; margin-bottom: 6px; }
+  .scp-row--discount { color: #1D9E75; font-weight: 600; }
+  .scp-total { display: flex; justify-content: space-between; font-size: 15px; font-weight: 600; margin-top: 6px; padding-top: 8px; border-top: 1px solid #F0F0F0; }
+  .scp-recurring-note { font-size: 11px; color: #888888; margin-top: 8px; line-height: 1.5; font-style: italic; }
+  .scp-checkout { background: #185FA5; color: white; border: none; border-radius: 999px; padding: 13px; font-size: 14px; font-weight: 600; cursor: pointer; width: 100%; margin-top: 16px; }
+  .scp-checkout:hover { background: #0C447C; }
+
+  /* === Shopify-style checkout overlay === */
+  .overlay { position: fixed; inset: 0; background: #FFFFFF; z-index: 1100; overflow-y: auto; -webkit-overflow-scrolling: touch; opacity: 0; pointer-events: none; transform: translateY(12px); transition: opacity 0.28s ease, transform 0.28s ease; }
+  .overlay.open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .co-header { border-bottom: 1px solid #E8E8E8; padding: 20px 32px; display: flex; align-items: center; justify-content: space-between; background: #FFFFFF; position: sticky; top: 0; z-index: 2; }
+  .co-brand { font-family: Georgia, 'Times New Roman', serif; font-size: 22px; font-weight: 400; letter-spacing: 0.02em; color: #1A1A1A; }
+  .co-cart-icon { width: 26px; height: 26px; color: #6B6B6B; }
+  .co-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); max-width: 1180px; margin: 0 auto; }
+  .co-form, .co-summary { padding: 40px 48px; }
+  .co-form { border-right: 1px solid #E8E8E8; }
+  .co-section { margin-bottom: 32px; }
+  .co-section__head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 16px; }
+  .co-section__title { font-size: 18px; font-weight: 600; color: #1A1A1A; }
+  .co-section__link { font-size: 13px; color: #185FA5; text-decoration: none; }
+  .co-section__link:hover { text-decoration: underline; }
+  .co-field { width: 100%; padding: 13px 14px; border: 1px solid #D5D5D5; border-radius: 6px; font-size: 14px; color: #1A1A1A; font-family: inherit; background: #FFFFFF; transition: border-color 0.15s ease, box-shadow 0.15s ease; }
+  .co-field:focus { border-color: #185FA5; outline: none; box-shadow: 0 0 0 1px #185FA5; }
+  .co-field::placeholder { color: #B0B0B0; }
+  .co-row { display: flex; gap: 10px; margin-top: 10px; }
+  .co-row .co-field { flex: 1; min-width: 0; }
+  .co-field-stack > .co-field + .co-field { margin-top: 10px; }
+  .co-checkbox { display: flex; align-items: center; gap: 10px; margin-top: 12px; font-size: 13px; color: #6B6B6B; cursor: pointer; }
+  .co-checkbox input { width: 16px; height: 16px; accent-color: #185FA5; }
+  .co-method { border: 1px solid #185FA5; border-radius: 6px; padding: 14px 16px; background: #F4F8FC; display: flex; justify-content: space-between; align-items: center; margin-top: 4px; }
+  .co-method__radio { width: 18px; height: 18px; border-radius: 999px; border: 5px solid #185FA5; background: white; flex-shrink: 0; margin-right: 12px; }
+  .co-method__left { display: flex; align-items: center; gap: 0; font-size: 14px; color: #1A1A1A; font-weight: 500; }
+  .co-method__price { font-size: 14px; font-weight: 600; color: #1A1A1A; }
+  .co-payment-card { background: #F4F4F4; border-radius: 6px 6px 0 0; padding: 14px 16px; font-size: 13px; color: #6B6B6B; border: 1px solid #D5D5D5; border-bottom: none; }
+  .co-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 28px; flex-wrap: wrap; gap: 12px; }
+  .co-back-link { font-size: 14px; color: #185FA5; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; cursor: pointer; background: transparent; border: none; padding: 0; }
+  .co-back-link:hover { text-decoration: underline; }
+  .co-place { background: #185FA5; color: white; border: none; border-radius: 6px; padding: 16px 28px; font-size: 15px; font-weight: 600; cursor: pointer; min-width: 220px; }
+  .co-place:hover { background: #0C447C; }
+  .co-place:disabled { background: #6B6B6B; cursor: progress; opacity: 0.85; }
+  .co-place:focus-visible { outline: 2px solid #1A1A1A; outline-offset: 2px; }
+  .co-summary-mobile-toggle { display: none; background: #FAFAFA; border-bottom: 1px solid #E8E8E8; padding: 14px 20px; align-items: center; justify-content: space-between; font-size: 14px; color: #185FA5; cursor: pointer; width: 100%; border-top: none; border-left: none; border-right: none; text-align: left; }
+  .co-summary { background: #FAFAFA; }
+  .co-summary[hidden] { display: none; }
+  .co-summary-item { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 18px; }
+  .co-summary-img { width: 56px; height: 56px; background: #E8E8E8; border-radius: 8px; flex-shrink: 0; position: relative; border: 1px solid #D5D5D5; display: inline-flex; align-items: center; justify-content: center; color: #999; font-size: 11px; }
+  .co-summary-item__title { font-size: 14px; font-weight: 600; color: #1A1A1A; line-height: 1.3; }
+  .co-summary-item__sub { font-size: 12px; color: #888; margin-top: 2px; }
+  .co-summary-item__qty { flex: 1; min-width: 0; }
+  .co-summary-item__price { font-size: 14px; color: #1A1A1A; font-weight: 500; white-space: nowrap; text-align: right; }
+  .co-summary-item__price small { display: block; font-size: 11px; font-weight: 500; color: #888; }
+  .co-summary-divider { border-top: 1px solid #E1E1E1; margin: 18px 0; }
+  .co-totals-row { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 8px; color: #1A1A1A; }
+  .co-totals-row--muted { color: #6B6B6B; }
+  .co-totals-row--discount { color: #1D9E75; font-weight: 600; }
+  .co-totals-row--total { font-size: 18px; font-weight: 700; margin-top: 12px; padding-top: 14px; border-top: 1px solid #E1E1E1; }
+  .co-totals-row--total small { font-size: 12px; font-weight: 500; color: #6B6B6B; margin-right: 4px; }
+  .co-future { margin-top: 18px; padding-top: 14px; border-top: 1px solid #E1E1E1; }
+  .co-future__title { font-size: 11px; font-weight: 700; color: #6B6B6B; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+  .co-future__row { display: flex; justify-content: space-between; font-size: 13px; color: #4A4A4A; margin-bottom: 5px; }
+
+  /* === Post-purchase === */
+  .pp-wrap { max-width: 880px; margin: 0 auto; padding: 40px 32px 80px; }
+  .pp-head { text-align: center; margin-bottom: 28px; }
+  .pp-check-icon { width: 56px; height: 56px; background: #1D9E75; color: white; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 16px; }
+  .pp-eyebrow { font-size: 12px; color: #6B6B6B; letter-spacing: 0.06em; margin-bottom: 4px; }
+  .pp-title { font-family: Georgia, serif; font-size: 28px; font-weight: 400; margin-bottom: 8px; line-height: 1.25; }
+  .pp-sub { font-size: 14px; color: #6B6B6B; }
+  .pp-sub strong { color: #1A1A1A; }
+  .pp-card { background: #FFFFFF; border: 1px solid #E1E1E1; border-radius: 12px; padding: 24px; margin-bottom: 16px; }
+  .pp-card__title { font-size: 15px; font-weight: 600; margin-bottom: 14px; color: #1A1A1A; }
+  .pp-upsell { background: linear-gradient(180deg, #F8FBFD 0%, #F4FBF6 100%); border: 1.5px solid #185FA5; box-shadow: 0 6px 24px rgba(24, 95, 165, 0.08); }
+  .pp-upsell__eyebrow { font-size: 11px; font-weight: 700; color: #185FA5; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .pp-upsell__savings { color: #1D9E75; text-transform: uppercase; letter-spacing: 0.1em; }
+  .pp-upsell__deal-badge { background: #C0DD97; color: #173404; font-size: 10px; padding: 2px 7px; border-radius: 999px; font-weight: 700; letter-spacing: 0.02em; margin-left: 4px; }
+  .pp-upsell__price s { color: #888; font-weight: 500; margin-right: 4px; font-size: 13px; }
+  .pp-upsell__title { font-family: Georgia, serif; font-size: 22px; line-height: 1.25; margin-bottom: 8px; color: #1A1A1A; }
+  .pp-upsell__body { font-size: 14px; color: #4A4A4A; margin-bottom: 18px; line-height: 1.5; }
+  .pp-upsell__product { background: #FFFFFF; border: 1px solid #E1E1E1; border-radius: 8px; padding: 14px; margin-bottom: 18px; display: flex; gap: 12px; align-items: center; }
+  .pp-upsell__thumb { width: 48px; height: 48px; background: #E8E8E8; border-radius: 6px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; color: #999; font-size: 11px; }
+  .pp-upsell__info { flex: 1 1 auto; min-width: 0; }
+  .pp-upsell__name { font-size: 14px; font-weight: 600; color: #1A1A1A; line-height: 1.3; }
+  .pp-upsell__detail { font-size: 12px; color: #6B6B6B; margin-top: 4px; line-height: 1.45; }
+  .pp-upsell__price { flex-shrink: 0; text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+  .pp-upsell__price-num { font-size: 18px; font-weight: 700; color: #1A1A1A; line-height: 1; }
+  .pp-upsell__price-unit { font-size: 11px; font-weight: 500; color: #888888; }
+  .pp-upsell__cta-row { display: flex; gap: 10px; align-items: center; }
+  .pp-upsell__accept { flex: 1; background: #185FA5; color: white; border: none; border-radius: 8px; padding: 14px; font-size: 14px; font-weight: 600; cursor: pointer; }
+  .pp-upsell__accept:hover { background: #0C447C; }
+  .pp-upsell__accept:disabled { background: #1D9E75; cursor: default; }
+  .pp-upsell__decline { background: transparent; border: none; color: #6B6B6B; padding: 14px 12px; font-size: 13px; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+  .pp-upsell__decline:hover { color: #1A1A1A; }
+  .pp-upsell__note { font-size: 11px; color: #888; margin-top: 10px; text-align: center; font-style: italic; }
+  .pp-upsell--added { background: #F4FBF6; border-color: #1D9E75; }
+  .pp-row { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 8px; color: #1A1A1A; }
+  .pp-row--muted { color: #6B6B6B; }
+  .pp-row--discount { color: #1D9E75; font-weight: 600; }
+  .pp-row--total { font-size: 16px; font-weight: 700; margin-top: 10px; padding-top: 14px; border-top: 1px solid #E1E1E1; }
+  .pp-next { font-size: 13px; color: #6B6B6B; line-height: 1.6; }
+  .pp-next strong { color: #1A1A1A; }
+  .pp-done { background: #1A1A1A; color: white; border: none; border-radius: 999px; padding: 14px 32px; font-size: 14px; font-weight: 600; cursor: pointer; display: block; margin: 24px auto 0; min-width: 220px; }
+  .pp-done:hover { background: #000; }
+
+  .hidden { display: none !important; }
+  .desktop-only { display: initial; }
+  .mobile-only { display: none; }
+
+  /* === Disclaimer modal === */
+  .disclaimer-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(15, 18, 22, 0.7);
+    z-index: 9998;
+    opacity: 0;
+    pointer-events: none;
+    -webkit-backdrop-filter: blur(0px);
+    backdrop-filter: blur(0px);
+    transition: opacity 0.3s ease, backdrop-filter 0.3s ease, -webkit-backdrop-filter 0.3s ease;
+  }
+  .disclaimer-backdrop.show { opacity: 1; pointer-events: auto; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+
+  .disclaimer-modal {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(0.96);
+    background: #FFFFFF;
+    border-radius: 18px;
+    padding: 28px 26px 26px;
+    max-width: 460px;
+    width: calc(100% - 32px);
+    z-index: 9999;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.35), 0 4px 12px rgba(0,0,0,0.1);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+    max-height: 92vh;
+    overflow-y: auto;
+  }
+  .disclaimer-modal.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  .disclaimer-eyebrow {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #888;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .disclaimer-title {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 10px;
+    color: #1A1A1A;
+  }
+  .disclaimer-body {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+  .disclaimer-flows {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .disclaimer-flow {
+    background: #FAFBFC;
+    border: 1px solid #E1E1E1;
+    border-radius: 10px;
+    padding: 14px;
+  }
+  .disclaimer-flow__label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #888;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .disclaimer-flow__title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1A1A1A;
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+  .disclaimer-flow__desc {
+    font-size: 13px;
+    color: #4A4A4A;
+    line-height: 1.5;
+    margin: 0;
+  }
+  .disclaimer-btn {
+    width: 100%;
+    background: #1A1A1A;
+    color: white;
+    border: none;
+    border-radius: 999px;
+    padding: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    min-height: 48px;
+    transition: background 0.15s ease, opacity 0.15s ease;
+  }
+  .disclaimer-btn:disabled { background: #C5C5C5; cursor: not-allowed; opacity: 0.7; }
+  .disclaimer-btn:not(:disabled):hover { background: #000; }
+  .disclaimer-replay {
+    position: fixed;
+    bottom: 14px;
+    right: 14px;
+    z-index: 80;
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.95);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border: 1px solid #E1E1E1;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    color: #6B6B6B;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .disclaimer-replay:hover { background: #FFFFFF; color: #1A1A1A; }
+
+  /* === Mobile plan cards (between hero and sticky/footer) === */
+  .plan-cards { display: none; }
+  .plan-card {
+    background: #FFFFFF;
+    border: 1.5px solid #E1E1E1;
+    border-radius: 14px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    cursor: pointer;
+    position: relative;
+    text-align: left;
+    transition: border-color 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+    font-family: inherit;
+    width: 100%;
+  }
+  .plan-card:hover { border-color: #185FA5; }
+  .plan-card:active { transform: scale(0.99); }
+  .plan-card:focus-visible { outline: 2px solid #185FA5; outline-offset: 2px; }
+  .plan-card--featured {
+    border-color: #1A1A1A;
+    background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+  }
+  .plan-card__badge {
+    position: absolute;
+    top: -9px;
+    right: 14px;
+    background: #C0DD97;
+    color: #173404;
+    font-size: 10px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+  .plan-card__name {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #6B6B6B;
+    white-space: nowrap;
+  }
+  .plan-card__headline {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 19px;
+    font-weight: 400;
+    line-height: 1.2;
+    color: #1A1A1A;
+    margin-top: 2px;
+  }
+  .plan-card__price {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: #1A1A1A;
+    line-height: 1;
+    margin-top: 4px;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 3px;
+  }
+  .plan-card__unit { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 13px; color: #6B6B6B; font-weight: 500; }
+  .plan-card__price-anchor { font-size: 11px; color: #6B6B6B; margin-top: -2px; font-style: italic; }
+  .plan-card__tagline { font-size: 13px; color: #4A4A4A; line-height: 1.4; }
+  .plan-card__bullets { list-style: none; padding: 0; margin: 4px 0 0; display: flex; flex-direction: column; gap: 5px; }
+  .plan-card__bullets li { font-size: 12px; color: #555; display: flex; align-items: flex-start; gap: 8px; line-height: 1.45; }
+  .plan-card__bullets li::before { content: '✓'; color: #1D9E75; font-weight: 700; flex-shrink: 0; font-size: 13px; line-height: 1.3; }
+  .plan-card__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 9px 18px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    background: transparent;
+    border: 1.5px solid #1A1A1A;
+    color: #1A1A1A;
+    margin-top: 8px;
+    align-self: flex-start;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .plan-card__cta::after { content: '→'; font-size: 14px; line-height: 1; }
+  .plan-card--featured .plan-card__cta { background: #1A1A1A; color: #FFFFFF; }
+  .plan-card--featured .plan-card__cta:hover { background: #000; }
+  .plan-card:not(.plan-card--featured) .plan-card__cta:hover { background: #1A1A1A; color: #FFFFFF; }
+  .plan-card__learn {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #185FA5;
+    text-decoration: none;
+  }
+  .plan-card__learn span { transition: transform 0.15s ease; }
+  .plan-card__learn:hover { color: #0C447C; }
+  .plan-card__learn:hover span { transform: translateX(2px); }
+
+  .plan-card__expand {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow: hidden;
+    max-height: 600px;
+    transition: max-height 0.3s ease, opacity 0.2s ease;
+  }
+  .plan-card__chevron {
+    display: none;
+    margin-left: auto;
+    color: #888;
+    font-size: 13px;
+    transition: transform 0.2s ease;
+  }
+  .plan-card--collapsed {
+    padding: 12px 16px;
+    cursor: pointer;
+    /* Grid layout: row 1 = name + price + chevron; row 2 = full-width headline */
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    grid-template-rows: auto auto;
+    column-gap: 10px;
+    row-gap: 3px;
+    align-items: baseline;
+  }
+  .plan-card--collapsed .plan-card__badge { display: none; }
+  .plan-card--collapsed .plan-card__expand { display: none; }
+  .plan-card--collapsed .plan-card__name { grid-column: 1; grid-row: 1; margin: 0; font-size: 10px; }
+  .plan-card--collapsed .plan-card__price { grid-column: 2; grid-row: 1; margin: 0; font-size: 17px; white-space: nowrap; }
+  .plan-card--collapsed .plan-card__unit { font-size: 11px; }
+  .plan-card--collapsed .plan-card__chevron { grid-column: 3; grid-row: 1; display: inline; align-self: center; font-size: 16px; color: #6B6B6B; margin-left: 4px; }
+  .plan-card--collapsed .plan-card__headline {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1A1A1A;
+    line-height: 1.3;
+    margin: 0;
+  }
+
+  .plan-or {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 2px 0;
+    font-size: 10px;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 600;
+  }
+  .plan-or::before, .plan-or::after { content: ''; flex: 1; height: 1px; background: #E1E1E1; }
+
+  .main-trust {
+    display: none;
+    font-size: 11.5px;
+    color: #555;
+    text-align: center;
+    margin: 12px 0 14px;
+    line-height: 1.5;
+  }
+  .main-trust strong { color: #1A1A1A; font-weight: 600; }
+
+  /* === Mobile plan toggle (replaces the two-card accordion) === */
+  .plan-toggle { display: none; }
+  .seg { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; background: #ECECEC; border-radius: 999px; padding: 4px; }
+  .seg__btn { border: none; background: transparent; border-radius: 999px; padding: 6px 6px; font-family: inherit; font-size: 12.5px; font-weight: 600; color: #5A5A5A; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: 36px; transition: background .15s ease, color .15s ease, box-shadow .15s ease; }
+  .seg__btn--active { background: #FFFFFF; color: #1A1A1A; box-shadow: 0 1px 4px rgba(0,0,0,0.14); }
+  .seg__flag { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; color: #173404; background: #C0DD97; padding: 1px 6px; border-radius: 999px; line-height: 1.5; }
+  .plan-toggle__body { display: flex; align-items: flex-start; justify-content: flex-start; gap: 12px; margin-top: 14px; text-align: left; }
+  .plan-toggle__price { font-family: Georgia, 'Times New Roman', serif; font-size: 28px; font-weight: 400; color: #1A1A1A; line-height: 1; display: inline-flex; align-items: baseline; gap: 4px; }
+  .plan-toggle__unit { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 15px; color: #6B6B6B; font-weight: 500; }
+  .plan-toggle__sub { font-size: 13px; color: #4A4A4A; line-height: 1.45; margin: 10px auto 0; max-width: 32ch; }
+  .plan-toggle__cta { display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; margin-top: 18px; background: #1A1A1A; color: #FFFFFF; border: none; border-radius: 999px; padding: 16px; font-family: inherit; font-size: 16px; font-weight: 600; cursor: pointer; transition: background .15s ease; }
+  .plan-toggle__cta:hover { background: #000000; }
+  .plan-toggle__tag { flex: 1; font-size: 12.5px; color: #5A5A5A; line-height: 1.4; }
+  .lead-desc { font-size: 13px; color: #4A4A4A; line-height: 1.55; margin: 14px 0 0; }
+  .terms-link { display: inline-block; margin: 10px 0 0; background: none; border: none; padding: 0; font-family: inherit; font-size: 12px; color: #185FA5; text-decoration: underline; cursor: pointer; }
+  .terms-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 300; opacity: 0; pointer-events: none; transition: opacity .2s ease; }
+  .terms-backdrop.open { opacity: 1; pointer-events: auto; }
+  .terms-modal { position: fixed; left: 50%; top: 50%; transform: translate(-50%,-48%); width: min(92vw, 380px); background: #FFFFFF; border-radius: 16px; padding: 22px 22px 24px; z-index: 301; box-shadow: 0 16px 48px rgba(0,0,0,0.22); opacity: 0; pointer-events: none; transition: opacity .2s ease, transform .2s ease; }
+  .terms-modal.open { opacity: 1; pointer-events: auto; transform: translate(-50%,-50%); }
+  .terms-modal__close { position: absolute; top: 8px; right: 12px; border: none; background: none; font-size: 24px; line-height: 1; color: #999; cursor: pointer; }
+  .terms-modal__title { font-family: Georgia, 'Times New Roman', serif; font-size: 19px; font-weight: 400; color: #1A1A1A; margin-bottom: 10px; }
+  .terms-modal__body { font-size: 13px; color: #4A4A4A; line-height: 1.55; }
+  .plan-toggle__learn { display: flex; align-items: center; gap: 6px; width: fit-content; margin: 14px auto 0; padding: 9px 18px; border: 1.5px solid #D4D4D4; border-radius: 999px; background: #FFFFFF; color: #185FA5; font-family: inherit; font-size: 13px; font-weight: 600; text-decoration: none; transition: border-color .15s ease, color .15s ease; }
+  .plan-toggle__learn:hover { border-color: #185FA5; color: #0C447C; }
+  .sticky-cta { display: none; }
+  .sticky-cta__info { display: flex; flex-direction: column; line-height: 1.2; }
+  .sticky-cta__price { font-family: Georgia, 'Times New Roman', serif; font-size: 20px; color: #1A1A1A; }
+  .sticky-cta__unit { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 12px; color: #6B6B6B; font-weight: 500; }
+  .sticky-cta__plan { font-size: 11px; color: #6B6B6B; }
+  .sticky-cta__btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; flex: 1; background: #1A1A1A; color: #FFFFFF; border: none; border-radius: 999px; padding: 14px 22px; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer; white-space: nowrap; transition: background .15s ease; }
+  .sticky-cta__btn:hover { background: #000000; }
+  .sticky-cta__learn { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; padding: 13px 16px; border: 1.5px solid #D4D4D4; border-radius: 999px; background: #FFFFFF; color: #185FA5; font-family: inherit; font-size: 14px; font-weight: 600; text-decoration: none; }
+  .sticky-cta__learn:hover { border-color: #185FA5; }
+  /* App card — top billing */
+  .app-card { display: flex; gap: 10px; align-items: center; background: #EEF4FB; border: 1px solid #D7E5F3; border-radius: 12px; padding: 10px 12px; margin-top: 16px; }
+  .app-card__thumb { flex-shrink: 0; width: 36px; height: 36px; border-radius: 9px; background: linear-gradient(135deg,#185FA5,#2E7FCB); color: #fff; font-size: 8px; font-weight: 700; letter-spacing: .05em; display: flex; align-items: center; justify-content: center; }
+  .app-card__body { flex: 1; min-width: 0; }
+  .app-card__head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .app-card__name { font-size: 13.5px; font-weight: 700; color: #12334F; }
+  .app-card__badge { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: #173404; background: #C0DD97; padding: 2px 7px; border-radius: 999px; }
+  .app-card__desc { font-size: 12px; color: #2C3B47; line-height: 1.4; margin-top: 2px; }
+  /* In the box — thumbnails + quantities */
+  .box-list { list-style: none; padding: 0; margin: 11px 0 0; display: flex; flex-direction: column; gap: 7px; }
+  .box-item { display: flex; align-items: flex-start; gap: 12px; }
+  .box-item__thumb { flex-shrink: 0; width: 44px; height: 44px; border-radius: 9px; background: #ECEFF2; border: 1px solid #E0E4E8; }
+  .box-item__main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+  .box-item__name { font-size: 13px; font-weight: 600; color: #1A1A1A; }
+  .box-item__desc { font-size: 12px; color: #6B6B6B; line-height: 1.35; }
+  .box-item__qty { font-size: 12px; font-weight: 600; color: #6B6B6B; white-space: nowrap; }
+  .buybox {
+    background: #FFFFFF;
+    border: 1px solid #E6E6E6;
+    border-radius: 16px;
+    padding: 14px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+  }
+  .plan-options { display: flex; flex-direction: column; gap: 8px; }
+  .opt {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    text-align: left;
+    background: #FFFFFF;
+    border: 1.5px solid #E1E1E1;
+    border-radius: 12px;
+    padding: 13px 14px;
+    cursor: pointer;
+    position: relative;
+    font-family: inherit;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .opt:hover { border-color: #B9C7D6; }
+  .opt__radio {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    border: 2px solid #C4C4C4;
+    flex-shrink: 0;
+    position: relative;
+    transition: border-color 0.15s ease;
+  }
+  .opt--active { border-color: #1A1A1A; box-shadow: inset 0 0 0 1px #1A1A1A; }
+  .opt--active .opt__radio { border-color: #1A1A1A; }
+  .opt--active .opt__radio::after {
+    content: ''; position: absolute; inset: 3px;
+    border-radius: 50%; background: #1A1A1A;
+  }
+  .opt__main { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .opt__name { font-size: 15px; font-weight: 600; color: #1A1A1A; }
+  .opt__badge {
+    display: inline-block; margin-left: 6px; vertical-align: middle;
+    background: #C0DD97; color: #173404;
+    font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+    padding: 2px 6px; border-radius: 999px;
+  }
+  .opt__note { font-size: 12px; color: #6B6B6B; line-height: 1.35; }
+  .opt__price { text-align: right; white-space: nowrap; display: flex; align-items: baseline; gap: 2px; }
+  .opt__amt { font-size: 17px; font-weight: 700; color: #1A1A1A; }
+  .opt__unit { font-size: 12px; color: #6B6B6B; font-weight: 500; }
+  .buybox__cta {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    width: 100%; margin-top: 12px;
+    background: #1A1A1A; color: #FFFFFF;
+    border: none; border-radius: 999px;
+    padding: 16px;
+    font-family: inherit; font-size: 16px; font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  .buybox__cta:hover { background: #000000; }
+
+  /* What's-in-the-bundle block (clinical: hardware + software co-equal) */
+  .bundle { margin-top: 20px; text-align: left; }
+  .bundle__eyebrow { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #6B6B6B; text-align: center; margin-bottom: 12px; }
+  .bundle__group { padding: 14px 2px; border-top: 1px solid #ECECEC; }
+  .bundle__label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #1A1A1A; margin-bottom: 9px; }
+  .bundle__list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+  .bundle__list li { font-size: 13px; color: #4A4A4A; line-height: 1.4; padding-left: 20px; position: relative; }
+  .bundle__list li::before { content: '✓'; position: absolute; left: 0; top: 0; color: #1D9E75; font-weight: 700; }
+  .bundle__group--software {
+    background: #F2F7FB; border: 1px solid #DCE8F2; border-radius: 12px;
+    padding: 14px; margin-top: 14px;
+  }
+  .bundle__group--software .bundle__label { color: #185FA5; }
+  .bundle__software { font-size: 13px; color: #2C3B47; line-height: 1.5; }
+  .bundle__line { font-size: 13px; color: #4A4A4A; line-height: 1.45; }
+  .bundle__tag { display: inline-block; margin-left: 8px; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: #6B6B6B; background: #ECECEC; padding: 2px 7px; border-radius: 999px; vertical-align: middle; }
+
+  .learn-more-row { text-align: center; margin: 16px 0 4px; }
+  .learn-more-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: #185FA5;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-weight: 500;
+  }
+  .learn-more-link:hover { color: #0C447C; }
+  .learn-more-link span { transition: transform 0.15s ease; }
+  .learn-more-link:hover span { transform: translateX(2px); }
+
+  /* === Tablet === */
+  @media (max-width: 1024px) and (min-width: 769px) {
+    body { padding: 20px; }
+    .section { padding: 32px; }
+    .grid { gap: 20px; }
+    .media { min-height: 340px; }
+    .co-form, .co-summary { padding: 32px; }
+  }
+
+  /* === Mobile: visual hero + plan cards + pull-up sheet === */
+  @media (max-width: 768px) {
+    body { padding: 0; }
+    .section { padding: 14px 16px 2px; border-radius: 0; }
+    .plan-cards { display: flex; flex-direction: column; gap: 6px; margin-top: 2px; }
+    .plan-toggle { display: block; }
+    .plan-or { margin: 0; }
+    .main-trust { display: block; margin: 8px 0 8px; }
+    .eyebrow { font-size: 10.5px; margin-bottom: 4px; letter-spacing: 0.08em; text-transform: uppercase; color: #888; }
+    .headline { font-size: 22px; line-height: 1.18; margin-bottom: 6px; }
+    .subhead { font-size: 13px; margin-bottom: 8px; padding: 0 4px; line-height: 1.45; }
+    .page-title { font-size: 20px; margin-bottom: 10px; }
+
+    /* Toggle hidden on main view (lives inside the sheet) */
+    .toggle-wrap { display: none; }
+
+    /* Grid: just the hero on mobile (card hidden, sheet replaces it) */
+    .grid { grid-template-columns: 1fr; gap: 0; }
+    .card { display: none; }
+
+    /* Visual hero — compact on mobile so both plan cards fit */
+    .media {
+      min-height: 230px;
+      padding: 14px;
+      background: linear-gradient(155deg, #FFFFFF 0%, #ECEEF1 100%);
+    }
+    .media-shapes { margin-bottom: 6px; gap: 10px; }
+    .phone { width: 98px; height: 150px; }
+    .phone::before { width: 20px; height: 3px; top: 5px; }
+    .phone-lines { top: 13px; left: 7px; right: 7px; gap: 4px; }
+    .phone-lines span { height: 3px; }
+    .tube { width: 32px; height: 92px; }
+    .media-inner { font-size: 11px; }
+    .media-placeholder-note { font-size: 10px; opacity: 0.65; }
+    .sticky-cta { display: flex; align-items: center; justify-content: space-between; gap: 12px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 200; background: #FFFFFF; border-top: 1px solid #E6E6E6; padding: 11px 16px calc(11px + env(safe-area-inset-bottom)); box-shadow: 0 -2px 12px rgba(0,0,0,0.06); }
+    body { padding-bottom: 70px; background: #E8E8E8; }
+    .disclaimer-replay { bottom: 92px; }
+
+    /* Sticky main CTA disabled — plan cards take over */
+    .m-main-cta { display: none; }
+    .mobile-only { display: initial; }
+    .desktop-only { display: none; }
+
+    /* Cart drawer becomes bottom sheet */
+    .cart-drawer { top: auto; right: 0; bottom: 0; left: 0; width: 100%; max-width: 100%; max-height: 92vh; border-radius: 16px 16px 0 0; transform: translateY(100%); box-shadow: 0 -10px 36px rgba(0, 0, 0, 0.18); }
+    .cart-drawer.open { transform: translateY(0); }
+    .cart-drawer__handle { display: block; width: 40px; height: 4px; background: #DDDDDD; border-radius: 999px; margin: 10px auto 0; flex-shrink: 0; }
+    .cart-drawer__body { padding: 14px 16px 18px; }
+    .scp-close { width: 44px; height: 44px; font-size: 24px; }
+    .scp-upsells-label { margin: 14px 0 6px; }
+    .cu-card { padding: 10px; gap: 10px; margin-bottom: 8px; }
+    .cu-card__thumb { width: 40px; height: 40px; }
+    .cu-card__title { font-size: 13px; }
+    .cu-card__sub { font-size: 11.5px; margin-top: 2px; }
+    .cu-card__price { font-size: 11.5px; margin-top: 4px; }
+    .cu-card__btn { min-height: 38px; padding: 8px 12px; font-size: 12px; }
+    .savings-bar { padding: 9px 11px; margin: 12px 0 10px; }
+    .savings-bar__label { font-size: 10.5px; }
+    .savings-bar__amount { font-size: 12px; }
+    .savings-bar__msg { font-size: 11px; margin-top: 5px; }
+    .scp-totals { padding-top: 12px; margin-top: 10px; }
+    .scp-row, .scp-total { font-size: 13px; }
+    .scp-checkout { padding: 14px; min-height: 48px; font-size: 14px; margin-top: 12px; }
+
+    /* Checkout overlay mobile */
+    .co-header { padding: 14px 18px; }
+    .co-brand { font-size: 19px; }
+    .co-grid { grid-template-columns: 1fr; }
+    .co-summary-mobile-toggle { display: flex; }
+    .co-summary { padding: 18px 18px 24px; border-top: 1px solid #E8E8E8; }
+    .co-form { padding: 18px; border-right: none; }
+    .co-section { margin-bottom: 24px; }
+    .co-section__title { font-size: 16px; }
+    .co-row--city { flex-wrap: wrap; }
+    .co-row--city > .co-field:first-child { flex: 1 1 100%; }
+    .co-actions { flex-direction: column-reverse; gap: 14px; align-items: stretch; }
+    .co-place { width: 100%; padding: 14px; font-size: 15px; min-height: 48px; }
+    .co-back-link { align-self: center; padding: 8px; min-height: 44px; display: inline-flex; align-items: center; }
+
+    /* Post-purchase */
+    .pp-wrap { padding: 24px 16px 60px; }
+    .pp-title { font-size: 22px; }
+    .pp-card { padding: 18px; }
+    .pp-upsell__title { font-size: 19px; }
+    .pp-upsell__cta-row { flex-direction: column; gap: 6px; }
+    .pp-upsell__accept { width: 100%; min-height: 48px; }
+    .pp-upsell__decline { padding: 12px; }
+    .pp-done { width: 100%; min-height: 48px; }
+  }
+
+  @media (max-width: 360px) {
+    .section { padding: 16px 14px 20px; }
+    .headline { font-size: 24px; }
+    .media { min-height: 320px; }
+    /* Tighten the 2-col included grid so labels stay on one line on Galaxy-class widths */
+    .included { gap: 6px 10px; }
+    .included li { font-size: 12px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: 0.01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="section">
+  <h1 class="page-title">Feno Smartbrush</h1>
+
+  <div class="toggle-wrap">
+    <span class="recommended-tag">Best value</span>
+    <div class="primary-toggle" role="tablist">
+      <button id="tab-onetime" type="button" role="tab" data-tab="onetime" aria-selected="false" onclick="setPrimary('onetime')">One Time</button>
+      <button class="active" id="tab-membership" type="button" role="tab" data-tab="membership" aria-selected="true" onclick="setPrimary('membership')">Subscribe &amp; Save</button>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="media">
+      <div class="media-inner">
+        <div class="media-shapes">
+          <div class="tube" aria-hidden="true"></div>
+          <div class="phone" aria-hidden="true">
+            <div class="phone-lines"><span></span><span></span><span></span><span></span><span></span></div>
+          </div>
+        </div>
+        <span class="media-placeholder-note" data-target="hero-note">Monthly membership<br>device + app + auto-shipped refills</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="badges">
+        <span class="badge"><svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2L4 6v6c0 5 4 9 8 10 4-1 8-5 8-10V6l-8-4z"/><path d="M9 12l2 2 4-4"/></svg>Money Back</span>
+        <span class="badge"><svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="1" y="6" width="15" height="11"/><path d="M16 11h4l3 3v3h-7"/><circle cx="6" cy="19" r="2"/><circle cx="19" cy="19" r="2"/></svg>Free Shipping</span>
+        <span class="badge"><svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M13 2L3 14h7v8l10-12h-7V2z"/></svg>Ships Fast</span>
+      </div>
+
+      <span class="incentive" data-target="incentive"></span>
+
+      <div class="price-row">
+        <p class="price-main"><span data-target="amount">$35</span><span class="price-unit" data-target="unit">/mo</span></p>
+        <p class="price-sub" data-target="sub"></p>
+      </div>
+
+      <div class="billing" data-target="billing">
+        <button class="active" type="button" data-bill="monthly" onclick="setBilling('monthly')">Monthly</button>
+        <button type="button" data-bill="annual" onclick="setBilling('annual')">Annual <span class="save-badge">Save $60</span></button>
+      </div>
+
+      <ul class="included" data-target="included"></ul>
+
+      <label class="addon hidden" data-target="addon">
+        <input type="checkbox" data-target="addon-checkbox">
+        <span class="addon__box" aria-hidden="true"></span>
+        <span class="addon__content">
+          <span class="addon__title">Add Quarterly Refills <span class="addon__save">Save $30 today</span></span>
+          <span class="addon__sub">3 Feno Foam + 1 TrueFit Mouthpiece every 90 days. $65/quarter, cancel anytime.</span>
+        </span>
+      </label>
+
+      <div class="qty-cta">
+        <div class="qty" aria-label="Quantity">
+          <button type="button" aria-label="Decrease quantity">−</button><span>1</span><button type="button" aria-label="Increase quantity">+</button>
+        </div>
+        <button class="cta" type="button" data-target="cta" onclick="handleCtaClick()">Get Started</button>
+      </div>
+
+      <p class="terms" data-target="terms"></p>
+    </div>
+  </div>
+
+  <!-- Mobile-only plan toggle -->
+  <div class="plan-toggle">
+    <div class="seg" role="tablist" aria-label="Choose how to pay">
+      <button class="seg__btn" type="button" role="tab" data-seg="upfront" onclick="selectMobilePlan('upfront')">Upfront</button>
+      <button class="seg__btn seg__btn--active" type="button" role="tab" data-seg="monthly" onclick="selectMobilePlan('monthly')">Monthly</button>
+      <button class="seg__btn" type="button" role="tab" data-seg="annual" onclick="selectMobilePlan('annual')"><span>Annual</span><span class="seg__flag">Best value</span></button>
+    </div>
+    <div class="plan-toggle__body">
+      <p class="plan-toggle__price"><span data-target="amount">$35</span><span class="plan-toggle__unit" data-target="unit">/mo</span></p>
+      <p class="plan-toggle__tag" data-target="sub-short">Cancel anytime</p>
+    </div>
+
+    <button class="terms-link" type="button" data-target="terms-link" onclick="openTerms()">Cancellation terms</button>
+
+    <div class="bundle">
+      <!-- App: top billing -->
+      <div class="app-card">
+        <div class="app-card__thumb" aria-hidden="true">APP</div>
+        <div class="app-card__body">
+          <p class="app-card__head"><span class="app-card__name" data-target="app-name">Feno Premium</span><span class="app-card__badge" data-target="app-badge">included</span></p>
+          <p class="app-card__desc" data-target="app-desc">Tracks your oral biomarkers + oral-health stats, synced to your dentist.</p>
+        </div>
+      </div>
+
+      <ul class="box-list">
+        <li class="box-item"><span class="box-item__thumb" aria-hidden="true"></span><span class="box-item__main"><span class="box-item__name">Feno Smartbrush</span><span class="box-item__desc">18,000 bristles, 250 strokes/20 sec.</span></span><span class="box-item__qty">×1</span></li>
+        <li class="box-item"><span class="box-item__thumb" aria-hidden="true"></span><span class="box-item__main"><span class="box-item__name">TrueFit Mouthpiece</span><span class="box-item__desc">Personalized to your mouth size.</span></span><span class="box-item__qty" data-target="mp-qty">×1</span></li>
+        <li class="box-item"><span class="box-item__thumb" aria-hidden="true"></span><span class="box-item__main"><span class="box-item__name">Tongue scraper</span><span class="box-item__desc">Clears flagged bacteria.</span></span><span class="box-item__qty">×1</span></li>
+        <li class="box-item"><span class="box-item__thumb" aria-hidden="true"></span><span class="box-item__main"><span class="box-item__name">Charging base</span><span class="box-item__desc">Wireless charging dock.</span></span><span class="box-item__qty">×1</span></li>
+        <li class="box-item"><span class="box-item__thumb" aria-hidden="true"></span><span class="box-item__main"><span class="box-item__name">Feno Foam</span><span class="box-item__desc">Foaming toothpaste with xylitol.</span></span><span class="box-item__qty" data-target="foam-qty">×3</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="sticky-cta" role="region" aria-label="Checkout">
+  <a class="sticky-cta__learn" href="/pdp?plan=monthly">Learn more</a>
+  <button class="sticky-cta__btn" type="button" onclick="startPurchase()"><span data-target="cta-label">Checkout</span> · <span data-target="amount">$35</span><span class="sticky-cta__unit" data-target="unit">/mo</span></button>
+</div>
+
+<!-- Cancellation terms modal -->
+<div class="terms-backdrop" id="terms-backdrop" aria-hidden="true"></div>
+<div class="terms-modal" id="terms-modal" role="dialog" aria-modal="true" aria-labelledby="terms-modal-title" aria-hidden="true">
+  <button class="terms-modal__close" id="terms-close" type="button" aria-label="Close">&times;</button>
+  <h2 class="terms-modal__title" id="terms-modal-title">Cancellation terms</h2>
+  <p class="terms-modal__body" data-target="plan-terms"></p>
+</div>
+
+<!-- Demo disclaimer modal -->
+<div class="disclaimer-backdrop" id="disclaimer-backdrop" aria-hidden="true"></div>
+<div class="disclaimer-modal" id="disclaimer-modal" role="dialog" aria-modal="true" aria-labelledby="disclaimer-title" aria-hidden="true">
+  <p class="disclaimer-eyebrow">Demo · UI/UX Preview</p>
+  <h2 class="disclaimer-title" id="disclaimer-title">Two flows to try</h2>
+  <p class="disclaimer-body">Wireframe demo, not a live store. Shopify checkout is pre-filled and no real charges happen.</p>
+  <div class="disclaimer-flows">
+    <div class="disclaimer-flow">
+      <span class="disclaimer-flow__label">Flow 1</span>
+      <h3 class="disclaimer-flow__title">Subscribe &amp; Save</h3>
+      <p class="disclaimer-flow__desc">Tap Subscribe &amp; Save. Pick monthly or annual. Place the order.</p>
+    </div>
+    <div class="disclaimer-flow">
+      <span class="disclaimer-flow__label">Flow 2</span>
+      <h3 class="disclaimer-flow__title">One Time with upsells</h3>
+      <p class="disclaimer-flow__desc">Tap One Time. The cart shows two upsells (Quarterly Refills, Feno Premium). Skip them to see the post-purchase upsell. Otherwise add and check out.</p>
+    </div>
+  </div>
+  <button class="disclaimer-btn" type="button" id="disclaimer-btn">Test it out</button>
+</div>
+
+<!-- Mobile main-view sticky CTA (unused now that plan cards exist; kept for desktop fallback) -->
+<div class="m-main-cta">
+  <div class="m-main-cta__inner">
+    <button type="button" class="m-main-cta__btn" id="open-sheet-btn" onclick="openSheet()">
+      <span>See plans</span> · <span class="m-main-cta__btn-price">from $35/mo</span>
+    </button>
+  </div>
+  <p class="m-main-cta__hint"><strong>Save $30</strong> with refills · 30-day money back</p>
+</div>
+
+<!-- Plans sheet (mobile) -->
+<div class="sheet-backdrop" id="sheet-backdrop" aria-hidden="true"></div>
+<aside class="plans-sheet" id="plans-sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title" aria-hidden="true" tabindex="-1">
+  <div class="plans-sheet__handle" aria-hidden="true"></div>
+  <button type="button" class="plans-sheet__close" id="sheet-close" aria-label="Close plans">×</button>
+
+  <div class="plans-sheet__body">
+    <div class="sheet-header">
+      <h2 id="sheet-title" class="sheet-title" data-target="sheet-title">Get everything, pay monthly</h2>
+      <span class="incentive" data-target="incentive"></span>
+    </div>
+    <button type="button" class="sheet-switch" data-target="sheet-switch" onclick="switchPlanFromSheet()"></button>
+    <p class="sheet-software" data-target="sheet-software"></p>
+
+    <div class="price-row">
+      <p class="price-main"><span data-target="amount">$40</span><span class="price-unit" data-target="unit">/mo</span></p>
+      <p class="price-sub" data-target="sub"></p>
+    </div>
+
+    <div class="billing" data-target="billing">
+      <button class="active" type="button" data-bill="monthly" onclick="setBilling('monthly')">Monthly</button>
+      <button type="button" data-bill="annual" onclick="setBilling('annual')">Annual <span class="save-badge">Save ~25%</span></button>
+    </div>
+
+    <ul class="included" data-target="included"></ul>
+
+    <label class="addon hidden" data-target="addon">
+      <input type="checkbox" data-target="addon-checkbox">
+      <span class="addon__box" aria-hidden="true"></span>
+      <span class="addon__content">
+        <span class="addon__title">Add Quarterly Refills <span class="addon__save">Save $30 today</span></span>
+        <span class="addon__sub">3 Feno Foam + 1 TrueFit Mouthpiece every 90 days. $65/quarter, cancel anytime.</span>
+      </span>
+    </label>
+
+    <p class="terms" data-target="terms"></p>
+  </div>
+
+  <div class="plans-sheet__footer">
+    <button class="cta" type="button" data-target="cta" onclick="handleSheetCtaClick()">Get Started</button>
+  </div>
+</aside>
+
+<!-- Cart drawer -->
+<div class="cart-backdrop" id="cart-backdrop" aria-hidden="true"></div>
+<aside class="cart-drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title" aria-hidden="true" tabindex="-1">
+  <div class="cart-drawer__handle" aria-hidden="true"></div>
+  <div class="cart-drawer__body">
+    <div class="scp-header">
+      <span id="cart-title">Your Cart</span>
+      <button type="button" class="scp-close" id="cart-close" aria-label="Close cart">×</button>
+    </div>
+
+    <div class="scp-line">
+      <div class="left">
+        <span class="item-name">Smartbrush Bundle</span>
+        <span class="item-detail">3 Feno Foam · 1 TrueFit Mouthpiece</span>
+      </div>
+      <span>$299</span>
+    </div>
+
+    <div class="savings-bar" id="savings-bar">
+      <div class="savings-bar__head">
+        <span class="savings-bar__label">Bundle savings</span>
+        <span class="savings-bar__amount" id="savings-amount">$0 of $45</span>
+      </div>
+      <div class="savings-bar__track"><div class="savings-bar__fill" id="savings-fill"></div></div>
+      <p class="savings-bar__msg" id="savings-msg">Add Refills + Feno Premium to save $45 on this order.</p>
+    </div>
+
+    <div class="scp-upsells-label">Recommended for you</div>
+
+    <div class="cu-card cu-card--featured" id="cu-qr">
+      <div class="cu-card__thumb" aria-hidden="true">refill</div>
+      <div class="cu-card__content">
+        <div class="cu-card__title">Quarterly Refills <span class="cu-card__save" id="cu-qr-save">Save $30</span></div>
+        <div class="cu-card__sub">3 Foam + 1 Mouthpiece every 90 days.</div>
+        <div class="cu-card__price">$65 / quarter · First charge in 90 days</div>
+      </div>
+      <button type="button" class="cu-card__btn" id="cu-qr-btn">Add</button>
+    </div>
+
+    <div class="cu-card" id="cu-app">
+      <div class="cu-card__thumb" aria-hidden="true">app</div>
+      <div class="cu-card__content">
+        <div class="cu-card__title">Feno Premium</div>
+        <div class="cu-card__sub">AI coaching · biomarker dashboards · dentist sync.</div>
+        <div class="cu-card__price">$10 / month · Cancel anytime</div>
+      </div>
+      <button type="button" class="cu-card__btn" id="cu-app-btn">Add</button>
+    </div>
+
+    <div class="scp-totals">
+      <div class="scp-row" id="scp-row-subtotal"><span>Subtotal</span><span id="scp-subtotal">$299</span></div>
+      <div class="scp-row scp-row--discount hidden" id="scp-row-discount"><span>First-order bonus</span><span>−$30</span></div>
+      <div class="scp-row scp-row--discount hidden" id="scp-row-bundle"><span>Bundle savings</span><span>−$15</span></div>
+      <div class="scp-total"><span>Today</span><span id="scp-total-today">$299</span></div>
+      <div class="scp-recurring-note hidden" id="scp-recurring-note"></div>
+    </div>
+
+    <button class="scp-checkout" type="button" id="cart-checkout">Checkout · <span id="cart-checkout-amount">$299</span></button>
+  </div>
+</aside>
+
+<!-- Shopify-style checkout overlay -->
+<section class="overlay" id="checkout-overlay" role="dialog" aria-modal="true" aria-labelledby="checkout-title" aria-hidden="true">
+  <header class="co-header">
+    <span class="co-brand">FENO</span>
+    <svg class="co-cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 6h15l-1.5 9h-12L5 3H2"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/></svg>
+  </header>
+
+  <button type="button" class="co-summary-mobile-toggle" id="co-summary-toggle" aria-expanded="false" aria-controls="co-summary">
+    <span><span id="co-summary-toggle-text">Show order summary</span> ▾</span>
+    <strong id="co-summary-toggle-price">$0.00</strong>
+  </button>
+
+  <div class="co-grid">
+    <div class="co-form">
+      <h2 id="checkout-title" class="hidden">Checkout</h2>
+
+      <section class="co-section">
+        <div class="co-section__head">
+          <span class="co-section__title">Contact</span>
+          <a href="#" class="co-section__link" tabindex="-1">Log in</a>
+        </div>
+        <input type="email" class="co-field" placeholder="Email" value="jane@feno.co" autocomplete="email">
+        <label class="co-checkbox"><input type="checkbox" checked> Email me with news and offers</label>
+      </section>
+
+      <section class="co-section">
+        <div class="co-section__head"><span class="co-section__title">Delivery</span></div>
+        <input type="text" class="co-field" value="United States" readonly>
+        <div class="co-row" style="margin-top:10px">
+          <input type="text" class="co-field" placeholder="First name" value="Jane">
+          <input type="text" class="co-field" placeholder="Last name" value="Smith">
+        </div>
+        <div class="co-field-stack" style="margin-top:10px">
+          <input type="text" class="co-field" placeholder="Address" value="123 Mission St" autocomplete="street-address">
+          <input type="text" class="co-field" placeholder="Apartment, suite, etc. (optional)" value="Apt 4B">
+        </div>
+        <div class="co-row co-row--city">
+          <input type="text" class="co-field" placeholder="City" value="San Francisco">
+          <input type="text" class="co-field" placeholder="State" value="CA">
+          <input type="text" class="co-field" placeholder="ZIP code" value="94103" inputmode="numeric">
+        </div>
+      </section>
+
+      <section class="co-section">
+        <div class="co-section__head"><span class="co-section__title">Shipping method</span></div>
+        <div class="co-method">
+          <div class="co-method__left">
+            <span class="co-method__radio" aria-hidden="true"></span>
+            Free Shipping (2–4 business days)
+          </div>
+          <span class="co-method__price">FREE</span>
+        </div>
+      </section>
+
+      <section class="co-section">
+        <div class="co-section__head"><span class="co-section__title">Payment</span></div>
+        <div class="co-payment-card">All transactions are secure and encrypted</div>
+        <input type="text" class="co-field" style="border-radius: 0; border-top: none;" placeholder="Card number" value="•••• •••• •••• 4242" inputmode="numeric">
+        <div class="co-row" style="margin-top: 0">
+          <input type="text" class="co-field" style="border-radius: 0 0 0 6px; border-top: none;" placeholder="Expiration (MM/YY)" value="12/27" inputmode="numeric">
+          <input type="text" class="co-field" style="border-radius: 0 0 6px 0; border-top: none; border-left: none;" placeholder="Security code" value="123" inputmode="numeric">
+        </div>
+        <input type="text" class="co-field" style="margin-top: 10px" placeholder="Name on card" value="Jane Smith">
+      </section>
+
+      <div class="co-actions">
+        <button type="button" class="co-back-link" id="co-back">← Return to cart</button>
+        <button type="button" class="co-place" id="co-place">Place order</button>
+      </div>
+    </div>
+
+    <aside class="co-summary" id="co-summary">
+      <div class="co-summary-item" id="co-item-bundle">
+        <div class="co-summary-img" aria-hidden="true">img</div>
+        <div class="co-summary-item__qty">
+          <div class="co-summary-item__title">Smartbrush Bundle</div>
+          <div class="co-summary-item__sub">3 Feno Foam · 1 TrueFit Mouthpiece</div>
+        </div>
+        <div class="co-summary-item__price">$299.00</div>
+      </div>
+
+      <div class="co-summary-item hidden" id="co-item-membership">
+        <div class="co-summary-img" aria-hidden="true">plan</div>
+        <div class="co-summary-item__qty">
+          <div class="co-summary-item__title">Subscribe &amp; Save <span class="addon__save" style="margin-left:4px">Plan</span></div>
+          <div class="co-summary-item__sub" id="co-item-membership-sub">Monthly billing · cancel anytime</div>
+        </div>
+        <div class="co-summary-item__price" id="co-item-membership-price">$35.00<small>per month</small></div>
+      </div>
+
+      <div class="co-summary-item hidden" id="co-item-qr">
+        <div class="co-summary-img" aria-hidden="true">sub</div>
+        <div class="co-summary-item__qty">
+          <div class="co-summary-item__title">Quarterly Refills <span class="addon__save" style="margin-left:4px">Sub</span></div>
+          <div class="co-summary-item__sub">$65 every 90 days · First charge in 90 days</div>
+        </div>
+        <div class="co-summary-item__price">$0.00<small>today</small></div>
+      </div>
+
+      <div class="co-summary-item hidden" id="co-item-app">
+        <div class="co-summary-img" aria-hidden="true">app</div>
+        <div class="co-summary-item__qty">
+          <div class="co-summary-item__title">Feno Premium <span class="addon__save" style="margin-left:4px">Sub</span></div>
+          <div class="co-summary-item__sub">AI coaching · biomarker dashboards · dentist sync</div>
+        </div>
+        <div class="co-summary-item__price">$10.00<small>per month</small></div>
+      </div>
+
+      <div class="co-summary-divider"></div>
+
+      <div class="co-totals-row co-totals-row--muted"><span>Subtotal</span><span id="co-subtotal">$299.00</span></div>
+      <div class="co-totals-row co-totals-row--discount hidden" id="co-discount-row"><span>First-order bonus</span><span>−$30.00</span></div>
+      <div class="co-totals-row co-totals-row--discount hidden" id="co-bundle-row"><span>Bundle savings</span><span>−$15.00</span></div>
+      <div class="co-totals-row co-totals-row--muted"><span>Shipping</span><span>FREE</span></div>
+      <div class="co-totals-row co-totals-row--total"><span><small>USD</small>Total</span><span id="co-total">$299.00</span></div>
+
+      <div class="co-future hidden" id="co-future">
+        <p class="co-future__title">After today</p>
+        <div class="co-future__row hidden" id="co-future-qr"><span>Quarterly Refills</span><span>$65 every 90 days</span></div>
+        <div class="co-future__row hidden" id="co-future-app"><span>Feno Premium</span><span>$10 every month</span></div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- Post-purchase overlay -->
+<section class="overlay" id="post-purchase-overlay" role="dialog" aria-modal="true" aria-labelledby="pp-title" aria-hidden="true">
+  <header class="co-header">
+    <span class="co-brand">FENO</span>
+  </header>
+
+  <div class="pp-wrap">
+    <div class="pp-head">
+      <div class="pp-check-icon" aria-hidden="true">✓</div>
+      <p class="pp-eyebrow">Order <span id="pp-order-no">#FEN-1042</span></p>
+      <h1 class="pp-title" id="pp-title">Your order is confirmed</h1>
+      <p class="pp-sub" id="pp-sub">Confirmation email sent to <strong id="pp-email">jane@feno.co</strong>. Your Smartbrush ships in 2 business days.</p>
+    </div>
+
+    <div class="pp-card pp-upsell hidden" id="pp-upsell-qr">
+      <p class="pp-upsell__eyebrow">One-click add · <span class="pp-upsell__savings">Save $30 today</span></p>
+      <h2 class="pp-upsell__title">Add refills, save $30 on your order</h2>
+      <p class="pp-upsell__body">3 Feno Foam tubes and 1 TrueFit Mouthpiece, shipped every 90 days.</p>
+      <div class="pp-upsell__product">
+        <div class="pp-upsell__thumb" aria-hidden="true">refill</div>
+        <div class="pp-upsell__info">
+          <div class="pp-upsell__name">Quarterly Refills</div>
+          <div class="pp-upsell__detail">3 Feno Foam · 1 TrueFit Mouthpiece<br>Ships every 90 days · Cancel anytime</div>
+        </div>
+        <div class="pp-upsell__price">
+          <span class="pp-upsell__price-num">$65</span>
+          <span class="pp-upsell__price-unit">/quarter</span>
+        </div>
+      </div>
+      <div class="pp-upsell__cta-row">
+        <button type="button" class="pp-upsell__accept" id="pp-qr-accept">Add to my order · Save $30</button>
+        <button type="button" class="pp-upsell__decline" id="pp-qr-decline">No thanks</button>
+      </div>
+      <p class="pp-upsell__note">$30 first-order bonus credited to your card. First refill ships in 90 days.</p>
+    </div>
+
+    <div class="pp-card pp-upsell hidden" id="pp-upsell-app">
+      <p class="pp-upsell__eyebrow">One-click add · <span class="pp-upsell__savings">Add for $10/mo</span></p>
+      <h2 class="pp-upsell__title">See your biomarkers, not just your brushing</h2>
+      <p class="pp-upsell__body">Your Smartbrush captures the scan. Feno Premium turns it into a tongue + teeth biomarker dashboard you can share with your dentist.</p>
+      <div class="pp-upsell__product">
+        <div class="pp-upsell__thumb" aria-hidden="true">app</div>
+        <div class="pp-upsell__info">
+          <div class="pp-upsell__name">Feno Premium</div>
+          <div class="pp-upsell__detail">AI coaching · biomarker dashboards<br>Dentist sync · cancel anytime</div>
+        </div>
+        <div class="pp-upsell__price">
+          <span class="pp-upsell__price-num">$10</span>
+          <span class="pp-upsell__price-unit">/month</span>
+        </div>
+      </div>
+      <div class="pp-upsell__cta-row">
+        <button type="button" class="pp-upsell__accept" id="pp-app-accept">Add to my order · $10/mo</button>
+        <button type="button" class="pp-upsell__decline" id="pp-app-decline">No thanks</button>
+      </div>
+      <p class="pp-upsell__note">Charged $10 today, then $10/month with your existing payment method.</p>
+    </div>
+
+    <div class="pp-card">
+      <p class="pp-card__title">Order summary</p>
+      <div id="pp-summary"></div>
+    </div>
+
+    <div class="pp-card hidden" id="pp-future-card">
+      <p class="pp-card__title">After today</p>
+      <div id="pp-future"></div>
+    </div>
+
+    <div class="pp-card">
+      <p class="pp-card__title">What's next</p>
+      <p class="pp-next" id="pp-next"></p>
+    </div>
+
+    <button type="button" class="pp-done" id="pp-done">Continue browsing</button>
+  </div>
+</section>
+
+<script>
+  // --- State
+  let primary = 'membership';
+  let billing = 'monthly';
+  let qrAdded = false;
+  let appAdded = false;
+  let qrDiscountEarned = false;
+  let bundleSavingsEarned = false;
+  let qrCheckedUpfront = false;
+  let qrFromPostPurchase = false;
+  let appFromPostPurchase = false;
+  let purchasedAs = 'onetime';  // Captures 'onetime' or 'membership' when checkout opens
+  let lastFocused = null;
+  let cameFromSheet = false;
+
+  // --- Refs
+  const drawer = document.getElementById('cart-drawer');
+  const backdrop = document.getElementById('cart-backdrop');
+  const cartCloseBtn = document.getElementById('cart-close');
+  const cartCheckoutBtn = document.getElementById('cart-checkout');
+  const cartCheckoutAmt = document.getElementById('cart-checkout-amount');
+
+  const cuQrCard = document.getElementById('cu-qr');
+  const cuQrBtn = document.getElementById('cu-qr-btn');
+  const cuQrSave = document.getElementById('cu-qr-save');
+  const cuAppCard = document.getElementById('cu-app');
+  const cuAppBtn = document.getElementById('cu-app-btn');
+
+  const scpSubtotal = document.getElementById('scp-subtotal');
+  const scpRowDiscount = document.getElementById('scp-row-discount');
+  const scpRowBundle = document.getElementById('scp-row-bundle');
+  const scpTotalToday = document.getElementById('scp-total-today');
+  const scpRecurringNote = document.getElementById('scp-recurring-note');
+
+  const savingsAmount = document.getElementById('savings-amount');
+  const savingsFill = document.getElementById('savings-fill');
+  const savingsMsg = document.getElementById('savings-msg');
+
+  const coOverlay = document.getElementById('checkout-overlay');
+  const coBackBtn = document.getElementById('co-back');
+  const coPlaceBtn = document.getElementById('co-place');
+  const coItemBundle = document.getElementById('co-item-bundle');
+  const coItemMembership = document.getElementById('co-item-membership');
+  const coItemMembershipSub = document.getElementById('co-item-membership-sub');
+  const coItemMembershipPrice = document.getElementById('co-item-membership-price');
+  const coItemQr = document.getElementById('co-item-qr');
+  const coItemApp = document.getElementById('co-item-app');
+  const coDiscountRow = document.getElementById('co-discount-row');
+  const coBundleRow = document.getElementById('co-bundle-row');
+  const coFuture = document.getElementById('co-future');
+  const coFutureQr = document.getElementById('co-future-qr');
+  const coFutureApp = document.getElementById('co-future-app');
+  const coSubtotal = document.getElementById('co-subtotal');
+  const coTotal = document.getElementById('co-total');
+  const coSummary = document.getElementById('co-summary');
+  const coSummaryToggle = document.getElementById('co-summary-toggle');
+  const coSummaryToggleText = document.getElementById('co-summary-toggle-text');
+  const coSummaryTogglePrice = document.getElementById('co-summary-toggle-price');
+
+  const ppOverlay = document.getElementById('post-purchase-overlay');
+  const ppDone = document.getElementById('pp-done');
+  const ppUpsellQr = document.getElementById('pp-upsell-qr');
+  const ppUpsellApp = document.getElementById('pp-upsell-app');
+  const ppQrAccept = document.getElementById('pp-qr-accept');
+  const ppQrDecline = document.getElementById('pp-qr-decline');
+  const ppAppAccept = document.getElementById('pp-app-accept');
+  const ppAppDecline = document.getElementById('pp-app-decline');
+  const ppTitle = document.getElementById('pp-title');
+  const ppSub = document.getElementById('pp-sub');
+  const ppSummary = document.getElementById('pp-summary');
+  const ppNext = document.getElementById('pp-next');
+  const ppFutureCard = document.getElementById('pp-future-card');
+  const ppFuture = document.getElementById('pp-future');
+
+  const sheet = document.getElementById('plans-sheet');
+  const sheetBackdrop = document.getElementById('sheet-backdrop');
+  const sheetCloseBtn = document.getElementById('sheet-close');
+
+  // --- Helpers
+  function money(n) { return '$' + Math.round(n).toLocaleString('en-US'); }
+  function moneyDecimal(n) { return '$' + n.toFixed(2); }
+  function todayTotal() {
+    const app = appAdded ? 10 : 0;
+    const qr = qrDiscountEarned ? 30 : 0;
+    const bundle = bundleSavingsEarned ? 15 : 0;
+    return 299 + app - qr - bundle;
+  }
+  function subtotalToday() { return 299 + (appAdded ? 10 : 0); }
+
+  // Multi-target helpers (apply to all elements with data-target="X")
+  function targets(name) { return document.querySelectorAll('[data-target="' + name + '"]'); }
+  function setText(name, text) { targets(name).forEach(el => { el.textContent = text; }); }
+  function setHTML(name, html) { targets(name).forEach(el => { el.innerHTML = html; }); }
+  function toggleClass(name, cls, on) { targets(name).forEach(el => { el.classList.toggle(cls, on); }); }
+  function addonCheckedState() {
+    const cb = document.querySelector('[data-target="addon-checkbox"]:checked');
+    return !!cb;
+  }
+
+  // --- Tabs
+  function setPrimary(val) {
+    primary = val;
+    document.querySelectorAll('[data-tab]').forEach(btn => {
+      const active = btn.dataset.tab === val;
+      btn.classList.toggle('active', active);
+      btn.setAttribute('aria-selected', active);
+    });
+    render();
+  }
+  function setBilling(val) {
+    billing = val;
+    document.querySelectorAll('[data-bill]').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.bill === val);
+    });
+    render();
+  }
+  // Mobile 3-way plan toggle → maps a single segment onto (primary, billing)
+  function selectMobilePlan(seg) {
+    if (seg === 'upfront') {
+      setPrimary('onetime');
+    } else if (seg === 'annual') {
+      setPrimary('membership');
+      setBilling('annual');
+    } else {
+      setPrimary('membership');
+      setBilling('monthly');
+    }
+    document.querySelectorAll('.seg__btn').forEach(b => {
+      const active = b.dataset.seg === seg;
+      b.classList.toggle('seg__btn--active', active);
+      b.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+    const lm = document.querySelector('.sticky-cta__learn');
+    if (lm) lm.href = '/pdp?plan=' + seg;
+  }
+
+  // Sync addon checkboxes (desktop + sheet) so they reflect the same state
+  document.querySelectorAll('[data-target="addon-checkbox"]').forEach(cb => {
+    cb.addEventListener('change', () => {
+      const checked = cb.checked;
+      document.querySelectorAll('[data-target="addon-checkbox"]').forEach(other => {
+        if (other !== cb) other.checked = checked;
+      });
+      render();
+    });
+  });
+
+  // --- Plans sheet
+  function openSheetWith(plan) {
+    setPrimary(plan);
+    openSheet();
+  }
+  function switchPlanFromSheet() {
+    setPrimary(primary === 'membership' ? 'onetime' : 'membership');
+  }
+  function openSheet() {
+    lastFocused = document.activeElement;
+    sheet.classList.add('open');
+    sheetBackdrop.classList.add('open');
+    sheet.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('lock-scroll');
+    window.requestAnimationFrame(() => sheetCloseBtn.focus({ preventScroll: true }));
+  }
+  function closeSheet(restoreFocus = true) {
+    sheet.classList.remove('open');
+    sheetBackdrop.classList.remove('open');
+    sheet.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('lock-scroll');
+    if (restoreFocus && lastFocused && typeof lastFocused.focus === 'function') {
+      lastFocused.focus();
+    }
+  }
+  sheetCloseBtn.addEventListener('click', () => closeSheet(true));
+  sheetBackdrop.addEventListener('click', () => closeSheet(true));
+
+  // Handle CTA inside the sheet — close sheet, then run the standard flow
+  function startPurchase() {
+    if (primary === 'onetime') {
+      handleCtaClick();
+    } else {
+      qrCheckedUpfront = false;
+      qrAdded = false;
+      appAdded = false;
+      qrDiscountEarned = false;
+      openCheckout();
+    }
+  }
+  function handleSheetCtaClick() {
+    cameFromSheet = true;
+    closeSheet(false);
+    // Slight delay so the close animation isn't visually overlapped by the next overlay
+    window.setTimeout(() => {
+      if (primary === 'onetime') {
+        handleCtaClick();
+      } else {
+        // Membership: go straight to Shopify checkout (no cart needed)
+        qrCheckedUpfront = false;
+        qrAdded = false;
+        appAdded = false;
+        qrDiscountEarned = false;
+        openCheckout();
+      }
+    }, 180);
+  }
+
+  // --- Cart drawer
+  function openCart() {
+    lastFocused = document.activeElement;
+    renderCart();
+    drawer.classList.add('open');
+    backdrop.classList.add('open');
+    drawer.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('lock-scroll');
+    window.requestAnimationFrame(() => cartCloseBtn.focus({ preventScroll: true }));
+  }
+  function closeCart(restoreFocus = true) {
+    drawer.classList.remove('open');
+    backdrop.classList.remove('open');
+    drawer.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('lock-scroll');
+    if (restoreFocus && lastFocused && typeof lastFocused.focus === 'function') {
+      lastFocused.focus();
+    }
+  }
+  function updateSavingsBar() {
+    const saved = (qrDiscountEarned ? 30 : 0) + (bundleSavingsEarned ? 15 : 0);
+    const pct = (saved / 45) * 100;
+    savingsAmount.textContent = '$' + saved + ' of $45';
+    savingsFill.style.width = pct + '%';
+    if (saved === 0) {
+      savingsMsg.textContent = appAdded
+        ? 'Add Quarterly Refills to unlock $30 + $15 bundle savings.'
+        : 'Add Refills + Feno Premium to save $45 on this order.';
+    } else if (saved === 30) {
+      savingsMsg.textContent = 'Add Feno Premium to unlock another $15 bundle savings.';
+    } else if (saved === 45) {
+      savingsMsg.textContent = 'You\'re saving $45 on this order. ✨';
+    }
+  }
+  function renderCart() {
+    cuQrCard.classList.toggle('cu-card--added', qrAdded);
+    cuQrCard.classList.toggle('cu-card--featured', !qrAdded);
+    cuQrBtn.textContent = qrAdded ? '✓ Added' : 'Add';
+    cuQrSave.classList.toggle('hidden', qrAdded);
+    cuAppCard.classList.toggle('cu-card--added', appAdded);
+    cuAppBtn.textContent = appAdded ? '✓ Added' : 'Add';
+    updateSavingsBar();
+    scpSubtotal.textContent = money(subtotalToday());
+    scpRowDiscount.classList.toggle('hidden', !qrDiscountEarned);
+    scpRowBundle.classList.toggle('hidden', !bundleSavingsEarned);
+    const total = todayTotal();
+    scpTotalToday.textContent = money(total);
+    cartCheckoutAmt.textContent = money(total);
+    let recurring = [];
+    if (qrAdded) recurring.push('$65 every 90 days, starting in 90 days');
+    if (appAdded) recurring.push('$10/month after today');
+    if (recurring.length) {
+      scpRecurringNote.textContent = 'Recurring: ' + recurring.join(' · ') + '. Cancel anytime.';
+      scpRecurringNote.classList.remove('hidden');
+    } else {
+      scpRecurringNote.classList.add('hidden');
+    }
+  }
+  cartCloseBtn.addEventListener('click', () => closeCart(true));
+  backdrop.addEventListener('click', () => closeCart(true));
+  cartCheckoutBtn.addEventListener('click', () => { closeCart(false); openCheckout(); });
+  cuQrBtn.addEventListener('click', () => {
+    qrAdded = !qrAdded;
+    qrDiscountEarned = qrAdded;
+    bundleSavingsEarned = qrAdded && appAdded;
+    renderCart();
+  });
+  cuAppBtn.addEventListener('click', () => {
+    appAdded = !appAdded;
+    bundleSavingsEarned = qrAdded && appAdded;
+    renderCart();
+  });
+
+  // --- Checkout
+  function openCheckout() {
+    // Capture purchase type at checkout time so post-purchase + summary stay consistent
+    purchasedAs = primary; // 'onetime' or 'membership'
+    // Fresh round of post-purchase decisions on next confirmation
+    qrFromPostPurchase = false;
+    appFromPostPurchase = false;
+    renderCheckoutSummary();
+    coOverlay.classList.add('open');
+    coOverlay.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('lock-scroll');
+    coOverlay.scrollTop = 0;
+    window.requestAnimationFrame(() => {
+      const firstField = coOverlay.querySelector('.co-field:not([readonly])');
+      if (firstField) firstField.focus({ preventScroll: true });
+    });
+  }
+  function closeCheckout(restoreFocus = true) {
+    coOverlay.classList.remove('open');
+    coOverlay.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('lock-scroll');
+    coPlaceBtn.disabled = false;
+    coPlaceBtn.textContent = 'Place order';
+    if (restoreFocus && lastFocused && typeof lastFocused.focus === 'function') {
+      lastFocused.focus();
+    }
+  }
+  function renderCheckoutSummary() {
+    if (purchasedAs === 'membership') {
+      // Subscribe & Save: single plan line, no addons, no discounts
+      coItemBundle.classList.add('hidden');
+      coItemQr.classList.add('hidden');
+      coItemApp.classList.add('hidden');
+      coDiscountRow.classList.add('hidden');
+      coBundleRow.classList.add('hidden');
+      coFuture.classList.add('hidden');
+      coItemMembership.classList.remove('hidden');
+
+      const isAnnual = billing === 'annual';
+      const planTotal = isAnnual ? 360 : 35;
+      coItemMembershipSub.textContent = isAnnual
+        ? 'Annual billing · saves $60 vs monthly'
+        : 'Monthly billing · cancel anytime after Smartbrush is paid off';
+      coItemMembershipPrice.innerHTML = isAnnual
+        ? '$360.00<small>per year</small>'
+        : '$35.00<small>per month</small>';
+
+      coSubtotal.textContent = moneyDecimal(planTotal);
+      coTotal.textContent = moneyDecimal(planTotal);
+      coSummaryTogglePrice.textContent = moneyDecimal(planTotal);
+      return;
+    }
+
+    // One Time path (existing behavior)
+    coItemBundle.classList.remove('hidden');
+    coItemMembership.classList.add('hidden');
+    coItemQr.classList.toggle('hidden', !qrAdded);
+    coItemApp.classList.toggle('hidden', !appAdded);
+    coDiscountRow.classList.toggle('hidden', !qrDiscountEarned);
+    coBundleRow.classList.toggle('hidden', !bundleSavingsEarned);
+    coFutureQr.classList.toggle('hidden', !qrAdded);
+    coFutureApp.classList.toggle('hidden', !appAdded);
+    coFuture.classList.toggle('hidden', !qrAdded && !appAdded);
+    coSubtotal.textContent = moneyDecimal(subtotalToday());
+    const tot = todayTotal();
+    coTotal.textContent = moneyDecimal(tot);
+    coSummaryTogglePrice.textContent = moneyDecimal(tot);
+  }
+  coBackBtn.addEventListener('click', () => {
+    closeCheckout(false);
+    if (purchasedAs === 'onetime' && !qrCheckedUpfront) openCart();
+    else if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+  });
+  coPlaceBtn.addEventListener('click', () => {
+    coPlaceBtn.disabled = true;
+    coPlaceBtn.textContent = 'Processing…';
+    window.setTimeout(() => { closeCheckout(false); openPostPurchase(); }, 1100);
+  });
+  coSummaryToggle.addEventListener('click', () => {
+    const expanded = coSummaryToggle.getAttribute('aria-expanded') === 'true';
+    coSummaryToggle.setAttribute('aria-expanded', String(!expanded));
+    coSummary.hidden = expanded;
+    coSummaryToggleText.textContent = expanded ? 'Show order summary' : 'Hide order summary';
+  });
+  function syncMobileSummaryDefault() {
+    if (window.matchMedia('(max-width: 768px)').matches) {
+      coSummary.hidden = true;
+      coSummaryToggle.setAttribute('aria-expanded', 'false');
+      coSummaryToggleText.textContent = 'Show order summary';
+    } else {
+      coSummary.hidden = false;
+    }
+  }
+  window.addEventListener('resize', syncMobileSummaryDefault);
+
+  // --- Post-purchase
+  function openPostPurchase() {
+    renderPostPurchase();
+    ppOverlay.classList.add('open');
+    ppOverlay.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('lock-scroll');
+    ppOverlay.scrollTop = 0;
+    window.requestAnimationFrame(() => ppDone.focus({ preventScroll: true }));
+  }
+  function closePostPurchase() {
+    ppOverlay.classList.remove('open');
+    ppOverlay.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('lock-scroll');
+    [ppUpsellQr, ppUpsellApp].forEach(el => el.classList.remove('pp-upsell--added'));
+    ppQrAccept.disabled = false; ppQrAccept.textContent = 'Add to my order · Save $30';
+    ppAppAccept.disabled = false; ppAppAccept.textContent = 'Add to my order · $10/mo';
+    if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+  }
+  function renderPostPurchase() {
+    if (purchasedAs === 'membership') {
+      // Subscribe & Save: simple thanks, no upsells, plan summary only
+      ppUpsellQr.classList.add('hidden');
+      ppUpsellApp.classList.add('hidden');
+      ppTitle.textContent = 'Thanks for your order';
+      const isAnnual = billing === 'annual';
+      const planTotal = isAnnual ? '$360.00' : '$35.00';
+      const planLabel = isAnnual ? 'Annual' : 'Monthly';
+      const nextWhen = isAnnual ? '1 year' : '30 days';
+      ppSub.innerHTML = 'Confirmation email sent to <strong id="pp-email">jane@feno.co</strong>. Your Smartbrush ships in 2 business days.';
+
+      ppSummary.innerHTML =
+        '<div class="pp-row"><span>Subscribe &amp; Save · ' + planLabel + '</span><span>' + planTotal + '</span></div>' +
+        '<div class="pp-row pp-row--muted"><span>Shipping</span><span>Free</span></div>' +
+        '<div class="pp-row pp-row--total"><span>Charged today</span><span>' + planTotal + '</span></div>';
+
+      ppFuture.innerHTML = '<div class="pp-row pp-row--muted"><span>Next charge</span><span>' + planTotal + ' in ' + nextWhen + '</span></div>';
+      ppFutureCard.classList.remove('hidden');
+
+      ppNext.innerHTML = 'Your <strong>Smartbrush</strong> ships in 2 business days. Open the Feno app to activate <strong>Feno Premium</strong> and start tracking your tongue + teeth biomarkers. Connect your dentist in the app to share your biomarker history.';
+      return;
+    }
+
+    // One Time post-purchase (existing logic)
+    ppTitle.textContent = 'Your order is confirmed';
+    ppSub.innerHTML = 'Confirmation email sent to <strong id="pp-email">jane@feno.co</strong>. Your Smartbrush ships in 2 business days.';
+    ppUpsellQr.classList.toggle('hidden', qrAdded);
+    ppUpsellApp.classList.toggle('hidden', appAdded);
+
+    // Unified math: same line items + discounts whether added in cart or accepted post-purchase
+    let html = '';
+    html += '<div class="pp-row"><span>Smartbrush Bundle</span><span>$299.00</span></div>';
+    if (qrAdded) html += '<div class="pp-row pp-row--muted"><span>Quarterly Refills · $65/qtr</span><span>$0.00 today</span></div>';
+    if (appAdded) html += '<div class="pp-row pp-row--muted"><span>Feno Premium · $10/mo</span><span>$10.00 today</span></div>';
+    if (qrDiscountEarned) html += '<div class="pp-row pp-row--discount"><span>First-order bonus</span><span>−$30.00</span></div>';
+    if (bundleSavingsEarned) html += '<div class="pp-row pp-row--discount"><span>Bundle savings</span><span>−$15.00</span></div>';
+    html += '<div class="pp-row pp-row--muted"><span>Shipping</span><span>Free</span></div>';
+    html += '<div class="pp-row pp-row--total"><span>Charged today</span><span>' + moneyDecimal(todayTotal()) + '</span></div>';
+    ppSummary.innerHTML = html;
+
+    // Future charges: just recurring schedule, no extra incentive framing
+    let futureHtml = '';
+    if (qrAdded) futureHtml += '<div class="pp-row pp-row--muted"><span>Quarterly Refills</span><span>$65 every 90 days</span></div>';
+    if (appAdded) futureHtml += '<div class="pp-row pp-row--muted"><span>Feno Premium</span><span>$10 every month</span></div>';
+    ppFuture.innerHTML = futureHtml;
+    ppFutureCard.classList.toggle('hidden', !qrAdded && !appAdded);
+
+    let parts = ['Your <strong>Smartbrush</strong> ships in 2 business days.'];
+    if (qrAdded) parts.push('Your first <strong>Quarterly Refill</strong> ships in 90 days.');
+    if (appAdded) parts.push('Set up <strong>Feno Premium</strong> in the app to start tracking your tongue + teeth biomarkers.');
+    parts.push('Connect your dentist in the app to share your biomarker history.');
+    ppNext.innerHTML = parts.join(' ');
+  }
+  ppQrAccept.addEventListener('click', () => {
+    qrAdded = true;
+    qrFromPostPurchase = true;
+    qrDiscountEarned = true;
+    bundleSavingsEarned = qrAdded && appAdded;
+    renderPostPurchase();
+    ppQrAccept.disabled = true; ppQrAccept.textContent = '✓ Added · $30 off today';
+    ppUpsellQr.classList.add('pp-upsell--added');
+  });
+  ppQrDecline.addEventListener('click', () => ppUpsellQr.classList.add('hidden'));
+  ppAppAccept.addEventListener('click', () => {
+    appAdded = true;
+    appFromPostPurchase = true;
+    bundleSavingsEarned = qrAdded && appAdded;
+    renderPostPurchase();
+    ppAppAccept.disabled = true; ppAppAccept.textContent = '✓ Added · $10/mo';
+    ppUpsellApp.classList.add('pp-upsell--added');
+  });
+  ppAppDecline.addEventListener('click', () => ppUpsellApp.classList.add('hidden'));
+  ppDone.addEventListener('click', closePostPurchase);
+
+  // Esc close
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    if (ppOverlay.classList.contains('open')) closePostPurchase();
+    else if (coOverlay.classList.contains('open')) closeCheckout(true);
+    else if (drawer.classList.contains('open')) closeCart(true);
+    else if (sheet.classList.contains('open')) closeSheet(true);
+  });
+
+  // --- Desktop CTA routing (also used by sheet for One Time)
+  function handleCtaClick() {
+    if (primary !== 'onetime') {
+      // Desktop membership click: go straight to Shopify checkout for parity
+      qrCheckedUpfront = false;
+      qrAdded = false;
+      appAdded = false;
+      qrDiscountEarned = false;
+      openCheckout();
+      return;
+    }
+    const checked = addonCheckedState();
+    qrCheckedUpfront = checked;
+    qrAdded = checked;
+    qrDiscountEarned = qrAdded;
+    appAdded = false;
+    bundleSavingsEarned = false;
+    if (qrCheckedUpfront) openCheckout();
+    else openCart();
+  }
+
+  // --- Plan card accordion (mobile)
+  let expandedPlan = 'membership';
+  function onPlanCardClick(plan) {
+    if (expandedPlan === plan) {
+      openSheetWith(plan);
+    } else {
+      setExpandedPlan(plan);
+    }
+  }
+  function onPlanCardKey(e, plan) {
+    if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+      e.preventDefault();
+      onPlanCardClick(plan);
+    }
+  }
+  function setExpandedPlan(plan) {
+    expandedPlan = plan;
+    document.querySelectorAll('.plan-card').forEach(card => {
+      card.classList.toggle('plan-card--collapsed', card.dataset.plan !== plan);
+    });
+  }
+
+  // --- Disclaimer modal
+  const disclaimerBackdrop = document.getElementById('disclaimer-backdrop');
+  const disclaimerModal = document.getElementById('disclaimer-modal');
+  const disclaimerBtn = document.getElementById('disclaimer-btn');
+  const disclaimerReplay = document.getElementById('disclaimer-replay');
+
+  function showDisclaimer() {
+    disclaimerBackdrop.classList.add('show');
+    disclaimerModal.classList.add('show');
+    disclaimerBackdrop.setAttribute('aria-hidden', 'false');
+    disclaimerModal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('lock-scroll');
+    window.requestAnimationFrame(() => { try { disclaimerBtn.focus({ preventScroll: true }); } catch(e){} });
+  }
+  function hideDisclaimer() {
+    disclaimerBackdrop.classList.remove('show');
+    disclaimerModal.classList.remove('show');
+    disclaimerBackdrop.setAttribute('aria-hidden', 'true');
+    disclaimerModal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('lock-scroll');
+    try { localStorage.setItem('feno-demo-seen', '1'); } catch(e){}
+  }
+
+  disclaimerBtn.addEventListener('click', hideDisclaimer);
+  if (disclaimerReplay) disclaimerReplay.addEventListener('click', showDisclaimer);
+
+  // Cancellation terms modal
+  const termsBackdrop = document.getElementById('terms-backdrop');
+  const termsModal = document.getElementById('terms-modal');
+  function openTerms() { termsBackdrop.classList.add('open'); termsModal.classList.add('open'); termsModal.setAttribute('aria-hidden', 'false'); document.body.classList.add('lock-scroll'); }
+  function closeTerms() { termsBackdrop.classList.remove('open'); termsModal.classList.remove('open'); termsModal.setAttribute('aria-hidden', 'true'); document.body.classList.remove('lock-scroll'); }
+  document.getElementById('terms-close').addEventListener('click', closeTerms);
+  termsBackdrop.addEventListener('click', closeTerms);
+
+  // Show on first load (or if localStorage not available)
+  let seen = false;
+  try { seen = !!localStorage.getItem('feno-demo-seen'); } catch(e) { seen = false; }
+  if (!seen) {
+    window.requestAnimationFrame(showDisclaimer);
+  }
+
+  // --- Render
+  function render() {
+    const isMembership = primary === 'membership';
+    const isAddonChecked = addonCheckedState();
+
+    // Toggle visibility
+    targets('billing').forEach(el => el.classList.toggle('hidden', !isMembership));
+    targets('addon').forEach(el => el.classList.toggle('hidden', isMembership));
+
+    let priceAmount, priceUnit, priceSub, incentiveText, includedHtml, ctaText, termsHtml, softwareHtml, headlineText;
+    if (isMembership) {
+      if (billing === 'monthly') {
+        priceAmount = '$35'; priceUnit = '/mo';
+        priceSub = 'Everything included. Cancel anytime after Smartbrush is paid off.';
+        incentiveText = 'Lowest cost to start';
+      } else {
+        priceAmount = '$360'; priceUnit = '/yr';
+        priceSub = 'Save $60 vs monthly ($30/mo effective). Renews annually.';
+        incentiveText = 'Best long-term value · $30/mo effective';
+      }
+      ctaText = billing === 'monthly' ? 'Get Started · $35/mo' : 'Get Started · $360/yr';
+      termsHtml = 'Cancel anytime after Smartbrush is paid off · Early cancel = remaining balance due · Refills + Feno Premium continue until cancelled.';
+      headlineText = 'Get everything, pay monthly';
+      softwareHtml = 'Includes <strong>Feno Premium</strong>: AI coaching and tongue + teeth biomarker tracking, synced to your dentist.';
+      includedHtml =
+        '<li><span class="check">✓</span>Smartbrush</li>' +
+        '<li><span class="check">✓</span>Tongue scraper</li>' +
+        '<li><span class="check">✓</span>Charger</li>' +
+        '<li><span class="check">✓</span>Personalized fit</li>' +
+        '<li><span class="check">✓</span>Foam + Mouthpiece refills</li>' +
+        '<li><span class="check">✓</span>Feno Premium app</li>';
+    } else {
+      priceAmount = '$299'; priceUnit = '';
+      priceSub = 'Smartbrush bundle. Yours to keep, no recurring charges.';
+      incentiveText = 'Pay once · free shipping';
+      ctaText = isAddonChecked ? 'Checkout · $269' : 'Add to Cart · $299';
+      termsHtml = isAddonChecked
+        ? 'Quarterly Refills added · $30 first-order bonus applies at checkout.'
+        : 'Smartbrush + 3 Foam + 1 Mouthpiece · Add Refills to save $30 on this order.';
+      headlineText = 'Pay upfront, own the bundle';
+      softwareHtml = 'Pair with the <strong>free Feno app</strong> to track tongue + teeth biomarkers.';
+      includedHtml =
+        '<li><span class="check">✓</span>Smartbrush</li>' +
+        '<li><span class="check">✓</span>Tongue scraper</li>' +
+        '<li><span class="check">✓</span>Charger</li>' +
+        '<li><span class="check">✓</span>Personalized fit</li>' +
+        '<li><span class="check">✓</span>3 Feno Foam tubes</li>' +
+        '<li><span class="check">✓</span>TrueFit Mouthpiece</li>';
+    }
+
+    setText('amount', priceAmount);
+    setText('unit', priceUnit);
+    setText('sub', priceSub);
+    setText('incentive', incentiveText);
+    setText('cta', ctaText);
+    setHTML('terms', termsHtml);
+    setHTML('included', includedHtml);
+
+    // Sheet title (now the descriptive headline), switch link, software sentence
+    setText('sheet-title', headlineText);
+    setText('sheet-switch', isMembership ? '← Switch to one-time' : '← Switch to Subscribe & Save');
+    setHTML('sheet-software', softwareHtml);
+
+    // Homepage bundle block: hardware is constant; consumables + software vary by plan
+    setText('mp-qty', isMembership ? (billing === 'annual' ? '×4' : '1/qtr') : '×1');
+    setText('foam-qty', isMembership ? (billing === 'annual' ? '×12' : '3/qtr') : '×3');
+    setText('app-name', isMembership ? 'Feno Premium' : 'Feno Plus');
+    setText('app-badge', isMembership ? 'included' : '1 month free');
+    setHTML('app-desc', isMembership
+      ? 'Tracks your oral biomarkers + oral-health stats, synced to your dentist.'
+      : 'Basic brushing insights. Upgrade to Premium anytime.');
+
+    // Mobile inline tag (next to price) + dynamic hero caption per plan
+    setText('sub-short', isMembership ? (billing === 'annual' ? 'Everything included at the best price, and you save $60 a year.' : 'Everything included. Cancel anytime once your brush is paid off.') : 'The full kit, yours to keep. No subscription.');
+    setText('cta-label', isMembership ? 'Checkout' : 'Add to cart');
+    targets('terms-link').forEach(el => el.classList.toggle('hidden', !isMembership));
+    setText('plan-terms', isMembership ? (billing === 'annual'
+      ? 'Your annual plan is prepaid for the year and renews each year unless you cancel before the renewal date. The brush is yours to keep, with no balance owed.'
+      : 'Your Smartbrush is paid off over your first 12 months. You can cancel anytime after that. If you cancel sooner, the remaining brush balance is charged at cancellation. Refills and Feno Premium continue until you cancel.')
+      : '');
+    setHTML('hero-note', isMembership
+      ? (billing === 'annual' ? 'Annual membership<br>device + app + a year of refills' : 'Monthly membership<br>device + app + auto-shipped refills')
+      : 'One-time bundle<br>the device + starter supplies, yours to keep');
+  }
+
+  syncMobileSummaryDefault();
+  setExpandedPlan('membership');
+  render();
+</script>
+
+</body>
+</html>
